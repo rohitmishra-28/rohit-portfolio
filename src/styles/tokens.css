@@ -1,0 +1,56 @@
+/* Design tokens from the Figma design-system frame (node 11:234). */
+:root {
+  --color-parchment: #f5ebdd;
+  --color-warm-ivory: #fbf6ed;
+  --color-ink: #1e211b;
+  --color-forest: #18291f;
+  --color-deep-green: #102019;
+  --color-terracotta: #c65b32;
+  --color-burnt-sienna: #a94627;
+  --color-muted-ochre: #c6a15b;
+  --color-stone: #807b70;
+  --color-soft-sage: #a9b39a;
+  --color-border-light: #dcd0bc;
+  --color-border-dark: #405044;
+
+  /* Font families come from next/font variables set on <html>. */
+  --font-display: var(--font-yatra-one), Georgia, serif;
+  --font-sans: var(--font-manrope), Arial, sans-serif;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --space-40: 160px;
+
+  /* Grid: 4 cols / 20px gutter on mobile, 8 / 32px on tablet, 12 / 72px on desktop. */
+  --grid-columns: 4;
+  --page-gutter: 20px;
+  --content-max: 1296px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 180ms;
+  --duration-base: 240ms;
+  --duration-reveal: 420ms;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --grid-columns: 8;
+    --page-gutter: 32px;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --grid-columns: 12;
+    --page-gutter: 72px;
+  }
+}
