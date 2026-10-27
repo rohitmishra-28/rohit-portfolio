@@ -1,6 +1,5 @@
-import type { CSSProperties } from "react";
+import { AnimatedSection } from "@/components/AnimatedSection";
 import { Picture } from "@/components/Picture";
-import { SectionReveal } from "@/components/SectionReveal";
 import type { ImageName } from "@/lib/images.generated";
 import styles from "./ProcessSection.module.css";
 
@@ -32,49 +31,37 @@ const steps: { title: string; body: string; art: ImageName; artAlt: string }[] =
 ];
 
 // 06 — Process (Figma desktop 11:166, mobile 120:83).
-// Desktop: the four milestones slide up one after another along the gold
-// route, which draws in with scaleX. Mobile: steps slide up and stick, so
-// each one stacks on top of the last while scrolling.
+// Timeline in src/animations/process.ts. Scrolls naturally (never pinned).
 export function ProcessSection() {
   return (
-    <SectionReveal
+    <AnimatedSection
       id="process"
+      animation="process"
       className={styles.process}
       ariaLabelledby="process-title"
-      distance={48}
-      duration={600}
-      stagger={0}
     >
       <div className={styles.inner}>
-        <div data-reveal className={styles.header}>
-          <p className={styles.marker}>
+        <div className={styles.header}>
+          <p data-anim="marker" className={styles.marker}>
             <span className={styles.number}>06</span>A thoughtful way of working
           </p>
           <h2 id="process-title" className={styles.title}>
-            A clear path from question to impact.
+            <span data-anim="mask">
+              <span>A clear path from question to impact.</span>
+            </span>
           </h2>
         </div>
 
         <div className={styles.journey}>
-          <span
-            data-reveal="line"
-            data-reveal-duration="900"
-            className={styles.route}
-            aria-hidden="true"
-          />
-          <ol
-            className={styles.steps}
-            data-reveal-group="160"
-            data-reveal-media="(min-width: 1024px)"
-          >
+          <span data-anim="route" className={styles.route} aria-hidden="true" />
+          <ol data-anim="steps" className={styles.steps}>
             {steps.map((step, i) => (
               <li
                 key={step.title}
-                data-reveal
+                data-anim="step"
                 className={styles.step}
-                style={{ "--i": i } as CSSProperties}
               >
-                <span className={styles.seal}>0{i + 1}</span>
+                <span data-anim="seal" className={styles.seal}>0{i + 1}</span>
                 <h3 className={styles.stepTitle}>{step.title}</h3>
                 <p className={styles.body}>{step.body}</p>
                 <Picture
@@ -89,10 +76,10 @@ export function ProcessSection() {
           </ol>
         </div>
 
-        <p data-reveal className={styles.note}>
+        <p data-anim="note" className={styles.note}>
           Clear thinking. Considered craft. Continuous improvement.
         </p>
       </div>
-    </SectionReveal>
+    </AnimatedSection>
   );
 }

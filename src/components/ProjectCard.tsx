@@ -34,7 +34,7 @@ export function ProjectCard({ project, index }: Props) {
   );
 
   return (
-    <li data-reveal className={styles.card} data-tone={index % 2 === 0 ? "dark" : "light"}>
+    <li data-anim="card" className={styles.card} data-tone={index % 2 === 0 ? "dark" : "light"}>
       {project.href ? (
         <a href={project.href} className={styles.link} target="_blank" rel="noreferrer">
           {body}

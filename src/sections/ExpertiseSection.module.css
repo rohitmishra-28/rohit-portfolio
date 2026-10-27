@@ -132,7 +132,20 @@
 /* Desktop (Figma 11:125): wide cards layered 60px over one another. */
 @media (min-width: 1024px) {
   .expertise {
-    padding: 42px 0 96px;
+    padding: 0 0 96px;
+  }
+
+  /*
+   * During the pinned reveal the card list slides up beneath the heading, so
+   * the heading block is an opaque cap that also carries the section's top
+   * padding and the 41px gap above the cards.
+   */
+  .header {
+    position: relative;
+    z-index: 2;
+    padding-top: 42px;
+    padding-bottom: 41px;
+    background: var(--color-parchment);
   }
 
   .header,
@@ -174,8 +187,10 @@
   }
 
   .cards {
+    position: relative;
+    z-index: 1;
     gap: 0;
-    margin-top: 41px;
+    margin-top: 0;
   }
 
   .card {
@@ -270,27 +285,21 @@
   }
 }
 
-/*
- * Scroll stacking: each card sticks a little lower than the one before, so
- * the next card slides up over it and the four end up as a stack. Static
- * layout when reduced motion is requested.
- */
-@media (prefers-reduced-motion: no-preference) {
-  .cards {
-    --stack-top: 20px;
-    --stack-step: 14px;
-  }
-
-  .card {
-    position: sticky;
-    top: calc(var(--stack-top) + var(--i, 0) * var(--stack-step));
-    box-shadow: 0 -6px 18px rgb(30 33 27 / 0.08);
-  }
+/* Hover: a gentle lift in the border and artwork. Information never depends on it. */
+.card {
+  transition: border-color var(--duration-base) var(--ease-out);
 }
 
-@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-  .cards {
-    --stack-top: 72px;
-    --stack-step: 28px;
+.artImg {
+  transition: scale 600ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .card:hover {
+    border-color: rgb(166 117 71 / 0.85);
+  }
+
+  .card:hover .artImg {
+    scale: 1.04;
   }
 }

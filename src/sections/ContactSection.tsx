@@ -1,31 +1,31 @@
+import { AnimatedSection } from "@/components/AnimatedSection";
 import { Picture } from "@/components/Picture";
-import { SectionReveal } from "@/components/SectionReveal";
 import { mailtoHref, siteConfig } from "@/lib/site-config";
 import styles from "./ContactSection.module.css";
 
 // 08 — Contact / Namaste invitation (Figma desktop 11:197, mobile 120:114).
-// Eyebrow and headline reveal as one group; copy and CTAs follow ~80ms later.
-// The desktop and mobile frames use different headlines and CTA order.
+// Timeline in src/animations/contact.ts. The desktop and mobile frames use
+// different headlines and CTA order.
 export function ContactSection() {
   return (
-    <SectionReveal
+    <AnimatedSection
       id="contact"
+      animation="contact"
       className={styles.contact}
       ariaLabelledby="contact-title"
-      distance={12}
-      duration={420}
-      stagger={80}
     >
-      <Picture
-        name="contact"
-        alt="Illustration of Rohit typing at a carved wooden desk on a veranda overlooking a temple and lotus pond."
-        sizes="(min-width: 1024px) 55vw, 100vw"
-        className={styles.art}
-        imgClassName={styles.artImg}
-      />
+      <div data-anim="art" className={styles.artWrap}>
+        <Picture
+          name="contact"
+          alt="Illustration of Rohit typing at a carved wooden desk on a veranda overlooking a temple and lotus pond."
+          sizes="(min-width: 1024px) 55vw, 100vw"
+          className={styles.art}
+          imgClassName={styles.artImg}
+        />
+      </div>
 
       <div className={styles.panel}>
-        <div data-reveal className={styles.heading}>
+        <div data-anim="heading" className={styles.heading}>
           <p className={styles.marker}>
             <span className={styles.number}>08</span>
             <span className={styles.slash} aria-hidden="true">
@@ -43,17 +43,17 @@ export function ContactSection() {
           </h2>
         </div>
 
-        <div data-reveal className={styles.body}>
-          <p className={`${styles.copy} ${styles.desktopOnly}`}>
+        <div className={styles.body}>
+          <p data-anim="copy" className={`${styles.copy} ${styles.desktopOnly}`}>
             Have a project, an opportunity, or an interesting problem? I’d love to hear what
             you’re working on.
           </p>
-          <p className={`${styles.copy} ${styles.mobileOnly}`}>
+          <p data-anim="copy" className={`${styles.copy} ${styles.mobileOnly}`}>
             Let’s build something thoughtful, useful and made to last.
           </p>
 
           <div className={styles.ctas}>
-            <a href={mailtoHref} className={styles.email}>
+            <a data-anim="action" href={mailtoHref} className={styles.email}>
               <span className={styles.desktopOnly}>
                 <span aria-hidden="true">↗ </span>Send me an email
               </span>
@@ -61,6 +61,7 @@ export function ContactSection() {
               <span className="visually-hidden"> ({siteConfig.email})</span>
             </a>
             <a
+              data-anim="action"
               href={siteConfig.resume.href}
               download={siteConfig.resume.downloadName}
               className={styles.resume}
@@ -73,10 +74,10 @@ export function ContactSection() {
             </a>
           </div>
 
-          <p className={styles.sign}>Thoughtful engineering. Human connection.</p>
-          <p className={styles.namaste}>Namaste</p>
+          <p data-anim="signoff" className={styles.sign}>Thoughtful engineering. Human connection.</p>
+          <p data-anim="signoff" className={styles.namaste}>Namaste</p>
         </div>
       </div>
-    </SectionReveal>
+    </AnimatedSection>
   );
 }

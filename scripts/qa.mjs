@@ -34,15 +34,21 @@ for (const reducedMotion of ["no-preference", "reduce"]) {
       await page.waitForTimeout(120);
     }
     await page.waitForLoadState("networkidle");
-    await page.waitForTimeout(1200);
+    await page.waitForTimeout(2200);
 
     const report = await page.evaluate(() => {
       const doc = document.documentElement;
-      // Cards off to the side of a horizontal scroller reveal when scrolled to.
-      const hidden = [...document.querySelectorAll("[data-reveal]")].filter((el) => {
+      // Anything GSAP animates must have settled visible once scrolled past.
+      // Skipped: cards off to the side of the mobile scroller, the hero copy
+      // and cue (faded on purpose by the scroll-linked hand-off) and the
+      // Process route (65% opacity in the design).
+      const intentional = ["content", "scroll-cue", "route"];
+      const hidden = [...document.querySelectorAll("[data-anim], [data-anim] *")].filter((el) => {
+        if (el.closest(intentional.map((n) => `[data-anim="${n}"]`).join(","))) return false;
         const r = el.getBoundingClientRect();
         const offside = r.left >= doc.clientWidth || r.right <= 0;
-        return r.width && !offside && Number(getComputedStyle(el).opacity) < 0.99;
+        const cs = getComputedStyle(el);
+        return r.width && !offside && (Number(cs.opacity) < 0.99 || cs.visibility === "hidden");
       });
       const brokenImgs = [...document.images].filter(
         (img) => img.getClientRects().length && img.complete && img.naturalWidth === 0,
@@ -97,7 +103,7 @@ for (const reducedMotion of ["no-preference", "reduce"]) {
       return {
         lowContrast,
         overflowX: doc.scrollWidth > doc.clientWidth,
-        hidden: hidden.length,
+        hidden: hidden.slice(0, 6).map((el) => el.dataset.anim ?? el.tagName.toLowerCase()),
         brokenImgs: brokenImgs.map((i) => i.currentSrc),
         badLinks: badLinks.length,
         missingAnchors: anchors,
@@ -107,7 +113,7 @@ for (const reducedMotion of ["no-preference", "reduce"]) {
     });
 
     if (report.overflowX) problems.push(`horizontal overflow: ${report.wide.join(", ")}`);
-    if (report.hidden) problems.push(`${report.hidden} reveal items still hidden`);
+    if (report.hidden.length) problems.push(`still hidden: ${report.hidden.join(", ")}`);
     if (report.brokenImgs.length) problems.push(`broken images: ${report.brokenImgs.join(", ")}`);
     if (report.badLinks) problems.push(`${report.badLinks} links with empty or "#" href`);
     if (report.missingAnchors.length) problems.push(`missing anchors: ${report.missingAnchors}`);

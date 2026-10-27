@@ -1,5 +1,5 @@
+import { AnimatedSection } from "@/components/AnimatedSection";
 import { Picture } from "@/components/Picture";
-import { SectionReveal } from "@/components/SectionReveal";
 import { ctaLinks } from "@/lib/site-config";
 import styles from "./AboutSection.module.css";
 
@@ -28,20 +28,16 @@ const capabilities = [
 ];
 
 // 02 — About (Figma desktop 11:72, mobile 120:14).
-// Headline rises; illustration fades over ~500ms; bio follows; the four
-// highlights then slide in one after another — left column from the left,
-// right column from the right.
+// Timeline in src/animations/about.ts.
 export function AboutSection() {
   return (
-    <SectionReveal
+    <AnimatedSection
       id="about"
+      animation="about"
       className={styles.about}
       ariaLabelledby="about-title"
-      distance={24}
-      duration={600}
-      stagger={70}
     >
-      <div data-reveal="fade" data-reveal-duration="500" className={styles.artWrap}>
+      <div data-anim="art" className={styles.artWrap}>
         <Picture
           name="about"
           alt="Illustration of Rohit at a wooden desk with a monitor and laptop, in a room with temple sketches, plants and a sleeping cat."
@@ -51,9 +47,9 @@ export function AboutSection() {
         />
       </div>
 
-      <div className={styles.column}>
-        <div data-reveal className={styles.heading}>
-          <p className={styles.marker}>
+      <div data-anim="column" className={styles.column}>
+        <div className={styles.heading}>
+          <p data-anim="marker" className={styles.marker}>
             <span className={styles.number}>01</span>
             <span className={styles.slash} aria-hidden="true">
               /
@@ -61,23 +57,29 @@ export function AboutSection() {
             About me
           </p>
           <h2 id="about-title" className={styles.title}>
-            <span className={styles.line}>A developer with</span>{" "}
-            <span className={styles.line}>
-              <span className={styles.accent}>Indian roots</span> and
+            <span data-anim="mask" className={styles.line}>
+              <span>A developer with</span>
             </span>{" "}
-            <span className={styles.line}>global vision.</span>
+            <span data-anim="mask" className={styles.line}>
+              <span>
+                <span className={styles.accent}>Indian roots</span> and
+              </span>
+            </span>{" "}
+            <span data-anim="mask" className={styles.line}>
+              <span>global vision.</span>
+            </span>
           </h2>
         </div>
 
-        <p data-reveal className={styles.bio}>
+        <p data-anim="bio" className={styles.bio}>
           I’m Rohit Mishra, a frontend developer passionate about crafting digital experiences
           that are meaningful, accessible and beautiful. I bring together engineering precision,
           ecommerce expertise and a deep appreciation for visual storytelling.
         </p>
 
-        <ul className={styles.capabilities} data-reveal-group="160">
+        <ul data-anim="highlights" className={styles.capabilities}>
           {capabilities.map((cap, i) => (
-            <li key={cap.label} data-reveal="slide" className={styles.capability}>
+            <li key={cap.label} data-anim="highlight" className={styles.capability}>
               <span className={styles.icon} aria-hidden="true">
                 {/* eslint-disable-next-line @next/next/no-img-element -- static SVG glyph */}
                 <img src={`/images/icons/about-cap-${i + 1}.svg`} alt="" />
@@ -97,7 +99,7 @@ export function AboutSection() {
           ))}
         </ul>
 
-        <a data-reveal href={ctaLinks.moreAboutMe} className={styles.cta}>
+        <a data-anim="cta" href={ctaLinks.moreAboutMe} className={styles.cta}>
           <span className={styles.circle} aria-hidden="true">
             →
           </span>
@@ -105,6 +107,6 @@ export function AboutSection() {
           <span className="visually-hidden"> (résumé PDF)</span>
         </a>
       </div>
-    </SectionReveal>
+    </AnimatedSection>
   );
 }

@@ -47,7 +47,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--duration-fast) var(--ease-out);
+  transition: scale var(--duration-fast) var(--ease-out);
 }
 
 .name {
@@ -97,7 +97,7 @@
 }
 
 .link:hover .img {
-  transform: scale(1.02);
+  scale: 1.02; /* composes with the GSAP scroll drift on transform */
 }
 
 .link:active {
@@ -179,5 +179,17 @@
     top: 32px;
     right: 0;
     bottom: auto;
+  }
+}
+
+/* Desktop hover on cards without a link yet: a quiet image scale only (no
+   lift or pointer, so it doesn't promise a click). */
+@media (hover: hover) and (min-width: 1024px) {
+  .static:hover .img {
+    scale: 1.03;
+  }
+
+  .img {
+    transition: scale 500ms var(--ease-out);
   }
 }

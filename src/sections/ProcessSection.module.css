@@ -253,16 +253,3 @@
     font-size: 13px;
   }
 }
-
-/*
- * Mobile scroll stacking: each step sticks a little lower than the last, so
- * the next one slides up over it. Desktop keeps the Figma row; reduced
- * motion keeps the plain list.
- */
-@media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
-  .step {
-    position: sticky;
-    top: calc(20px + var(--i, 0) * 14px);
-    box-shadow: 0 -6px 18px rgb(30 33 27 / 0.08);
-  }
-}

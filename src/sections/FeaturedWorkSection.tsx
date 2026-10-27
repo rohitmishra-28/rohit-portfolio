@@ -1,22 +1,15 @@
+import { AnimatedSection } from "@/components/AnimatedSection";
 import { Picture } from "@/components/Picture";
 import { ProjectCard } from "@/components/ProjectCard";
-import { SectionReveal } from "@/components/SectionReveal";
 import { projects } from "@/lib/projects";
 import { ctaLinks } from "@/lib/site-config";
 import styles from "./FeaturedWorkSection.module.css";
 
 // 03 — Featured Work (Figma desktop 11:85, mobile 120:23).
-// Heading and intro reveal as a group; then the cards rise one after another.
+// Timeline in src/animations/work.ts.
 export function FeaturedWorkSection() {
   return (
-    <SectionReveal
-      id="work"
-      className={styles.work}
-      ariaLabelledby="work-title"
-      distance={48}
-      duration={650}
-      stagger={90}
-    >
+    <AnimatedSection id="work" animation="work" className={styles.work} ariaLabelledby="work-title">
       <Picture
         name="work-bg"
         alt=""
@@ -26,25 +19,29 @@ export function FeaturedWorkSection() {
       />
 
       <div className={styles.inner}>
-        <div data-reveal className={styles.header}>
+        <div className={styles.header}>
           <div>
-            <p className={styles.marker}>
+            <p data-anim="marker" className={styles.marker}>
               <span className={styles.number}>02</span>
               Featured work
             </p>
             <h2 id="work-title" className={styles.title}>
-              <span className={styles.line}>Digital products</span>{" "}
-              <span className={`${styles.line} ${styles.accent}`}>that create impact.</span>
+              <span data-anim="mask" className={styles.line}>
+                <span>Digital products</span>
+              </span>{" "}
+              <span data-anim="mask" className={styles.line}>
+                <span className={styles.accent}>that create impact.</span>
+              </span>
             </h2>
-            <p className={`${styles.intro} ${styles.introDesktop}`}>
+            <p data-anim="intro" className={`${styles.intro} ${styles.introDesktop}`}>
               A selection of projects where I’ve helped brands solve real problems, improve user
               experience and build better ecommerce journeys.
             </p>
-            <p className={`${styles.intro} ${styles.introMobile}`}>
+            <p data-anim="intro" className={`${styles.intro} ${styles.introMobile}`}>
               Selected projects where engineering, brand craft and customer experience meet.
             </p>
           </div>
-          <a href={ctaLinks.viewAllProjects} className={styles.cta}>
+          <a data-anim="cta" href={ctaLinks.viewAllProjects} className={styles.cta}>
             <span className={styles.circle} aria-hidden="true">
               →
             </span>
@@ -57,17 +54,17 @@ export function FeaturedWorkSection() {
           className={styles.cards}
           aria-label="Featured projects"
           tabIndex={0}
-          data-reveal-group="220"
+          data-anim="cards"
         >
           {projects.map((project, i) => (
             <ProjectCard key={project.slug} project={project} index={i} />
           ))}
         </ul>
 
-        <p data-reveal className={styles.note}>
+        <p data-anim="note" className={styles.note}>
           Selected work shaped by each brand’s craft, story, and customer journey.
         </p>
       </div>
-    </SectionReveal>
+    </AnimatedSection>
   );
 }

@@ -1,6 +1,5 @@
-import type { CSSProperties } from "react";
+import { AnimatedSection } from "@/components/AnimatedSection";
 import { Picture } from "@/components/Picture";
-import { SectionReveal } from "@/components/SectionReveal";
 import type { ImageName } from "@/lib/images.generated";
 import styles from "./ExpertiseSection.module.css";
 
@@ -53,40 +52,40 @@ const capabilities: Capability[] = [
 ];
 
 // 04 — Expertise (Figma desktop 11:125, mobile 120:41).
-// Heading first; each card slides up as it enters and then sticks, so the
-// next card slides over it and the four build a stack while scrolling.
-// Artwork fades in ~120ms after its card.
+// Timeline in src/animations/expertise.ts (pinned card sequence on desktop).
 export function ExpertiseSection() {
   return (
-    <SectionReveal
+    <AnimatedSection
       id="expertise"
+      animation="expertise"
       className={styles.expertise}
       ariaLabelledby="expertise-title"
-      distance={48}
-      duration={600}
     >
       <div className={styles.inner}>
-        <div data-reveal data-reveal-delay="0" className={styles.header}>
-          <p className={styles.marker}>
+        <div className={styles.header}>
+          <p data-anim="marker" className={styles.marker}>
             <span className={styles.number}>03</span>
             Expertise
           </p>
           <h2 id="expertise-title" className={styles.title}>
-            <span className={styles.line}>Engineering the details.</span>{" "}
-            <span className={`${styles.line} ${styles.subline}`}>Elevating the experience.</span>
+            <span data-anim="mask" className={styles.line}>
+              <span>Engineering the details.</span>
+            </span>{" "}
+            <span data-anim="mask" className={`${styles.line} ${styles.subline}`}>
+              <span>Elevating the experience.</span>
+            </span>
           </h2>
         </div>
 
-        <ol className={styles.cards}>
+        <ol data-anim="cards" className={styles.cards}>
           {capabilities.map((cap, i) => (
             <li
               key={cap.title}
-              data-reveal
+              data-anim="card"
               className={styles.card}
               data-tone={cap.tone}
-              style={{ "--i": i } as CSSProperties}
             >
-              <div className={styles.text}>
+              <div data-anim="card-text" className={styles.text}>
                 <Picture
                   name={cap.emblem}
                   alt=""
@@ -107,11 +106,7 @@ export function ExpertiseSection() {
                   )}
                 </p>
               </div>
-              <div
-                data-reveal="fade"
-                data-reveal-delay="120"
-                className={styles.artWrap}
-              >
+              <div data-anim="card-art" className={styles.artWrap}>
                 <Picture
                   name={cap.art}
                   alt={cap.artAlt}
@@ -124,6 +119,6 @@ export function ExpertiseSection() {
           ))}
         </ol>
       </div>
-    </SectionReveal>
+    </AnimatedSection>
   );
 }

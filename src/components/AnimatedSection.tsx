@@ -1,0 +1,60 @@
+"use client";
+
+import { useRef, type ReactNode } from "react";
+import { gsap, useGSAP } from "@/animations/gsap";
+import { animations, type AnimationName } from "@/animations";
+
+type Props = {
+  id: string;
+  /** Which section timeline from src/animations to run. */
+  animation: AnimationName;
+  as?: "section" | "footer";
+  className?: string;
+  ariaLabelledby?: string;
+  children: ReactNode;
+};
+
+/**
+ * Wraps a server-rendered section and runs its GSAP timeline, scoped to the
+ * section and reverted on unmount. Content is fully visible in the server
+ * HTML; if a timeline throws, its partial setup is reverted so nothing is
+ * left hidden.
+ */
+export function AnimatedSection({
+  id,
+  animation,
+  as: Tag = "section",
+  className,
+  ariaLabelledby,
+  children,
+}: Props) {
+  const ref = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const scope = ref.current;
+      if (!scope) return;
+      const mm = gsap.matchMedia();
+      try {
+        animations[animation](scope, mm);
+      } catch (error) {
+        mm.revert();
+        document.documentElement.classList.add("anim-failed");
+        console.error(`Animation "${animation}" failed; showing static content.`, error);
+      }
+      return () => mm.revert();
+    },
+    { scope: ref },
+  );
+
+  return (
+    <Tag
+      ref={ref as React.Ref<HTMLElement & HTMLDivElement>}
+      id={id}
+      className={className}
+      aria-labelledby={ariaLabelledby}
+    >
+      {children}
+    </Tag>
+  );
+}

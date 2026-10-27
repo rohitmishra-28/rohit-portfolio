@@ -100,16 +100,6 @@
   color: var(--color-burnt-sienna);
 }
 
-/* Reveal direction: left column slides in from the left, right from the right. */
-.capability:nth-child(odd) {
-  --from-x: -56px;
-  --from-y: 0;
-}
-
-.capability:nth-child(even) {
-  --from-x: 56px;
-  --from-y: 0;
-}
 
 .icon {
   display: grid;

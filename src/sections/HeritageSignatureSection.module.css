@@ -69,6 +69,7 @@
     position: relative;
     display: block;
     height: 100%;
+    overflow: hidden;
   }
 
   .art::after {
@@ -91,7 +92,7 @@
   }
 
   .eyebrowLine {
-    display: inline;
+    display: inline-block;
   }
 
   .title {

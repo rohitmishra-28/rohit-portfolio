@@ -4,13 +4,18 @@
   background: var(--color-parchment);
 }
 
-.art {
+.artWrap {
   position: relative;
-  display: block;
   height: 290px;
+  overflow: hidden;
 }
 
-.art::after {
+.art {
+  display: block;
+  height: 100%;
+}
+
+.artWrap::after {
   content: "";
   position: absolute;
   inset: auto 0 -12px;
@@ -134,13 +139,13 @@
     overflow: hidden;
   }
 
-  .art {
+  .artWrap {
     position: absolute;
     inset: 0;
     height: auto;
   }
 
-  .art::after {
+  .artWrap::after {
     display: none;
   }
 
@@ -261,6 +266,10 @@
     position: absolute;
     bottom: 48px;
     left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .scrollInner {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -269,7 +278,6 @@
     font-weight: 500;
     letter-spacing: 2px;
     text-transform: uppercase;
-    transform: translateX(-50%);
   }
 
   .scrollLine {
@@ -293,73 +301,8 @@
   }
 }
 
-/* First-render entrance: headline lines stagger, then copy, then CTAs. */
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-}
-
-@keyframes fade {
-  from {
-    opacity: 0;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .title,
-  .eyebrow,
-  .divider,
-  .lede,
-  .ctas {
-    animation: rise 480ms var(--ease-out) backwards;
-  }
-
-  .title {
-    animation-delay: 80ms;
-  }
-
-  .divider {
-    animation-name: fade;
-    animation-delay: 360ms;
-  }
-
-  .lede {
-    animation-delay: 380ms;
-  }
-
-  .ctas {
-    animation-delay: 460ms;
-  }
-
-  .scroll {
-    animation: fade 600ms var(--ease-out) 700ms backwards;
-  }
-}
-
-/* Desktop lines are separate blocks, so each one gets its own stagger. */
+/* Looping details (entrance timeline lives in src/animations/hero.ts). */
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-  .title {
-    animation: none;
-  }
-
-  .line {
-    animation: rise 480ms var(--ease-out) backwards;
-  }
-
-  .line:nth-child(1) {
-    animation-delay: 80ms;
-  }
-
-  .line:nth-child(2) {
-    animation-delay: 160ms;
-  }
-
-  .line:nth-child(3) {
-    animation-delay: 240ms;
-  }
-
   /* The scroll cue's line and dot keep bouncing; the label stays put. */
   .scrollLine {
     animation: bounce 1.8s ease-in-out 1.3s infinite;

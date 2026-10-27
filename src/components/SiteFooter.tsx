@@ -1,6 +1,6 @@
 import { projects } from "@/lib/projects";
 import { ctaLinks, mailtoHref, sectionLinks, siteConfig } from "@/lib/site-config";
-import { SectionReveal } from "./SectionReveal";
+import { AnimatedSection } from "./AnimatedSection";
 import { SocialIcon } from "./SocialIcon";
 import styles from "./SiteFooter.module.css";
 
@@ -14,14 +14,14 @@ const resources = [
 ];
 
 // 09 — Footer / Heritage colophon (Figma desktop 11:210, mobile 120:126).
-// A single fade-in once visible; links are not staggered.
+// Timeline in src/animations/footer.ts.
 export function SiteFooter() {
   return (
-    <SectionReveal id="footer" as="footer" className={styles.footer} duration={340}>
-      <div data-reveal="fade" className={styles.inner}>
-        <div className={styles.brand}>
+    <AnimatedSection id="footer" as="footer" animation="footer" className={styles.footer}>
+      <div className={styles.inner}>
+        <div data-anim="group" className={styles.brand}>
           <p className={styles.name}>
-            <span className={styles.mark} aria-hidden="true">
+            <span data-anim="mark" className={styles.mark} aria-hidden="true">
               ❋
             </span>
             {siteConfig.name}
@@ -48,7 +48,7 @@ export function SiteFooter() {
         </div>
 
         <nav className={styles.columns} aria-label="Footer">
-          <div className={styles.column}>
+          <div data-anim="group" className={styles.column}>
             <h2 className={styles.heading}>Navigation</h2>
             <ul className={styles.list}>
               {navigation.map((link) => (
@@ -58,7 +58,7 @@ export function SiteFooter() {
               ))}
             </ul>
           </div>
-          <div className={styles.column}>
+          <div data-anim="group" className={styles.column}>
             <h2 className={styles.heading}>Featured work</h2>
             <ul className={styles.list}>
               {projects.map((p) => (
@@ -71,7 +71,7 @@ export function SiteFooter() {
               </li>
             </ul>
           </div>
-          <div className={styles.column}>
+          <div data-anim="group" className={styles.column}>
             <h2 className={styles.heading}>Resources</h2>
             <ul className={styles.list}>
               {resources.map((r) => (
@@ -90,19 +90,19 @@ export function SiteFooter() {
           </div>
         </nav>
 
-        <blockquote className={styles.quote}>
+        <blockquote data-anim="group" className={styles.quote}>
           <p>“Technology is a modern medium. Our culture is an endless source of inspiration.”</p>
           <span className={styles.ornament} aria-hidden="true" />
         </blockquote>
 
         <div className={styles.bottom}>
-          <span className={styles.rule} aria-hidden="true">
+          <span data-anim="rule" className={styles.rule} aria-hidden="true">
             <span className={styles.ruleGlyph}>♧</span>
           </span>
-          <p>© 2026 Rohit Mishra. All rights reserved.</p>
-          <p>Built with purpose, inspired by Bharat.</p>
+          <p data-anim="legal">© 2026 Rohit Mishra. All rights reserved.</p>
+          <p data-anim="legal">Built with purpose, inspired by Bharat.</p>
         </div>
       </div>
-    </SectionReveal>
+    </AnimatedSection>
   );
 }

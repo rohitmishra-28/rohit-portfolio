@@ -1,5 +1,5 @@
+import { AnimatedSection } from "@/components/AnimatedSection";
 import { Picture } from "@/components/Picture";
-import { SectionReveal } from "@/components/SectionReveal";
 import styles from "./EngineeringPhilosophySection.module.css";
 
 // `body` is the desktop copy; `short` is the mobile frame's.
@@ -28,28 +28,27 @@ const principles = [
 ];
 
 // 05 — Engineering Philosophy (Figma desktop 11:148, mobile 120:65).
-// Dark background stays put; statement lines stagger ~70ms; principles
-// slide in one after another (left from the left, right from the right).
+// Timeline in src/animations/philosophy.ts.
 export function EngineeringPhilosophySection() {
   return (
-    <SectionReveal
+    <AnimatedSection
       id="philosophy"
+      animation="philosophy"
       className={styles.philosophy}
       ariaLabelledby="philosophy-title"
-      distance={24}
-      duration={600}
-      stagger={70}
     >
-      <Picture
-        name="philosophy"
-        alt=""
-        sizes="(min-width: 1024px) 55vw, 100vw"
-        className={styles.art}
-        imgClassName={styles.artImg}
-      />
+      <div data-anim="art" className={styles.art}>
+        <Picture
+          name="philosophy"
+          alt=""
+          sizes="(min-width: 1024px) 55vw, 100vw"
+          className={styles.artPic}
+          imgClassName={styles.artImg}
+        />
+      </div>
 
       <div className={styles.inner}>
-        <p data-reveal className={styles.marker}>
+        <p data-anim="marker" className={styles.marker}>
           <span className={styles.number}>05</span>
           <span className={styles.slash} aria-hidden="true">
             /
@@ -57,27 +56,28 @@ export function EngineeringPhilosophySection() {
           Engineering philosophy
         </p>
         <h2 id="philosophy-title" className={styles.title}>
-          <span data-reveal className={styles.line}>
-            Good engineering
+          <span data-anim="mask" className={styles.line}>
+            <span>Good engineering</span>
           </span>{" "}
-          <span data-reveal className={`${styles.line} ${styles.accent}`}>
-            is felt, not just seen.
+          <span data-anim="mask" className={`${styles.line} ${styles.accent}`}>
+            <span>is felt, not just seen.</span>
           </span>
         </h2>
-        <p data-reveal className={`${styles.statement} ${styles.desktopOnly}`}>
+        <p data-anim="statement" className={`${styles.statement} ${styles.desktopOnly}`}>
           I believe technology should be invisible, intuitive and human. Performance,
           accessibility and maintainability are not checkboxes — they are part of a better, more
           inclusive web.
         </p>
-        <p data-reveal className={`${styles.statement} ${styles.mobileOnly}`}>
+        <p data-anim="statement" className={`${styles.statement} ${styles.mobileOnly}`}>
           Technology should feel invisible, intuitive and human—built for performance,
           accessibility and maintainability.
         </p>
 
-        <ul className={styles.principles} data-reveal-group="180">
+        <ul data-anim="principles" className={styles.principles}>
           {principles.map((p) => (
-            <li key={p.title} data-reveal="slide" className={styles.principle}>
-              <span className={styles.glyph} aria-hidden="true">
+            <li key={p.title} data-anim="principle" className={styles.principle}>
+              <span data-anim="rule" className={styles.rule} aria-hidden="true" />
+              <span data-anim="glyph" className={styles.glyph} aria-hidden="true">
                 {p.glyph}
               </span>
               <h3 className={styles.principleTitle}>{p.title}</h3>
@@ -90,6 +90,6 @@ export function EngineeringPhilosophySection() {
           ))}
         </ul>
       </div>
-    </SectionReveal>
+    </AnimatedSection>
   );
 }
