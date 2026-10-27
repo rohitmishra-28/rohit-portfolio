@@ -1,0 +1,122 @@
+/* Mobile (Figma 120:108): text on a solid night-green panel. */
+.signature {
+  position: relative;
+  min-height: 460px;
+  padding: 64px 0 60px;
+  background: var(--color-night);
+  color: var(--color-warm-ivory);
+  overflow: hidden;
+}
+
+.artWrap {
+  display: none;
+}
+
+.inner {
+  position: relative;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--section-inset);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--color-gold-line);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.eyebrowLine {
+  display: block;
+}
+
+.title {
+  max-width: 342px;
+  margin: 40px 0 0;
+  font-family: var(--font-display);
+  font-size: 31px;
+  font-weight: 400;
+  line-height: 1.43;
+}
+
+.body {
+  max-width: 320px;
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.desktopOnly {
+  display: none;
+}
+
+/* Desktop (Figma 11:191): banyan-to-circuit art behind a light veil. */
+@media (min-width: 1024px) {
+  .signature {
+    padding: 70px 0 100px;
+    background: var(--color-forest);
+  }
+
+  .artWrap {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  .art {
+    position: relative;
+    display: block;
+    height: 100%;
+  }
+
+  .art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgb(16 32 25 / 0.16);
+  }
+
+  .artImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .eyebrow {
+    color: var(--color-muted-ochre);
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+
+  .eyebrowLine {
+    display: inline;
+  }
+
+  .title {
+    max-width: 850px;
+    margin-top: 30px;
+    font-size: 44px;
+    line-height: 50px;
+  }
+
+  .line {
+    display: block;
+  }
+
+  .body {
+    max-width: 600px;
+    margin-top: 56px;
+    font-size: 16px;
+    line-height: 23px;
+  }
+
+  .desktopOnly {
+    display: block;
+  }
+
+  .mobileOnly {
+    display: none;
+  }
+}

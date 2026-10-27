@@ -82,6 +82,12 @@ a {
   transform: none;
 }
 
+.motion-ready [data-reveal="line"] {
+  opacity: 1;
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
 .motion-ready [data-reveal].is-visible {
   opacity: 1;
   transform: none;

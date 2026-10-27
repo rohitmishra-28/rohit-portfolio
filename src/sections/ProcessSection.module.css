@@ -1,0 +1,254 @@
+/* Mobile (Figma 120:83): vertical journey of framed step panels. */
+.process {
+  padding: 28px 0 36px;
+  background: var(--color-warm-ivory);
+}
+
+.inner {
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+.header,
+.note {
+  padding-inline: var(--section-inset);
+}
+
+.marker {
+  display: flex;
+  gap: 31px;
+  margin: 0;
+  color: var(--color-burnt-sienna);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.number {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.title {
+  max-width: 342px;
+  margin: 18px 0 0;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 31px;
+  font-weight: 400;
+  line-height: 1.32;
+}
+
+.journey {
+  position: relative;
+}
+
+.route {
+  display: none;
+}
+
+.steps {
+  display: grid;
+  gap: 8px;
+  margin: 24px 0 0;
+  padding: 0 20px;
+  list-style: none;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  grid-template-areas:
+    "art art"
+    "seal title"
+    "body body";
+  align-items: baseline;
+  min-height: 190px;
+  padding-bottom: 20px;
+  border: 1px solid #b88c40;
+  background: var(--color-parchment);
+}
+
+.art {
+  grid-area: art;
+  display: block;
+  height: 90px;
+}
+
+.artImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.seal {
+  grid-area: seal;
+  padding: 10px 0 0 14px;
+  color: var(--color-burnt-sienna);
+  font-size: 11px;
+}
+
+.stepTitle {
+  grid-area: title;
+  margin: 7px 0 0;
+  color: var(--color-ink);
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.body {
+  grid-area: body;
+  max-width: 315px;
+  margin: 14px 0 0 14px;
+  color: #736e5e;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.note {
+  margin: 20px 0 0;
+  color: var(--color-burnt-sienna);
+  font-size: 11px;
+}
+
+/* Desktop (Figma 11:166): four milestone panels on an antique-gold route. */
+@media (min-width: 1024px) {
+  .process {
+    padding: 42px 0 80px;
+  }
+
+  .marker {
+    position: relative;
+    gap: 0;
+    color: var(--color-muted-ochre);
+    font-size: 13px;
+    letter-spacing: 0;
+  }
+
+  .number {
+    position: absolute;
+    left: calc(-1 * var(--section-inset) + 58px);
+    color: var(--color-burnt-sienna);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .number::after {
+    content: "";
+    position: absolute;
+    top: 24px;
+    left: 6px;
+    width: 1px;
+    height: 74px;
+    background: var(--color-muted-ochre);
+  }
+
+  .number::before {
+    content: "";
+    position: absolute;
+    top: 95px;
+    left: 3px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-burnt-sienna);
+  }
+
+  .title {
+    max-width: none;
+    margin-top: 26px;
+    font-size: 48px;
+    line-height: 52px;
+  }
+
+  .journey {
+    margin-top: 64px;
+    padding-inline: var(--section-inset);
+  }
+
+  .route {
+    position: absolute;
+    top: 42px;
+    left: calc(var(--section-inset) + 40px);
+    display: block;
+    width: min(1080px, calc(100% - 2 * var(--section-inset) - 80px));
+    height: 1.5px;
+    background: var(--color-muted-ochre);
+    opacity: 0.65;
+  }
+
+  .steps {
+    position: relative;
+    grid-template-columns: repeat(4, minmax(0, 260px));
+    gap: clamp(20px, 2.8vw, 40px);
+    margin: 0;
+    padding: 0;
+  }
+
+  .step {
+    display: block;
+    min-height: 258px;
+    padding: 20px 18px 10px;
+    border: 1px solid rgb(199 173 122 / 0.65);
+    border-radius: 12px;
+    background: #f0e8d6;
+  }
+
+  .step:nth-child(2) {
+    background: #e8ebd9;
+  }
+
+  .step:nth-child(3) {
+    background: #f0e3c7;
+  }
+
+  .step:nth-child(4) {
+    background: #e8e8d6;
+  }
+
+  .seal {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1.5px solid var(--color-muted-ochre);
+    border-radius: 50%;
+    background: var(--color-terracotta);
+    color: #faf5e5;
+    font-size: 12px;
+  }
+
+  .step:nth-child(even) .seal {
+    background: #2e3d2e;
+  }
+
+  .stepTitle {
+    margin-top: 18px;
+    font-size: 25px;
+    line-height: 28px;
+  }
+
+  .body {
+    max-width: 224px;
+    min-height: 42px;
+    margin: 21px 0 0;
+    color: var(--color-stone);
+    line-height: 21px;
+  }
+
+  .art {
+    height: 62px;
+    margin-top: 14px;
+    border-radius: 7px;
+    overflow: hidden;
+  }
+
+  .note {
+    margin-top: 32px;
+    color: var(--color-stone);
+    font-size: 13px;
+  }
+}

@@ -31,7 +31,8 @@ type Props = RevealSettings & {
  * items until revealed). No IntersectionObserver → nothing is hidden.
  * Reduced motion is handled in CSS.
  *
- * Items can override their stagger slot with `data-reveal-delay="<ms>"`.
+ * Items can override their stagger slot with `data-reveal-delay="<ms>"` and
+ * the section duration with `data-reveal-duration="<ms>"`.
  */
 export function SectionReveal({
   id,
@@ -57,6 +58,9 @@ export function SectionReveal({
       const explicit = item.dataset.revealDelay;
       const delay = explicit !== undefined ? Number(explicit) : index * stagger;
       item.style.setProperty("--reveal-delay", `${delay}ms`);
+      if (item.dataset.revealDuration !== undefined) {
+        item.style.setProperty("--reveal-duration", `${item.dataset.revealDuration}ms`);
+      }
     });
 
     const observer = new IntersectionObserver(

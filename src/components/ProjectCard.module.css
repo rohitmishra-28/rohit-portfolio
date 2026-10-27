@@ -1,0 +1,183 @@
+/* Mobile (Figma 124:3–124:5): framed cards that alternate forest/parchment
+   and step down in size across a horizontal scroller. */
+.card {
+  flex: none;
+  width: 290px;
+  scroll-snap-align: start;
+}
+
+.card:nth-child(2) {
+  width: 270px;
+  margin-top: 30px;
+}
+
+.card:nth-child(3) {
+  width: 250px;
+  margin-top: 56px;
+}
+
+.link,
+.static {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 7px 7px 20px;
+  border: 1px solid var(--color-muted-ochre);
+  border-radius: 2px;
+  background: #1f3025;
+  color: var(--color-warm-ivory);
+  text-decoration: none;
+}
+
+.card[data-tone="light"] .link,
+.card[data-tone="light"] .static {
+  background: var(--color-parchment);
+  color: var(--color-ink);
+}
+
+.media {
+  order: 1;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 274 / 285;
+  border: 0.5px solid var(--color-muted-ochre);
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.name {
+  order: 2;
+  margin: 12px 4px 0;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.footer {
+  order: 3;
+  position: relative;
+  padding-inline: 4px;
+}
+
+.title,
+.stack,
+.focus {
+  display: none;
+}
+
+.tags {
+  margin: 10px 0 0;
+  color: var(--color-mist);
+  font-size: 11px;
+}
+
+.card[data-tone="light"] .tags {
+  color: #736e5e;
+}
+
+.arrow {
+  position: absolute;
+  right: 4px;
+  bottom: 0;
+  font-size: 17px;
+}
+
+.link {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.link:hover {
+  transform: translateY(-4px);
+}
+
+.link:hover .img {
+  transform: scale(1.02);
+}
+
+.link:active {
+  transform: translateY(-3px);
+}
+
+/* Desktop (Figma 11:97): ivory cards with the name above the image. */
+@media (min-width: 1024px) {
+  .card,
+  .card:nth-child(2),
+  .card:nth-child(3) {
+    width: 360px;
+    margin-top: 0;
+  }
+
+  .link,
+  .static,
+  .card[data-tone="light"] .link,
+  .card[data-tone="light"] .static {
+    min-height: 430px;
+    padding: 0;
+    border: 0;
+    border-radius: 7px;
+    overflow: hidden;
+    background: var(--color-warm-ivory);
+    color: var(--color-ink);
+  }
+
+  .name {
+    order: 1;
+    margin: 0;
+    padding: 15px 22px 12px;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .media {
+    order: 2;
+    aspect-ratio: 360 / 286;
+    border: 0;
+  }
+
+  .footer {
+    margin: 9px 16px 0;
+    padding: 10px 0 18px;
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .title {
+    display: block;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+
+  .stack,
+  .focus {
+    display: block;
+    margin: 4px 0 0;
+    font-size: 12px;
+  }
+
+  .stack {
+    color: #474f40;
+  }
+
+  .focus {
+    margin-top: 10px;
+    color: #614f33;
+  }
+
+  .tags {
+    display: none;
+  }
+
+  .arrow {
+    top: 32px;
+    right: 0;
+    bottom: auto;
+  }
+}

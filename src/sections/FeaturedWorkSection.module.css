@@ -1,0 +1,237 @@
+/* Mobile (Figma 120:23): art strip behind the heading, cards in a scroller. */
+.work {
+  position: relative;
+  padding: 28px 0 32px;
+  background: var(--color-forest);
+  color: var(--color-warm-ivory);
+  overflow: hidden;
+}
+
+.art {
+  position: absolute;
+  inset: 0 0 auto;
+  display: block;
+  height: 245px;
+}
+
+.art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(14 27 21 / 0.42);
+}
+
+.artImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+
+.inner {
+  position: relative;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+.header {
+  padding-inline: var(--section-inset);
+}
+
+.marker {
+  display: flex;
+  gap: 28px;
+  margin: 0;
+  color: var(--color-soft-sage);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.number {
+  color: var(--color-warm-ivory);
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
+.title {
+  margin: 22px 0 0;
+  font-family: var(--font-display);
+  font-size: 29px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.line {
+  display: block;
+}
+
+.intro {
+  max-width: 330px;
+  margin: 12px 0 0;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.introDesktop {
+  display: none;
+}
+
+.cta {
+  display: none;
+}
+
+.cards {
+  display: flex;
+  gap: 16px;
+  margin: 40px 0 0;
+  padding: 0 var(--section-inset) 8px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--section-inset);
+  list-style: none;
+  overscroll-behavior-x: contain;
+  scrollbar-color: rgb(198 161 91 / 0.6) transparent;
+  scrollbar-width: thin;
+}
+
+.note {
+  margin: 16px 0 0;
+  padding-inline: var(--section-inset);
+  color: var(--color-mist);
+  font-size: 13px;
+}
+
+/* Desktop (Figma 11:85): full-bleed forest art with a row of three cards. */
+@media (min-width: 1024px) {
+  .work {
+    min-height: 900px;
+    padding: 42px 0 120px;
+  }
+
+  .art {
+    inset: 0;
+    height: auto;
+  }
+
+  .art::after {
+    display: none;
+  }
+
+  .artImg {
+    object-position: 50% 50%;
+  }
+
+  .header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+    max-width: calc(1128px + var(--section-inset));
+  }
+
+  .marker {
+    position: relative;
+    gap: 0;
+    font-size: 13px;
+    letter-spacing: 0;
+  }
+
+  .number {
+    position: absolute;
+    left: calc(-1 * var(--section-inset) + 58px);
+    font-size: 13px;
+  }
+
+  .number::after {
+    content: "";
+    position: absolute;
+    top: 24px;
+    left: 6px;
+    width: 1px;
+    height: 74px;
+    background: var(--color-muted-ochre);
+  }
+
+  .number::before {
+    content: "";
+    position: absolute;
+    top: 95px;
+    left: 3px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-warm-ivory);
+  }
+
+  .title {
+    margin-top: 20px;
+    font-size: 44px;
+    line-height: 48px;
+  }
+
+  .accent {
+    color: var(--color-peach);
+  }
+
+  .intro {
+    max-width: 760px;
+    margin-top: 20px;
+    line-height: 22px;
+  }
+
+  .introDesktop {
+    display: block;
+  }
+
+  .introMobile {
+    display: none;
+  }
+
+  .cta {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 16px;
+    min-height: 46px;
+    margin-bottom: -6px;
+    color: var(--color-warm-ivory);
+    font-size: 11px;
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .cta:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .circle {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--color-terracotta);
+    font-size: 24px;
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .cta:hover .circle {
+    transform: translateX(3px);
+  }
+
+  .cards {
+    gap: 24px;
+    margin-top: 28px;
+    padding-bottom: 0;
+    overflow: visible;
+  }
+
+  .note {
+    margin-top: 28px;
+    color: #c7d1ba;
+  }
+}

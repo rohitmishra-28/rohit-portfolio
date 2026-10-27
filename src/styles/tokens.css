@@ -34,6 +34,18 @@
   --grid-columns: 4;
   --page-gutter: 20px;
   --content-max: 1296px;
+  /* Left edge of section content; section numbers sit in the gutter on desktop. */
+  --section-inset: 24px;
+
+  /* Section-specific tones sampled from the Figma frames. */
+  --color-amber: #db9e57;
+  --color-gold-line: #c78f4a;
+  --color-mist: #b8baa6;
+  --color-forest-card: #213d30;
+  --color-sand: #e8c79c;
+  --color-linen: #f2e8d1;
+  --color-peach: #ed9e6e;
+  --color-night: #0e1b15;
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --duration-fast: 180ms;
@@ -45,6 +57,12 @@
   :root {
     --grid-columns: 8;
     --page-gutter: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --section-inset: clamp(96px, 8.75vw, 126px);
   }
 }
 

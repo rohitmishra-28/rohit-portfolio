@@ -1,0 +1,348 @@
+/* Mobile (Figma 120:2): art crop on top, copy below on parchment. */
+.hero {
+  position: relative;
+  background: var(--color-parchment);
+}
+
+.art {
+  position: relative;
+  display: block;
+  height: 290px;
+}
+
+.art::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -12px;
+  height: 52px;
+  background: linear-gradient(to bottom, rgb(245 235 221 / 0), var(--color-parchment));
+}
+
+.artImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 40%;
+}
+
+.content {
+  position: relative;
+  padding: 30px var(--section-inset) 46px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--color-burnt-sienna);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 20px 0 0;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1.32;
+}
+
+.line {
+  display: inline;
+}
+
+.divider {
+  display: block;
+  width: 58px;
+  height: 1px;
+  margin: 18px 0 14px;
+  background: var(--color-burnt-sienna);
+}
+
+.lede {
+  max-width: 330px;
+  margin: 0;
+  color: #736e5e;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 25px;
+  margin-top: 40px;
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.primary {
+  width: 166px;
+  padding-inline: 12px;
+  background: var(--color-burnt-sienna);
+  color: var(--color-warm-ivory);
+}
+
+.primary:hover {
+  background: var(--color-terracotta);
+}
+
+.primary:active,
+.secondary:active {
+  transform: translateY(1px);
+}
+
+.circle {
+  display: none;
+}
+
+.secondary {
+  color: var(--color-burnt-sienna);
+  letter-spacing: 1.1px;
+}
+
+.secondary:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.scroll {
+  display: none;
+}
+
+/* Desktop (Figma 11:46): full-bleed art with copy over the open sky. */
+@media (min-width: 1024px) {
+  .hero {
+    min-height: 900px;
+    max-height: 1000px;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .art {
+    position: absolute;
+    inset: 0;
+    height: auto;
+  }
+
+  .art::after {
+    display: none;
+  }
+
+  .artImg {
+    object-position: 70% 50%;
+  }
+
+  .content {
+    max-width: 1440px;
+    margin-inline: auto;
+    padding: 190px 0 0 var(--section-inset);
+  }
+
+  .eyebrow {
+    color: var(--color-stone);
+    font-size: 13px;
+    letter-spacing: 0;
+  }
+
+  .title {
+    margin-top: 14px;
+    margin-left: -2px;
+    font-size: 68px;
+    line-height: 68px;
+  }
+
+  .line {
+    display: block;
+  }
+
+  .accent {
+    color: var(--color-terracotta);
+  }
+
+  .divider {
+    position: relative;
+    width: 70px;
+    margin: 28px 0 24px;
+    background: var(--color-terracotta);
+  }
+
+  .divider::after {
+    content: "";
+    position: absolute;
+    top: -3px;
+    right: -5px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-terracotta);
+  }
+
+  .lede {
+    max-width: 420px;
+    color: var(--color-ink);
+    font-size: 18px;
+    line-height: 25px;
+  }
+
+  .ctas {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    margin-top: 20px;
+  }
+
+  .primary {
+    gap: 18px;
+    width: auto;
+    padding: 0;
+    background: none;
+    color: var(--color-ink);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .primary:hover {
+    background: none;
+    color: var(--color-burnt-sienna);
+  }
+
+  .circle {
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--color-terracotta);
+    color: var(--color-warm-ivory);
+    font-size: 24px;
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .primary:hover .circle {
+    transform: translateX(3px);
+  }
+
+  .secondary {
+    min-height: 32px;
+    margin-left: 68px;
+    color: var(--color-stone);
+    font-size: 11px;
+    letter-spacing: 0;
+  }
+
+  .scroll {
+    position: absolute;
+    bottom: 76px;
+    left: max(72px, calc((100% - 1440px) / 2 + 72px));
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: var(--color-ink);
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .scrollLine {
+    position: relative;
+    width: 1px;
+    height: 46px;
+    margin: 0 0 14px 26px;
+    background: var(--color-burnt-sienna);
+  }
+
+  .scrollLine::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: -2.5px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-burnt-sienna);
+  }
+}
+
+/* First-render entrance: headline lines stagger, then copy, then CTAs. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .title,
+  .eyebrow,
+  .divider,
+  .lede,
+  .ctas {
+    animation: rise 480ms var(--ease-out) backwards;
+  }
+
+  .title {
+    animation-delay: 80ms;
+  }
+
+  .divider {
+    animation-name: fade;
+    animation-delay: 360ms;
+  }
+
+  .lede {
+    animation-delay: 380ms;
+  }
+
+  .ctas {
+    animation-delay: 460ms;
+  }
+
+  .scroll {
+    animation: fade 600ms var(--ease-out) 700ms backwards;
+  }
+}
+
+/* Desktop lines are separate blocks, so each one gets its own stagger. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .title {
+    animation: none;
+  }
+
+  .line {
+    animation: rise 480ms var(--ease-out) backwards;
+  }
+
+  .line:nth-child(1) {
+    animation-delay: 80ms;
+  }
+
+  .line:nth-child(2) {
+    animation-delay: 160ms;
+  }
+
+  .line:nth-child(3) {
+    animation-delay: 240ms;
+  }
+}

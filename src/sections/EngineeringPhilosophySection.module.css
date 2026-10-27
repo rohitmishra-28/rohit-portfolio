@@ -1,0 +1,223 @@
+/* Mobile (Figma 120:65): veiled art behind the heading, principles below. */
+.philosophy {
+  position: relative;
+  padding: 28px 0 60px;
+  background: var(--color-night);
+  color: var(--color-warm-ivory);
+  overflow: hidden;
+}
+
+.art {
+  position: absolute;
+  inset: 0 0 auto;
+  display: block;
+  height: 260px;
+}
+
+.art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgb(14 27 21 / 0.42);
+}
+
+.artImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;
+}
+
+.inner {
+  position: relative;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--section-inset);
+}
+
+.marker {
+  margin: 0;
+  color: var(--color-gold-line);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+}
+
+.slash {
+  margin-inline: 10px;
+}
+
+.title {
+  margin: 20px 0 0;
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.32;
+}
+
+.line {
+  display: block;
+}
+
+.statement {
+  max-width: 342px;
+  margin: 14px 0 0;
+  font-size: 15px;
+  line-height: 1.33;
+}
+
+.desktopOnly {
+  display: none;
+}
+
+.principles {
+  margin: 58px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.principle {
+  min-height: 230px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-gold-line);
+}
+
+.principle:last-child {
+  min-height: 0;
+}
+
+.glyph {
+  display: none;
+}
+
+.principleTitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.tagline {
+  margin: 6px 0 0;
+  color: var(--color-gold-line);
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.body {
+  margin: 18px 0 0;
+  color: var(--color-mist);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Desktop (Figma 11:148): copy on the left, courtyard art on the right. */
+@media (min-width: 1024px) {
+  .philosophy {
+    min-height: 610px;
+    padding: 38px 0 78px;
+    background: #091b14;
+  }
+
+  .art {
+    inset: 0 0 0 auto;
+    width: 55%;
+    height: auto;
+  }
+
+  /* Blend the art's left edge into the dark section background. */
+  .art::after {
+    background: linear-gradient(to right, #091b14 0%, rgb(9 27 20 / 0) 28%);
+  }
+
+  .artImg {
+    object-position: 30% 50%;
+  }
+
+  .marker {
+    position: relative;
+    color: var(--color-amber);
+    font-size: 15px;
+    letter-spacing: 4px;
+  }
+
+  .number {
+    position: absolute;
+    left: calc(-1 * var(--section-inset) + 58px);
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+
+  .slash {
+    display: none;
+  }
+
+  .title {
+    margin-top: 18px;
+    color: var(--color-linen);
+    font-size: 56px;
+    line-height: 62px;
+  }
+
+  .accent {
+    color: var(--color-amber);
+    font-size: 54px;
+  }
+
+  .statement {
+    max-width: 610px;
+    margin-top: 14px;
+    color: var(--color-linen);
+    font-size: 19px;
+    line-height: 1.32;
+  }
+
+  .desktopOnly {
+    display: block;
+  }
+
+  .mobileOnly {
+    display: none;
+  }
+
+  .principles {
+    display: flex;
+    gap: 24px;
+    margin-top: 56px;
+  }
+
+  .principle,
+  .principle:last-child {
+    width: 260px;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .glyph {
+    display: block;
+    color: var(--color-amber);
+    font-size: 31px;
+    line-height: 1;
+  }
+
+  .principleTitle {
+    margin-top: 22px;
+    color: var(--color-linen);
+    font-size: 27px;
+  }
+
+  .tagline {
+    margin-top: 6px;
+    color: #c4b28f;
+    font-size: 10px;
+  }
+
+  .body {
+    margin-top: 22px;
+    color: var(--color-linen);
+    font-size: 16px;
+    line-height: 1.3;
+  }
+}
