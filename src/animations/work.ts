@@ -1,15 +1,19 @@
 import { byAnim, gsap, onEnter } from "./gsap";
 
-// Mobile Figma (120:23) overlaps the cards at these left offsets from the
-// first card; the scroller spreads them out so every card stays readable.
-const FIGMA_OVERLAP = [0, 132, 257];
+// Mobile Figma (120:23) layers the cards in a stepped fan (each one further
+// right and lower). The pinned mobile sequence keeps that layering but steps
+// each card 40px right of the last, so the newest card is always fully on
+// screen instead of running off the edge as in the frame.
+const MOBILE_FAN_STEP = 40;
 
 const motion = "(prefers-reduced-motion: no-preference)";
 const media = {
   // Pinning needs the whole 900px composition (heading + cards) to fit.
   pinned: `(min-width: 1024px) and (min-height: 700px) and ${motion}`,
   desktopShort: `(min-width: 1024px) and (max-height: 699px) and ${motion}`,
-  mobile: `(max-width: 1023px) and ${motion}`,
+  // The heading plus the tallest card must fit to pin on phones.
+  mobilePinned: `(max-width: 1023px) and (min-height: 600px) and ${motion}`,
+  mobileShort: `(max-width: 1023px) and (max-height: 599px) and ${motion}`,
 };
 
 /**
@@ -19,15 +23,17 @@ const media = {
  * revealed one at a time by scroll progress — each rises, then its image
  * opens upward — before the closing note appears and the pin releases.
  * Reversing the scroll reverses the sequence.
- * Short desktop windows and mobile skip the pin: desktop cards rise in a
- * stagger; on mobile the row enters in the Figma overlap and fans out into
- * the scrollable row (scrubbed, never pinned, so touch scrolling stays free).
+ * Mobile: the section pins too. Tarinika stays put while Paksha, then
+ * Novology, slide in from the right and land on top of it in the stepped
+ * Figma fan, each fully on screen as it arrives. Reversing slides them out.
+ * Short windows skip the pin: cards rise in a stagger, and on mobile the row
+ * stays horizontally scrollable.
  */
 export function workAnimation(scope: HTMLElement, mm: gsap.MatchMedia) {
   const $ = byAnim(scope);
 
   mm.add(media, (ctx) => {
-    const { pinned, mobile } = ctx.conditions as Record<keyof typeof media, boolean>;
+    const { pinned, mobilePinned } = ctx.conditions as Record<keyof typeof media, boolean>;
     const cards = $("card");
     const row = $("cards")[0];
     const note = $("note");
@@ -76,32 +82,41 @@ export function workAnimation(scope: HTMLElement, mm: gsap.MatchMedia) {
       return () => scope.removeEventListener("focusin", reveal);
     }
 
-    if (mobile) {
-      // Offsets are measured, so they stay right after resizes and font loads.
-      const overlapX = (i: number) =>
-        FIGMA_OVERLAP[i] - (cards[i].offsetLeft - cards[0].offsetLeft);
+    if (mobilePinned) {
+      // The row is a horizontal scroller without JS; while this sequence
+      // owns it, the cards are positioned by transforms instead.
+      gsap.set(row, { overflowX: "visible" });
+      const first = cards[0];
+      const left = (card: HTMLElement) => card.offsetLeft - row.scrollLeft;
 
-      gsap.fromTo(
-        cards,
-        { x: (i: number) => overlapX(i) },
-        {
-          // No stagger: staggered tweens wouldn't render their overlapped
-          // start state until their slot begins.
-          x: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: row,
-            start: "top 85%",
-            end: "top 35%",
-            scrub: 0.6,
-            invalidateOnRefresh: true,
-          },
+      const tl = gsap.timeline({
+        defaults: { ease: "power2.out" },
+        scrollTrigger: {
+          trigger: scope,
+          start: "top top",
+          end: () => `+=${Math.round(window.innerHeight * 0.6 * (cards.length - 1))}`,
+          pin: true,
+          scrub: 0.8,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
-      );
-    } else {
-      onEnter(row, "top 85%").from(cards, { autoAlpha: 0, y: 80, duration: 0.95, stagger: 0.16 });
+      });
+      cards.slice(1).forEach((card, n) => {
+        const i = n + 1;
+        tl.fromTo(
+          card,
+          // From just off the right edge to its step in the fan.
+          { x: () => window.innerWidth + 20 - left(card) },
+          { x: () => left(first) + i * MOBILE_FAN_STEP - left(card), duration: 1 },
+          n * 1.2,
+        ).from(card.querySelector("picture img"), { scale: 1.12, duration: 1.1 }, n * 1.2 + 0.2);
+      });
+      tl.to({}, { duration: 0.4 });
+      return;
     }
 
+    // Short windows: no pin.
+    onEnter(row, "top 85%").from(cards, { autoAlpha: 0, y: 80, duration: 0.95, stagger: 0.16 });
     onEnter(note[0], "top 95%").from(note, { autoAlpha: 0, y: 12 });
   });
 }
