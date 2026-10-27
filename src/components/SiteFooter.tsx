@@ -1,6 +1,7 @@
 import { projects } from "@/lib/projects";
 import { ctaLinks, mailtoHref, sectionLinks, siteConfig } from "@/lib/site-config";
 import { AnimatedSection } from "./AnimatedSection";
+import { Logo } from "./Logo";
 import { SocialIcon } from "./SocialIcon";
 import styles from "./SiteFooter.module.css";
 
@@ -20,11 +21,9 @@ export function SiteFooter() {
     <AnimatedSection id="footer" as="footer" animation="footer" className={styles.footer}>
       <div className={styles.inner}>
         <div data-anim="group" className={styles.brand}>
+          {/* Inverse logo on the dark colophon (Figma brand system 171:2). */}
           <p className={styles.name}>
-            <span data-anim="mark" className={styles.mark} aria-hidden="true">
-              ❋
-            </span>
-            {siteConfig.name}
+            <Logo theme="inverse" />
           </p>
           <p className={styles.role}>Frontend Developer • Shopify Specialist</p>
           <p className={styles.tagline}>Crafting digital experiences with Indian roots and a global vision.</p>

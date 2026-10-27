@@ -12,13 +12,6 @@
 
 .name {
   margin: 0;
-  font-size: 14px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
-
-.mark {
-  display: none;
 }
 
 .role {
@@ -157,26 +150,13 @@
     padding: 38px 72px 50px;
   }
 
+  /* The logo's mark hangs in the gutter so its wordmark lines up with the copy. */
   .name {
-    display: flex;
-    align-items: center;
-    gap: 14px;
     margin-left: -52px;
-    color: #f5edd9;
-    letter-spacing: 4px;
   }
 
   .brand {
     padding-left: 52px;
-  }
-
-  .mark {
-    display: block;
-    color: var(--color-burnt-sienna);
-    font-family: Georgia, serif;
-    font-size: 38px;
-    line-height: 1;
-    letter-spacing: 0;
   }
 
   .role {

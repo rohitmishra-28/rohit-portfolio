@@ -1,0 +1,41 @@
+/*
+ * Proportions from the 424 × 80 Figma master: 80px mark, wordmark at 43px
+ * starting 98px in. Everything scales from --logo-height (default 40px, the
+ * brand guide's minimum: 212 × 40).
+ */
+.logo {
+  --logo-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--logo-height) * 0.225);
+  height: var(--logo-height);
+  white-space: nowrap;
+}
+
+.mark {
+  width: var(--logo-height);
+  height: var(--logo-height);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: calc(var(--logo-height) * 0.5375);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.primary .wordmark {
+  color: var(--color-forest);
+}
+
+.inverse .wordmark {
+  color: var(--color-warm-ivory);
+}
+
+.monogram {
+  display: block;
+  width: 36px;
+  height: 36px;
+}
