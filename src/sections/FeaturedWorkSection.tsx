@@ -6,18 +6,16 @@ import { ctaLinks } from "@/lib/site-config";
 import styles from "./FeaturedWorkSection.module.css";
 
 // 03 — Featured Work (Figma desktop 11:85, mobile 120:23).
-// Heading and intro reveal as a group; cards rise 18px with ~90ms stagger.
+// Heading and intro reveal as a group; then the cards rise one after another.
 export function FeaturedWorkSection() {
   return (
     <SectionReveal
       id="work"
       className={styles.work}
       ariaLabelledby="work-title"
-      distance={18}
-      duration={420}
+      distance={48}
+      duration={650}
       stagger={90}
-      // Any sliver of a card peeking into the mobile scroller reveals it.
-      threshold={0}
     >
       <Picture
         name="work-bg"
@@ -55,7 +53,12 @@ export function FeaturedWorkSection() {
         </div>
 
         {/* Focusable so keyboard users can scroll the mobile card row. */}
-        <ul className={styles.cards} aria-label="Featured projects" tabIndex={0}>
+        <ul
+          className={styles.cards}
+          aria-label="Featured projects"
+          tabIndex={0}
+          data-reveal-group="220"
+        >
           {projects.map((project, i) => (
             <ProjectCard key={project.slug} project={project} index={i} />
           ))}

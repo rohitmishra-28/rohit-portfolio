@@ -1,6 +1,7 @@
 import { projects } from "@/lib/projects";
 import { ctaLinks, mailtoHref, sectionLinks, siteConfig } from "@/lib/site-config";
 import { SectionReveal } from "./SectionReveal";
+import { SocialIcon } from "./SocialIcon";
 import styles from "./SiteFooter.module.css";
 
 const navigation = [{ label: "Home", href: "#top" }, ...sectionLinks];
@@ -30,17 +31,17 @@ export function SiteFooter() {
           <ul className={styles.social}>
             <li>
               <a href={siteConfig.social.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn (opens in a new tab)">
-                in
+                <SocialIcon name="linkedin" />
               </a>
             </li>
             <li>
               <a href={siteConfig.social.github} target="_blank" rel="noreferrer" aria-label="GitHub (opens in a new tab)">
-                gh
+                <SocialIcon name="github" />
               </a>
             </li>
             <li>
               <a href={mailtoHref} aria-label={`Email ${siteConfig.email}`}>
-                ✉
+                <SocialIcon name="email" />
               </a>
             </li>
           </ul>

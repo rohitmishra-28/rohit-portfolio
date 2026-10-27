@@ -82,6 +82,10 @@ a {
   transform: none;
 }
 
+.motion-ready [data-reveal="slide"] {
+  transform: translate(var(--from-x, 0), var(--from-y, var(--reveal-distance, 16px)));
+}
+
 .motion-ready [data-reveal="line"] {
   opacity: 1;
   transform: scaleX(0);

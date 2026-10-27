@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Picture } from "@/components/Picture";
 import { SectionReveal } from "@/components/SectionReveal";
 import type { ImageName } from "@/lib/images.generated";
@@ -31,17 +32,18 @@ const steps: { title: string; body: string; art: ImageName; artAlt: string }[] =
 ];
 
 // 06 — Process (Figma desktop 11:166, mobile 120:83).
-// Heading first; steps reveal with ~80ms stagger. The desktop connector line
-// draws in with scaleX; on mobile the steps simply stack.
+// Desktop: the four milestones slide up one after another along the gold
+// route, which draws in with scaleX. Mobile: steps slide up and stick, so
+// each one stacks on top of the last while scrolling.
 export function ProcessSection() {
   return (
     <SectionReveal
       id="process"
       className={styles.process}
       ariaLabelledby="process-title"
-      distance={12}
-      duration={390}
-      stagger={80}
+      distance={48}
+      duration={600}
+      stagger={0}
     >
       <div className={styles.inner}>
         <div data-reveal className={styles.header}>
@@ -60,9 +62,18 @@ export function ProcessSection() {
             className={styles.route}
             aria-hidden="true"
           />
-          <ol className={styles.steps}>
+          <ol
+            className={styles.steps}
+            data-reveal-group="160"
+            data-reveal-media="(min-width: 1024px)"
+          >
             {steps.map((step, i) => (
-              <li key={step.title} data-reveal className={styles.step}>
+              <li
+                key={step.title}
+                data-reveal
+                className={styles.step}
+                style={{ "--i": i } as CSSProperties}
+              >
                 <span className={styles.seal}>0{i + 1}</span>
                 <h3 className={styles.stepTitle}>{step.title}</h3>
                 <p className={styles.body}>{step.body}</p>

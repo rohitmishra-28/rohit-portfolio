@@ -269,3 +269,28 @@
     overflow: hidden;
   }
 }
+
+/*
+ * Scroll stacking: each card sticks a little lower than the one before, so
+ * the next card slides up over it and the four end up as a stack. Static
+ * layout when reduced motion is requested.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .cards {
+    --stack-top: 20px;
+    --stack-step: 14px;
+  }
+
+  .card {
+    position: sticky;
+    top: calc(var(--stack-top) + var(--i, 0) * var(--stack-step));
+    box-shadow: 0 -6px 18px rgb(30 33 27 / 0.08);
+  }
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .cards {
+    --stack-top: 72px;
+    --stack-step: 28px;
+  }
+}

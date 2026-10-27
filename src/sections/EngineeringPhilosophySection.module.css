@@ -87,6 +87,17 @@
   min-height: 0;
 }
 
+/* Reveal direction: stacked on mobile, so they alternate sides. */
+.principle:nth-child(odd) {
+  --from-x: -56px;
+  --from-y: 0;
+}
+
+.principle:nth-child(even) {
+  --from-x: 56px;
+  --from-y: 0;
+}
+
 .glyph {
   display: none;
 }
@@ -185,6 +196,16 @@
     display: flex;
     gap: 24px;
     margin-top: 56px;
+  }
+
+  /* Three columns: left from the left, middle rises, right from the right. */
+  .principle:nth-child(2) {
+    --from-x: 0;
+    --from-y: 32px;
+  }
+
+  .principle:nth-child(3) {
+    --from-x: 56px;
   }
 
   .principle,

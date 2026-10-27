@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Picture } from "@/components/Picture";
 import { SectionReveal } from "@/components/SectionReveal";
 import type { ImageName } from "@/lib/images.generated";
@@ -52,16 +53,17 @@ const capabilities: Capability[] = [
 ];
 
 // 04 — Expertise (Figma desktop 11:125, mobile 120:41).
-// Heading first; each card reveals independently with ~90ms stagger and its
-// artwork fades in ~100ms after the card content.
+// Heading first; each card slides up as it enters and then sticks, so the
+// next card slides over it and the four build a stack while scrolling.
+// Artwork fades in ~120ms after its card.
 export function ExpertiseSection() {
   return (
     <SectionReveal
       id="expertise"
       className={styles.expertise}
       ariaLabelledby="expertise-title"
-      distance={12}
-      duration={420}
+      distance={48}
+      duration={600}
     >
       <div className={styles.inner}>
         <div data-reveal data-reveal-delay="0" className={styles.header}>
@@ -80,9 +82,9 @@ export function ExpertiseSection() {
             <li
               key={cap.title}
               data-reveal
-              data-reveal-delay={String(90 + i * 90)}
               className={styles.card}
               data-tone={cap.tone}
+              style={{ "--i": i } as CSSProperties}
             >
               <div className={styles.text}>
                 <Picture
@@ -107,7 +109,7 @@ export function ExpertiseSection() {
               </div>
               <div
                 data-reveal="fade"
-                data-reveal-delay={String(190 + i * 90)}
+                data-reveal-delay="120"
                 className={styles.artWrap}
               >
                 <Picture

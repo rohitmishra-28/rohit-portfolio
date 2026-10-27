@@ -32,7 +32,14 @@ type Props = RevealSettings & {
  * Reduced motion is handled in CSS.
  *
  * Items can override their stagger slot with `data-reveal-delay="<ms>"` and
- * the section duration with `data-reveal-duration="<ms>"`.
+ * the section duration with `data-reveal-duration="<ms>"`. Wrap items in
+ * `data-reveal-group="<ms>"` to reveal them one after another, that many ms
+ * apart, as soon as the group enters view; add `data-reveal-media="<query>"`
+ * to group only at matching viewport sizes.
+ *
+ * Variants: `data-reveal` rises, `="fade"` only fades, `="line"` draws in
+ * with scaleX, and `="slide"` starts from --from-x / --from-y (set per item
+ * in the section's CSS, so the direction can change per breakpoint).
  */
 export function SectionReveal({
   id,
@@ -54,28 +61,50 @@ export function SectionReveal({
     const items = Array.from(root.querySelectorAll<HTMLElement>("[data-reveal]"));
     if (items.length === 0) return;
 
-    items.forEach((item, index) => {
+    // Items inside a [data-reveal-group] reveal together, one after another,
+    // when the group enters view; everything else is observed on its own.
+    // A group with data-reveal-media only groups while that query matches.
+    const groups = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-reveal-group]"),
+    ).filter((g) => !g.dataset.revealMedia || window.matchMedia(g.dataset.revealMedia).matches);
+    const membersOf = new Map(groups.map((g) => [g, [] as HTMLElement[]]));
+    const solo: HTMLElement[] = [];
+    for (const item of items) {
+      const group = item.parentElement?.closest<HTMLElement>("[data-reveal-group]");
+      if (group && membersOf.has(group)) membersOf.get(group)!.push(item);
+      else solo.push(item);
+    }
+
+    const setTiming = (item: HTMLElement, fallbackDelay: number) => {
       const explicit = item.dataset.revealDelay;
-      const delay = explicit !== undefined ? Number(explicit) : index * stagger;
+      const delay = explicit !== undefined ? Number(explicit) : fallbackDelay;
       item.style.setProperty("--reveal-delay", `${delay}ms`);
       if (item.dataset.revealDuration !== undefined) {
         item.style.setProperty("--reveal-duration", `${item.dataset.revealDuration}ms`);
       }
+    };
+    solo.forEach((item, index) => setTiming(item, index * stagger));
+    membersOf.forEach((members, group) => {
+      const step = Number(group.dataset.revealGroup) || stagger;
+      members.forEach((item, index) => setTiming(item, index * step));
     });
 
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (!entry.isIntersecting) continue;
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
+          const target = entry.target as HTMLElement;
+          const members = membersOf.get(target) ?? [target];
+          members.forEach((m) => m.classList.add("is-visible"));
+          observer.unobserve(target);
         }
       },
       { threshold },
     );
 
     root.classList.add("motion-ready");
-    items.forEach((item) => observer.observe(item));
+    solo.forEach((item) => observer.observe(item));
+    groups.forEach((group) => observer.observe(group));
 
     return () => observer.disconnect();
   }, [stagger, threshold]);

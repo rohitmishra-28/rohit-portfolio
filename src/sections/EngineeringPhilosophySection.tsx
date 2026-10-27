@@ -28,16 +28,16 @@ const principles = [
 ];
 
 // 05 — Engineering Philosophy (Figma desktop 11:148, mobile 120:65).
-// Dark background stays put; statement lines stagger ~70ms; each principle
-// reveals on its own.
+// Dark background stays put; statement lines stagger ~70ms; principles
+// slide in one after another (left from the left, right from the right).
 export function EngineeringPhilosophySection() {
   return (
     <SectionReveal
       id="philosophy"
       className={styles.philosophy}
       ariaLabelledby="philosophy-title"
-      distance={12}
-      duration={450}
+      distance={24}
+      duration={600}
       stagger={70}
     >
       <Picture
@@ -74,9 +74,9 @@ export function EngineeringPhilosophySection() {
           accessibility and maintainability.
         </p>
 
-        <ul className={styles.principles}>
+        <ul className={styles.principles} data-reveal-group="180">
           {principles.map((p) => (
-            <li key={p.title} data-reveal className={styles.principle}>
+            <li key={p.title} data-reveal="slide" className={styles.principle}>
               <span className={styles.glyph} aria-hidden="true">
                 {p.glyph}
               </span>

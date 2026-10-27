@@ -43,7 +43,7 @@ export function HeroSection() {
 
       <div className={styles.scroll} aria-hidden="true">
         <span className={styles.scrollLine} />
-        Scroll
+        <span>Scroll</span>
       </div>
     </section>
   );

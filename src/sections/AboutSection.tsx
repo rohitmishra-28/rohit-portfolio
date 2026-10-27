@@ -28,16 +28,17 @@ const capabilities = [
 ];
 
 // 02 — About (Figma desktop 11:72, mobile 120:14).
-// Headline rises 12px; illustration fades over ~500ms; bio follows;
-// capability items stagger ~70ms.
+// Headline rises; illustration fades over ~500ms; bio follows; the four
+// highlights then slide in one after another — left column from the left,
+// right column from the right.
 export function AboutSection() {
   return (
     <SectionReveal
       id="about"
       className={styles.about}
       ariaLabelledby="about-title"
-      distance={12}
-      duration={420}
+      distance={24}
+      duration={600}
       stagger={70}
     >
       <div data-reveal="fade" data-reveal-duration="500" className={styles.artWrap}>
@@ -74,9 +75,9 @@ export function AboutSection() {
           ecommerce expertise and a deep appreciation for visual storytelling.
         </p>
 
-        <ul className={styles.capabilities}>
+        <ul className={styles.capabilities} data-reveal-group="160">
           {capabilities.map((cap, i) => (
-            <li key={cap.label} data-reveal className={styles.capability}>
+            <li key={cap.label} data-reveal="slide" className={styles.capability}>
               <span className={styles.icon} aria-hidden="true">
                 {/* eslint-disable-next-line @next/next/no-img-element -- static SVG glyph */}
                 <img src={`/images/icons/about-cap-${i + 1}.svg`} alt="" />
