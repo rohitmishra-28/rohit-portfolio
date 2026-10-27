@@ -261,6 +261,11 @@
     min-height: 0;
   }
 
+  /* Only the rolling CTA slot gives "About me" a circle. */
+  .secondary .circle {
+    display: none;
+  }
+
   /* Scroll cue: line, dot and label share one centre line, centred in the banner. */
   .scroll {
     position: absolute;
@@ -309,25 +314,57 @@
   }
 
   /*
-   * "Explore work" (50px row) and "About me" (32px row) trade places every
-   * 7s with a flip, like a countdown counter rolling over. Both links stay
-   * in DOM order and reachable; the swap pauses on hover or focus.
+   * One CTA slot that rolls over like a countdown digit: "Explore work" shows
+   * first, then rolls up and away as "About me" rolls in, and back again
+   * (8s cycle). The hidden link drops pointer events so it can't catch
+   * clicks, but stays in the tab order. Hover pauses the roll; keyboard
+   * focus stops it and shows whichever link has focus.
    */
   .ctas {
-    perspective: 400px;
+    display: grid;
+    grid-template-areas: "slot";
   }
 
-  .primary {
-    animation: swap-primary 7s var(--ease-out) 2.5s infinite;
+  .ctas > a {
+    grid-area: slot;
   }
 
   .secondary {
-    animation: swap-secondary 7s var(--ease-out) 2.5s infinite;
+    height: 50px;
+    gap: 18px;
+    margin-left: 0;
+    color: var(--color-ink);
+    font-size: 12px;
+    font-weight: 500;
   }
 
-  .ctas:hover > a,
-  .ctas:focus-within > a {
+  .secondary .circle {
+    display: grid;
+  }
+
+  .secondaryArrow {
+    display: none;
+  }
+
+  .primary {
+    animation: cta-roll 8s var(--ease-out) -0.48s infinite backwards;
+  }
+
+  .secondary {
+    animation: cta-roll 8s var(--ease-out) 3.52s infinite backwards;
+  }
+
+  .ctas:hover > a {
     animation-play-state: paused;
+  }
+
+  .ctas:focus-within > a {
+    animation: none;
+    opacity: 0;
+  }
+
+  .ctas:focus-within > a:focus-within {
+    opacity: 1;
   }
 }
 
@@ -363,61 +400,25 @@
   }
 }
 
-@keyframes swap-primary {
-  0%,
-  42% {
-    transform: translateY(0) rotateX(0);
-    opacity: 1;
+@keyframes cta-roll {
+  0% {
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(60%);
   }
 
-  46% {
-    transform: translateY(16px) rotateX(-90deg);
-    opacity: 0.2;
+  6%,
+  44% {
+    pointer-events: auto;
+    opacity: 1;
+    transform: none;
   }
 
   50%,
-  92% {
-    transform: translateY(32px) rotateX(0);
-    opacity: 1;
-  }
-
-  96% {
-    transform: translateY(16px) rotateX(90deg);
-    opacity: 0.2;
-  }
-
   100% {
-    transform: translateY(0) rotateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes swap-secondary {
-  0%,
-  42% {
-    transform: translateY(0) rotateX(0);
-    opacity: 1;
-  }
-
-  46% {
-    transform: translateY(-25px) rotateX(90deg);
-    opacity: 0.2;
-  }
-
-  50%,
-  92% {
-    transform: translateY(-50px) rotateX(0);
-    opacity: 1;
-  }
-
-  96% {
-    transform: translateY(-25px) rotateX(-90deg);
-    opacity: 0.2;
-  }
-
-  100% {
-    transform: translateY(0) rotateX(0);
-    opacity: 1;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-60%);
   }
 }
 

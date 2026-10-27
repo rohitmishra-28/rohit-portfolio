@@ -52,7 +52,10 @@ export function HeroSection() {
             Explore work
           </a>
           <a href="#about" className={styles.secondary}>
-            About me <span aria-hidden="true">↗</span>
+            <span className={styles.circle} aria-hidden="true">
+              →
+            </span>
+            About me <span className={styles.secondaryArrow} aria-hidden="true">↗</span>
           </a>
         </div>
       </div>

@@ -11,6 +11,7 @@ import { ScrollTrigger } from "@/animations/gsap";
  *   browser's own restoration runs before the pinned sections add their
  *   scroll distance and lands in the wrong place, so the head script sets
  *   history.scrollRestoration to "manual" and we restore once the pins exist.
+ * - Sends in-page links to a pinned section to the start of its pin.
  */
 export function MotionRoot() {
   useEffect(() => {
@@ -46,9 +47,25 @@ export function MotionRoot() {
     if (document.readyState === "complete") settle();
     else window.addEventListener("load", settle, { once: true });
 
+    // In-page links to a pinned section land where its pin begins, so the
+    // sequence starts from the beginning (sections pinned mid-viewport would
+    // otherwise open partway through). Other links keep native behaviour.
+    const onClick = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey) return;
+      const link = (event.target as Element).closest?.<HTMLAnchorElement>('a[href^="#"]');
+      const target = link && document.getElementById(link.hash.slice(1));
+      const pin = target && ScrollTrigger.getAll().find((st) => st.pin === target);
+      if (!pin) return;
+      event.preventDefault();
+      window.scrollTo(0, pin.start);
+      history.pushState(null, "", link.hash);
+    };
+    document.addEventListener("click", onClick);
+
     return () => {
       window.removeEventListener("pagehide", save);
       window.removeEventListener("load", settle);
+      document.removeEventListener("click", onClick);
     };
   }, []);
 
