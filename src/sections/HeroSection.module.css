@@ -313,22 +313,7 @@
     animation: bounce 1.8s ease-in-out 1.3s infinite;
   }
 
-  /*
-   * One CTA slot that rolls over like a countdown digit: "Explore work" shows
-   * first, then rolls up and away as "About me" rolls in, and back again
-   * (8s cycle). The hidden link drops pointer events so it can't catch
-   * clicks, but stays in the tab order. Hover pauses the roll; keyboard
-   * focus stops it and shows whichever link has focus.
-   */
-  .ctas {
-    display: grid;
-    grid-template-areas: "slot";
-  }
-
-  .ctas > a {
-    grid-area: slot;
-  }
-
+  /* In the rolling slot "About me" takes the primary CTA's look. */
   .secondary {
     height: 50px;
     gap: 18px;
@@ -340,6 +325,28 @@
 
   .secondary .circle {
     display: grid;
+  }
+
+}
+
+/*
+ * One CTA slot that rolls over like a countdown digit: "Explore work" shows
+ * first, then rolls up and away as "About me" rolls in, and back again (8s
+ * cycle). The hidden link drops pointer events so it can't catch taps or
+ * clicks, but stays in the tab order. Hover pauses the roll; keyboard focus
+ * stops it and shows whichever link has focus. With reduced motion both
+ * links show as in the Figma frames.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .ctas {
+    display: grid;
+    grid-template-areas: "slot";
+    /* Links keep their own width, so empty space beside them isn't a link. */
+    justify-items: start;
+  }
+
+  .ctas > a {
+    grid-area: slot;
   }
 
   .secondaryArrow {
@@ -368,24 +375,19 @@
   }
 }
 
-/* Mobile: the CTAs sit side by side, so each flips over in place in turn. */
+/* Mobile: in the rolling slot "About me" becomes the same filled button. */
 @media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
-  .primary,
   .secondary {
-    animation: flip 7s var(--ease-out) 2.5s infinite;
+    width: 166px;
+    padding-inline: 12px;
+    background: var(--color-burnt-sienna);
+    color: var(--color-warm-ivory);
+    letter-spacing: 1.2px;
   }
 
-  .secondary {
-    animation-delay: 2.8s;
-  }
-
-  .ctas {
-    perspective: 400px;
-  }
-
-  .ctas:hover > a,
-  .ctas:focus-within > a {
-    animation-play-state: paused;
+  .secondary:hover {
+    background: var(--color-terracotta);
+    text-decoration: none;
   }
 }
 
@@ -422,18 +424,3 @@
   }
 }
 
-@keyframes flip {
-  0%,
-  44% {
-    transform: rotateX(0);
-  }
-
-  48% {
-    transform: rotateX(-90deg);
-  }
-
-  52%,
-  100% {
-    transform: rotateX(-360deg);
-  }
-}
