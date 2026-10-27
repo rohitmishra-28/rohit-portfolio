@@ -63,7 +63,7 @@
 .lede {
   max-width: 330px;
   margin: 0;
-  color: #736e5e;
+  color: var(--color-text-muted);
   font-size: 14px;
   line-height: 1.4;
 }
@@ -155,7 +155,7 @@
   }
 
   .eyebrow {
-    color: var(--color-stone);
+    color: var(--color-text-muted);
     font-size: 13px;
     letter-spacing: 0;
   }
@@ -242,7 +242,7 @@
   .secondary {
     min-height: 32px;
     margin-left: 68px;
-    color: var(--color-stone);
+    color: var(--color-text-muted);
     font-size: 11px;
     letter-spacing: 0;
   }

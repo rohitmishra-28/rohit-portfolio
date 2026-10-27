@@ -104,13 +104,25 @@
 .skills {
   max-width: 315px;
   margin: 8px 0 0;
-  color: #736e5e;
+  color: var(--color-text-muted);
   font-size: 14px;
   line-height: 1.4;
 }
 
 .card[data-tone="forest"] .skills {
   color: var(--color-mist);
+}
+
+.card[data-tone="forest"] .index {
+  color: var(--color-peach);
+}
+
+.card[data-tone="sand"] .index {
+  color: var(--color-terracotta-text-sand);
+}
+
+.card[data-tone="sand"] .skills {
+  color: var(--color-text-muted-sand);
 }
 
 .desktopOnly {
@@ -132,7 +144,7 @@
   .marker {
     position: relative;
     gap: 0;
-    color: var(--color-muted-ochre);
+    color: var(--color-ochre-text);
     font-size: 13px;
     letter-spacing: 0;
   }
@@ -207,8 +219,12 @@
   }
 
   .index {
-    color: var(--color-terracotta);
+    color: var(--color-burnt-sienna);
     font-size: 12px;
+  }
+
+  .card[data-tone="forest"] .index {
+    color: var(--color-peach);
   }
 
   .cardTitle {
@@ -221,12 +237,16 @@
   .skills {
     max-width: 455px;
     margin-top: 37px;
-    color: var(--color-stone);
+    color: var(--color-text-muted);
     line-height: 21px;
   }
 
+  .card[data-tone="sand"] .skills {
+    color: var(--color-text-muted-sand);
+  }
+
   .card[data-tone="forest"] .skills {
-    color: var(--color-stone);
+    color: var(--color-text-muted-on-forest);
   }
 
   .desktopOnly {

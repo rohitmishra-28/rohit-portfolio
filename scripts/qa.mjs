@@ -62,7 +62,40 @@ for (const reducedMotion of ["no-preference", "reduce"]) {
         .filter((el) => !el.closest("[class*='cards']"))
         .slice(0, 5)
         .map((el) => `${el.tagName.toLowerCase()}.${el.className}`);
+      // WCAG AA contrast for visible text, measured against the nearest solid
+      // background colour. Text inside a [data-over-art] container sits on an
+      // illustration on desktop, so it's skipped there and checked by eye.
+      const desktop = window.innerWidth >= 1024;
+      const parse = (c) => (c.match(/[\d.]+/g) ?? []).map(Number);
+      const lum = ([r, g, b]) => {
+        const f = (v) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+        return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+      };
+      const bgOf = (el) => {
+        for (let n = el; n; n = n.parentElement) {
+          const c = parse(getComputedStyle(n).backgroundColor);
+          if (c.length && (c[3] ?? 1) > 0.5) return c;
+        }
+        return [255, 255, 255];
+      };
+      const lowContrast = [];
+      for (const el of document.querySelectorAll("body *")) {
+        const text = [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
+        const r = el.getBoundingClientRect();
+        if (!text || !r.width || el.closest("[aria-hidden='true'], .visually-hidden, .skip-link")) continue;
+        if (desktop && el.closest("[data-over-art]")) continue;
+        const cs = getComputedStyle(el);
+        const size = parseFloat(cs.fontSize);
+        const large = size >= 24 || (size >= 18.66 && Number(cs.fontWeight) >= 700);
+        const [a, b] = [lum(parse(cs.color)), lum(bgOf(el))].sort((x, y) => y - x);
+        const ratio = (a + 0.05) / (b + 0.05);
+        if (ratio < (large ? 3 : 4.5)) {
+          lowContrast.push(`${ratio.toFixed(2)} "${el.textContent.trim().slice(0, 30)}"`);
+        }
+      }
+
       return {
+        lowContrast,
         overflowX: doc.scrollWidth > doc.clientWidth,
         hidden: hidden.length,
         brokenImgs: brokenImgs.map((i) => i.currentSrc),
@@ -79,6 +112,7 @@ for (const reducedMotion of ["no-preference", "reduce"]) {
     if (report.badLinks) problems.push(`${report.badLinks} links with empty or "#" href`);
     if (report.missingAnchors.length) problems.push(`missing anchors: ${report.missingAnchors}`);
     if (report.h1 !== 1) problems.push(`${report.h1} h1 elements`);
+    if (report.lowContrast.length) problems.push(`low contrast: ${report.lowContrast.join("; ")}`);
 
     const name = `${width}${reducedMotion === "reduce" ? "-reduced" : ""}`;
     await page.evaluate(() => window.scrollTo(0, 0));

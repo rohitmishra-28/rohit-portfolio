@@ -78,7 +78,7 @@
 }
 
 .card[data-tone="light"] .tags {
-  color: #736e5e;
+  color: var(--color-text-muted);
 }
 
 .arrow {

@@ -37,7 +37,14 @@ export function SiteHeader() {
         <span className="visually-hidden">{open ? "Close menu" : "Open menu"}</span>
       </button>
 
-      <nav aria-label="Primary" id={menuId} className={styles.nav} data-open={open}>
+      {/* data-over-art: on desktop the links sit on the hero illustration. */}
+      <nav
+        aria-label="Primary"
+        id={menuId}
+        className={styles.nav}
+        data-open={open}
+        data-over-art
+      >
         <ul className={styles.links}>
           {sectionLinks.map((link) => (
             <li key={link.href}>

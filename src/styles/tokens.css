@@ -47,6 +47,16 @@
   --color-peach: #ed9e6e;
   --color-night: #0e1b15;
 
+  /*
+   * Small-text shades: the Figma stone/ochre/terracotta darkened (or, on the
+   * forest card, lightened) just enough to reach WCAG AA 4.5:1 on their grounds.
+   */
+  --color-text-muted: #66625a; /* stone, on parchment/linen/ivory/process panels */
+  --color-text-muted-sand: #57544c; /* stone, on the sand card */
+  --color-text-muted-on-forest: #a6a39b; /* stone, on the forest card */
+  --color-ochre-text: #7d6539; /* muted ochre eyebrows on light grounds */
+  --color-terracotta-text-sand: #893f22; /* terracotta index on the sand card */
+
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --duration-fast: 180ms;
   --duration-base: 240ms;
