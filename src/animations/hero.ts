@@ -40,21 +40,25 @@ export function heroAnimation(scope: HTMLElement, mm: gsap.MatchMedia) {
     // pre-hide (its lines carry their own autoAlpha).
     if (desktop) gsap.set($("title"), { autoAlpha: 1 });
 
-    // Hero → About hand-off (scrubbed, no pin). While the hero scrolls away
-    // the artwork lags behind the page for depth and the copy recedes; About
-    // picks up the motion on its side (see about.ts).
-    const handoff = { trigger: scope, start: "top top", end: "bottom top", scrub: true };
-    gsap.to(artImg, { yPercent: desktop ? 14 : 8, ease: "none", scrollTrigger: handoff });
-    gsap.to($("content"), {
-      y: desktop ? -70 : -24,
-      opacity: desktop ? 0.25 : 0.6,
-      ease: "none",
-      scrollTrigger: handoff,
-    });
-    gsap.to($("scroll-cue"), {
-      opacity: 0,
-      ease: "none",
-      scrollTrigger: { ...handoff, end: "20% top" },
-    });
+    // Hero → About hand-off. The hero pins once its bottom edge reaches the
+    // bottom of the viewport (straight away when it fits the screen) and
+    // About slides up over it from below. pinSpacing is off, so no scroll
+    // distance is added: About covers the hero over exactly the hero's
+    // visible height. Meanwhile the hero recedes — art drifts and zooms
+    // slightly, the copy lifts and fades — for the parallax depth.
+    const visible = () => Math.min(scope.offsetHeight, window.innerHeight);
+    const handoff = {
+      trigger: scope,
+      start: () => (scope.offsetHeight > window.innerHeight ? "bottom bottom" : "top top"),
+      end: () => `+=${visible()}`,
+      scrub: true,
+      invalidateOnRefresh: true,
+    };
+    gsap
+      .timeline({ defaults: { ease: "none" }, scrollTrigger: { ...handoff, pin: true, pinSpacing: false } })
+      // The zoom keeps the drifted art covering the top edge (4% > 3%).
+      .to(artImg, { yPercent: 3, scale: 1.08 }, 0)
+      .to($("content"), { y: desktop ? -80 : -40, opacity: 0.2 }, 0)
+      .to($("scroll-cue"), { opacity: 0, duration: 0.2 }, 0);
   });
 }

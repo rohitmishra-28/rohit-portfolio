@@ -54,7 +54,11 @@ export function MotionRoot() {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey) return;
       const link = (event.target as Element).closest?.<HTMLAnchorElement>('a[href^="#"]');
       const target = link && document.getElementById(link.hash.slice(1));
-      const pin = target && ScrollTrigger.getAll().find((st) => st.pin === target);
+      // Pins without spacing (the hero) don't shift the page, so they keep
+      // the native jump.
+      const pin =
+        target &&
+        ScrollTrigger.getAll().find((st) => st.pin === target && st.vars.pinSpacing !== false);
       if (!pin) return;
       event.preventDefault();
       window.scrollTo(0, pin.start);

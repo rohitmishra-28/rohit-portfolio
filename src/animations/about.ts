@@ -5,7 +5,8 @@ import { byAnim, conditions, gsap, onEnter, type Conditions } from "./gsap";
  * phrases unmask, the bio follows, and the workspace art opens with a clip
  * (sweeping in from the right on desktop, down on mobile). The highlights
  * then slide in one after another — left column from the left, right column
- * from the right. A scrubbed offset completes the Hero → About hand-off.
+ * from the right. The section itself slides up over the pinned hero (see
+ * hero.ts); it sits above it in the stacking order (AboutSection.module.css).
  */
 export function aboutAnimation(scope: HTMLElement, mm: gsap.MatchMedia) {
   const $ = byAnim(scope);
@@ -35,14 +36,5 @@ export function aboutAnimation(scope: HTMLElement, mm: gsap.MatchMedia) {
     });
 
     if ($("cta").length) onEnter($("cta")[0], "top 92%").from($("cta"), { autoAlpha: 0, y: 16 });
-
-    // Hero → About hand-off, About's half (scrubbed, no pin): while About
-    // rises into view its artwork and copy column travel a little less than
-    // the page, so the section settles into place as it becomes the focus.
-    const emerge = { trigger: scope, start: "top bottom", end: "top top", scrub: true };
-    // Moves the art's wrapper, not the image: any gap it opens is plain
-    // parchment (mobile) or below the fold (desktop).
-    gsap.fromTo(art, { y: desktop ? -90 : -30 }, { y: 0, ease: "none", scrollTrigger: emerge });
-    if (desktop) gsap.fromTo($("column"), { y: 60 }, { y: 0, ease: "none", scrollTrigger: emerge });
   });
 }

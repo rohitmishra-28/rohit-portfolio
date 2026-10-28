@@ -20,8 +20,13 @@ export type Conditions = { desktop: boolean; mobile: boolean };
 export const byAnim = (scope: HTMLElement) => (name: string) =>
   gsap.utils.toArray<HTMLElement>(scope.querySelectorAll(`[data-anim="${name}"]`));
 
-/** A timeline that plays once when `trigger` scrolls into view. */
+/**
+ * A timeline that plays once when `trigger` scrolls into view and never
+ * reverses. Not `once: true`: a once-trigger that is already passed kills
+ * itself mid-refresh (e.g. on a reload further down the page), which breaks
+ * the refresh of every pinned section after it.
+ */
 export const onEnter = (trigger: Element, start = "top 80%") =>
-  gsap.timeline({ scrollTrigger: { trigger, start, once: true } });
+  gsap.timeline({ scrollTrigger: { trigger, start, toggleActions: "play none none none" } });
 
 export { gsap, ScrollTrigger, useGSAP };
