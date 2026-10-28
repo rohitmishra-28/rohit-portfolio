@@ -153,6 +153,34 @@
     /* Figma crops the desktop art centred, leaving the sky clear for the copy. */
     object-position: 50% 50%;
   }
+}
+
+/*
+ * Narrow laptops crop the wide art hard. Shift it right so the figure at the
+ * laptop stays in frame, and wash the left side in parchment so the copy that
+ * now overlaps the temple stays legible.
+ */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .artImg {
+    object-position: 72% 50%;
+  }
+
+  .artWrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    display: block;
+    height: auto;
+    background: linear-gradient(
+      to right,
+      rgb(245 235 221 / 0.92) 0%,
+      rgb(245 235 221 / 0.78) 42%,
+      rgb(245 235 221 / 0) 62%
+    );
+  }
+}
+
+@media (min-width: 1024px) {
 
   .content {
     max-width: 1440px;
