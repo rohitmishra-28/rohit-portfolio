@@ -55,3 +55,49 @@ export const projects: Project[] = [
     href: "https://www.novology.com/",
   },
 ];
+
+// Every brand Rohit has built for, by market (listed by the user; URLs are
+// the live stores, checked by hand). A site with several regional stores
+// lists each one. href null = URL still to come; shown as plain text.
+
+export type ClientSite = { label: string; href: string | null };
+export type Client = { name: string; sites: ClientSite[] };
+export type ClientGroup = { region: string; clients: Client[] };
+
+const site = (href: string | null): ClientSite[] => [{ label: "", href }];
+
+export const clientGroups: ClientGroup[] = [
+  {
+    region: "India",
+    clients: [
+      { name: "Seiko Watches", sites: site("https://seikowatches.co.in/") },
+      { name: "Grand Seiko", sites: site("https://grandseikoboutique.in/") },
+      { name: "TrueSouth Coffee", sites: site("https://truesouth.in/") },
+      { name: "Novology", sites: site("https://www.novology.com/") },
+      { name: "Vishal Mega Mart", sites: site("https://www.vishalmegamart.com/") },
+      { name: "Infinitea", sites: site(null) },
+      { name: "Alba Watches", sites: site(null) },
+      { name: "Adelite", sites: site(null) },
+    ],
+  },
+  {
+    region: "UK & Europe",
+    clients: [
+      { name: "Hush Puppies", sites: site("https://www.hushpuppies.co.uk/") },
+      {
+        name: "Muck Boot",
+        sites: [
+          { label: "UK", href: "https://muckbootcompany.co.uk/" },
+          { label: "EU", href: "https://muckbootcompany.eu/" },
+          { label: "DE", href: "https://muckbootcompany.de/" },
+        ],
+      },
+      { name: "CAT Footwear", sites: site("https://catfootwear.co.uk/") },
+      { name: "Base London", sites: site("https://baselondon.com/") },
+      { name: "Timberland PRO", sites: site("https://timberlandpro.co.uk/") },
+      { name: "Frye", sites: site("https://fryeboots.co.uk/") },
+      { name: "Bearpaw", sites: site("https://bearpawshoes.co.uk/") },
+      { name: "Brantano", sites: site("https://www.brantano.co.uk/") },
+    ],
+  },
+];

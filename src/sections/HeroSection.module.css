@@ -410,8 +410,23 @@
   }
 }
 
-/* Mobile: "About me" sits in the primary's filled button, which stays put. */
+/* Mobile: the slot itself is the filled button, so it stays put under both labels. */
 @media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+  .ctas {
+    width: 166px;
+    background: var(--color-burnt-sienna);
+    transition: background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .ctas:hover {
+    background: var(--color-terracotta);
+  }
+
+  .primary,
+  .primary:hover {
+    background: none;
+  }
+
   .secondary {
     width: 166px;
     padding-inline: 12px;
@@ -421,10 +436,6 @@
 
   .secondary:hover {
     text-decoration: none;
-  }
-
-  .ctas:hover .primary {
-    background: var(--color-terracotta);
   }
 }
 

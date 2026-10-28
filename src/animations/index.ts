@@ -1,4 +1,5 @@
 import { aboutAnimation } from "./about";
+import { allProjectsAnimation } from "./allProjects";
 import { contactAnimation } from "./contact";
 import { expertiseAnimation } from "./expertise";
 import { footerAnimation } from "./footer";
@@ -16,6 +17,7 @@ export const animations = {
   hero: heroAnimation,
   about: aboutAnimation,
   work: workAnimation,
+  allProjects: allProjectsAnimation,
   expertise: expertiseAnimation,
   philosophy: philosophyAnimation,
   process: processAnimation,
