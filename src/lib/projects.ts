@@ -58,7 +58,8 @@ export const projects: Project[] = [
 
 // Every brand Rohit has built for, by market (listed by the user; URLs are
 // the live stores, checked by hand). A site with several regional stores
-// lists each one. href null = URL still to come; shown as plain text.
+// lists each one. href null = URL still to come. Not rendered yet: kept for
+// the upcoming all-projects page.
 
 export type ClientSite = { label: string; href: string | null };
 export type Client = { name: string; sites: ClientSite[] };

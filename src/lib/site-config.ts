@@ -36,6 +36,6 @@ export const sectionLinks = [
 
 // CTAs whose destinations aren't in the Figma link map; confirmed in chat.
 export const ctaLinks = {
-  viewAllProjects: "#projects",
+  viewAllProjects: "#work",
   moreAboutMe: siteConfig.resume.href,
 } as const;
