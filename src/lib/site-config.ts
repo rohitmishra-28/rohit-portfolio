@@ -6,8 +6,14 @@ import { asset } from "./base-path";
 
 export const siteConfig = {
   name: "Rohit Mishra",
-  // Final domain not chosen yet. When null, canonical/Open Graph URLs are omitted.
-  url: null as string | null,
+  role: "Frontend Developer",
+  // Hero supporting copy, reused as the share/search description.
+  description:
+    "I craft performant, accessible and thoughtful digital experiences that help ecommerce brands grow.",
+  // Public address, set at build time (the deploy workflow passes the GitHub
+  // Pages URL; change it there for a custom domain). When unset, canonical
+  // and absolute share URLs are omitted.
+  url: (process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || null) as string | null,
 
   email: "irohitm89@gmail.com",
   emailSubject: "Hello from your portfolio",

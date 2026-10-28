@@ -7,11 +7,38 @@ import { manrope, yatraOne } from "@/lib/fonts";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
-// Description and social preview copy are finalised with the Hero content.
+const title = `${siteConfig.name} — ${siteConfig.role}`;
+
+// Share card: the homepage banner (public/og-image.jpg, 1200×630). Link
+// previews (WhatsApp, LinkedIn, X…) need absolute URLs, so the card and
+// canonical are only emitted when the site URL is known. URLs are built in
+// full because the site may live under a sub-path.
+const shareImage = siteConfig.url && {
+  url: `${siteConfig.url}/og-image.jpg`,
+  width: 1200,
+  height: 630,
+  alt: "Rohit Mishra, Frontend Developer — Building digital experiences with purpose.",
+};
+
 export const metadata: Metadata = {
   ...(siteConfig.url && { metadataBase: new URL(siteConfig.url) }),
-  title: siteConfig.name,
-  ...(siteConfig.url && { alternates: { canonical: "/" } }),
+  title,
+  description: siteConfig.description,
+  ...(siteConfig.url && { alternates: { canonical: `${siteConfig.url}/` } }),
+  openGraph: {
+    type: "website",
+    siteName: siteConfig.name,
+    title,
+    description: siteConfig.description,
+    ...(siteConfig.url && { url: `${siteConfig.url}/` }),
+    ...(shareImage && { images: [shareImage] }),
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description: siteConfig.description,
+    ...(shareImage && { images: [shareImage.url] }),
+  },
   // Brand icons from the Figma logo system (171:2). favicon.ico (16/32/48,
   // dark tile) comes from src/app/favicon.ico via the file convention.
   icons: {
