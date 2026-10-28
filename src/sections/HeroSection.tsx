@@ -17,6 +17,7 @@ export function HeroSection() {
       <div data-anim="art" className={styles.artWrap}>
         <Picture
           name="hero"
+          desktopName="hero-desktop"
           alt="Illustration of a developer working on a laptop beneath a banyan tree, beside a lotus lake and a South Indian temple at sunset."
           sizes="100vw"
           priority

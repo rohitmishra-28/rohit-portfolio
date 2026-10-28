@@ -3,6 +3,8 @@ import { images, type ImageName } from "@/lib/images.generated";
 
 type Props = {
   name: ImageName;
+  /** Different artwork for desktop (≥1024px); `name` is then the mobile art. */
+  desktopName?: ImageName;
   /** Empty string for decorative artwork. */
   alt: string;
   /** Rendered width hint for the browser, e.g. "(min-width: 1024px) 50vw, 100vw". */
@@ -14,12 +16,15 @@ type Props = {
   objectPosition?: string;
 };
 
+const DESKTOP = "(min-width: 1024px)";
+
 const srcSet = (name: ImageName, ext: "avif" | "webp") =>
   images[name].widths.map((w) => `/images/${name}-${w}.${ext} ${w}w`).join(", ");
 
 /** Responsive AVIF/WebP image from the pre-generated set in public/images. */
 export function Picture({
   name,
+  desktopName,
   alt,
   sizes,
   priority = false,
@@ -32,6 +37,12 @@ export function Picture({
 
   return (
     <picture className={className}>
+      {desktopName && (
+        <>
+          <source media={DESKTOP} type="image/avif" srcSet={srcSet(desktopName, "avif")} sizes={sizes} />
+          <source media={DESKTOP} type="image/webp" srcSet={srcSet(desktopName, "webp")} sizes={sizes} />
+        </>
+      )}
       <source type="image/avif" srcSet={srcSet(name, "avif")} sizes={sizes} />
       <source type="image/webp" srcSet={srcSet(name, "webp")} sizes={sizes} />
       <img

@@ -92,6 +92,17 @@ export const images = {
       1536
     ]
   },
+  "hero-desktop": {
+    "width": 1672,
+    "height": 941,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      1672
+    ]
+  },
   "hero": {
     "width": 1536,
     "height": 1024,

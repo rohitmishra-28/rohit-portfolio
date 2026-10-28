@@ -150,7 +150,8 @@
   }
 
   .artImg {
-    object-position: 70% 50%;
+    /* Figma crops the desktop art centred, leaving the sky clear for the copy. */
+    object-position: 50% 50%;
   }
 
   .content {
