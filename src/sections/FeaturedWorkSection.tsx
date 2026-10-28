@@ -1,4 +1,5 @@
 import { AnimatedSection } from "@/components/AnimatedSection";
+import { ArrowIcon } from "@/components/ArrowIcon";
 import { Picture } from "@/components/Picture";
 import { ProjectCard } from "@/components/ProjectCard";
 import { projects } from "@/lib/projects";
@@ -43,7 +44,7 @@ export function FeaturedWorkSection() {
           </div>
           <a data-anim="cta" href={ctaLinks.viewAllProjects} className={styles.cta}>
             <span className={styles.circle} aria-hidden="true">
-              →
+              <ArrowIcon size={20} />
             </span>
             View all projects
           </a>

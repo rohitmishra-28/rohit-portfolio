@@ -1,4 +1,5 @@
 import { AnimatedSection } from "@/components/AnimatedSection";
+import { ArrowIcon } from "@/components/ArrowIcon";
 import { Picture } from "@/components/Picture";
 import { ctaLinks } from "@/lib/site-config";
 import styles from "./AboutSection.module.css";
@@ -101,7 +102,7 @@ export function AboutSection() {
 
         <a data-anim="cta" href={ctaLinks.moreAboutMe} className={styles.cta}>
           <span className={styles.circle} aria-hidden="true">
-            →
+            <ArrowIcon />
           </span>
           More about me
           <span className="visually-hidden"> (résumé PDF)</span>

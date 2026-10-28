@@ -1,4 +1,5 @@
 import { AnimatedSection } from "@/components/AnimatedSection";
+import { ArrowIcon } from "@/components/ArrowIcon";
 import { Picture } from "@/components/Picture";
 import styles from "./HeroSection.module.css";
 
@@ -68,13 +69,10 @@ export function HeroSection() {
   );
 }
 
-// An SVG arrow rather than the "→" glyph, whose font metrics sit it off-centre.
 function CircleArrow() {
   return (
     <span className={styles.circle} aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 12h16M14 6l6 6-6 6" />
-      </svg>
+      <ArrowIcon />
     </span>
   );
 }
