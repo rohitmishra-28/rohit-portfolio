@@ -1,5 +1,5 @@
 import { AnimatedSection } from "@/components/AnimatedSection";
-import { Picture } from "@/components/Picture";
+import { LoopVideo } from "@/components/LoopVideo";
 import { mailtoHref, siteConfig } from "@/lib/site-config";
 import styles from "./ContactSection.module.css";
 
@@ -15,13 +15,16 @@ export function ContactSection() {
       ariaLabelledby="contact-title"
     >
       <div data-anim="art" className={styles.artWrap}>
-        <Picture
-          name="contact"
-          alt="Illustration of Rohit typing at a carved wooden desk on a veranda overlooking a temple and lotus pond."
-          sizes="(min-width: 1024px) 55vw, 100vw"
-          className={styles.art}
-          imgClassName={styles.artImg}
-        />
+        <div className={styles.art}>
+          <LoopVideo
+            src="/video/contact-namaste.webm"
+            poster="/video/contact-namaste-poster.webp"
+            label="Rohit standing among carved sandstone arches in a sunlit garden, greeting with a namaste."
+            width={1280}
+            height={720}
+            className={styles.artImg}
+          />
+        </div>
       </div>
 
       <div className={styles.panel}>
