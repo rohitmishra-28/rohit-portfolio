@@ -1,7 +1,7 @@
 import type { ImageName } from "./images.generated";
 
-// Featured projects (copy from Figma 11:85 / 120:23). Shaped so a CMS can
-// populate it later.
+// Featured projects: the three chosen by Rohit, with card images captured
+// from each live store. Shaped so a CMS can populate it later.
 
 export type Project = {
   slug: string;
@@ -22,37 +22,37 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: "tarinika",
-    name: "Tarinika",
-    title: "Tradition in every weave",
+    slug: "grand-seiko",
+    name: "Grand Seiko",
+    title: "Luxury, made online",
     stack: "Shopify · Liquid · Theme development",
-    focus: "Shopify theme engineering",
-    tags: "Ecommerce · Shopify",
-    image: "project-tarinika",
-    imageAlt: "Gold temple-style necklace and jhumka earrings on a silk sari.",
-    href: "https://www.tarinika.com/",
+    focus: "Luxury boutique experience",
+    tags: "Luxury · Shopify",
+    image: "project-grand-seiko",
+    imageAlt: "Grand Seiko India online boutique homepage, featuring two silver Heritage Collection watches.",
+    href: "https://grandseikoboutique.in/",
   },
   {
-    slug: "paksha",
-    name: "Paksha",
-    title: "Modern Ayurveda",
-    stack: "Shopify · JavaScript · UX implementation",
-    focus: "Frontend implementation",
-    tags: "Wellness · Shopify",
-    image: "project-paksha",
-    imageAlt: "Ayurvedic oils, herbs and a stone mortar and pestle among green leaves.",
-    href: "https://paksha.com/",
+    slug: "seiko",
+    name: "Seiko Watches",
+    title: "Craft, made reliable",
+    stack: "Shopify · Liquid · Theme development",
+    focus: "Brand storefront",
+    tags: "Watches · Shopify",
+    image: "project-seiko",
+    imageAlt: "Seiko India online store homepage, featuring a Prospex India Limited Edition dive watch with a tiger.",
+    href: "https://seikowatches.co.in/",
   },
   {
-    slug: "novology",
-    name: "Novology",
-    title: "Science-backed care",
-    stack: "Shopify · Frontend development",
-    focus: "Ecommerce experience",
-    tags: "Skincare · Commerce",
-    image: "project-novology",
-    imageAlt: "Skincare serums and a cream jar on stone blocks beside lab glassware.",
-    href: "https://www.novology.com/",
+    slug: "vishal-mega-mart",
+    name: "Vishal Mega Mart",
+    title: "Retail at national scale",
+    stack: "Salesforce Commerce Cloud · Frontend development",
+    focus: "High-traffic grocery & apparel commerce",
+    tags: "Retail · Commerce Cloud",
+    image: "project-vishal-mega-mart",
+    imageAlt: "Vishal Mega Mart online store homepage, with clothing, home and grocery categories and a festive gifts banner.",
+    href: "https://www.vishalmegamart.com/",
   },
 ];
 

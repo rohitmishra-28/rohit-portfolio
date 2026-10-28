@@ -158,31 +158,31 @@ export const images = {
       1200
     ]
   },
-  "project-novology": {
-    "width": 1024,
-    "height": 1024,
+  "project-grand-seiko": {
+    "width": 1000,
+    "height": 990,
     "widths": [
       480,
       800,
-      1024
+      1000
     ]
   },
-  "project-paksha": {
-    "width": 1024,
-    "height": 1024,
+  "project-seiko": {
+    "width": 1000,
+    "height": 990,
     "widths": [
       480,
       800,
-      1024
+      1000
     ]
   },
-  "project-tarinika": {
-    "width": 1024,
-    "height": 1024,
+  "project-vishal-mega-mart": {
+    "width": 1000,
+    "height": 990,
     "widths": [
       480,
       800,
-      1024
+      1000
     ]
   },
   "signature": {
