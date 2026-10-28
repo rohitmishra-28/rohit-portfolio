@@ -313,7 +313,10 @@
     animation: bounce 1.8s ease-in-out 1.3s infinite;
   }
 
-  /* In the rolling slot "About me" takes the primary CTA's look. */
+  /*
+   * In the rolling slot "About me" lays out like the primary CTA, but its own
+   * circle stays invisible: the primary's circle is the one static button.
+   */
   .secondary {
     height: 50px;
     gap: 18px;
@@ -323,18 +326,33 @@
     font-weight: 500;
   }
 
-  .secondary .circle {
-    display: grid;
+  .secondary:hover {
+    color: var(--color-burnt-sienna);
+    text-decoration: none;
   }
 
+  .secondary .circle {
+    display: grid;
+    visibility: hidden;
+  }
+
+  .ctas:hover .circle {
+    transform: translateX(3px);
+  }
+}
+
+.label {
+  display: inline-block;
 }
 
 /*
- * One CTA slot that rolls over like a countdown digit: "Explore work" shows
- * first, then rolls up and away as "About me" rolls in, and back again (8s
- * cycle). The hidden link drops pointer events so it can't catch taps or
+ * One CTA slot: the button itself stays still while its label rolls over like
+ * a countdown digit — "Explore work" rolls up and away as "About me" rolls in,
+ * and back again (8s cycle). Both links share the slot; the primary draws the
+ * button and the secondary is a transparent overlay carrying only its label.
+ * Whichever link is hidden drops pointer events so it can't catch taps or
  * clicks, but stays in the tab order. Hover pauses the roll; keyboard focus
- * stops it and shows whichever link has focus. With reduced motion both
+ * stops it and shows the focused link's label. With reduced motion both
  * links show as in the Figma frames.
  */
 @media (prefers-reduced-motion: no-preference) {
@@ -354,40 +372,59 @@
   }
 
   .primary {
-    animation: cta-roll 8s var(--ease-out) -0.48s infinite backwards;
+    animation: cta-hit 8s linear -0.48s infinite backwards;
   }
 
   .secondary {
+    animation: cta-hit 8s linear 3.52s infinite backwards;
+  }
+
+  .primary .label {
+    animation: cta-roll 8s var(--ease-out) -0.48s infinite backwards;
+  }
+
+  .secondary .label {
     animation: cta-roll 8s var(--ease-out) 3.52s infinite backwards;
   }
 
-  .ctas:hover > a {
+  .ctas:hover > a,
+  .ctas:hover .label {
     animation-play-state: paused;
   }
 
-  .ctas:focus-within > a {
+  .ctas:focus-within > a,
+  .ctas:focus-within .label {
     animation: none;
+  }
+
+  .ctas:focus-within .label {
     opacity: 0;
   }
 
-  .ctas:focus-within > a:focus-within {
+  .ctas:focus-within > a:not(:focus-within) {
+    pointer-events: none;
+  }
+
+  .ctas:focus-within > a:focus-within .label {
     opacity: 1;
   }
 }
 
-/* Mobile: in the rolling slot "About me" becomes the same filled button. */
+/* Mobile: "About me" sits in the primary's filled button, which stays put. */
 @media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
   .secondary {
     width: 166px;
     padding-inline: 12px;
-    background: var(--color-burnt-sienna);
     color: var(--color-warm-ivory);
     letter-spacing: 1.2px;
   }
 
   .secondary:hover {
-    background: var(--color-terracotta);
     text-decoration: none;
+  }
+
+  .ctas:hover .primary {
+    background: var(--color-terracotta);
   }
 }
 
@@ -402,25 +439,37 @@
   }
 }
 
+/* Label motion. */
 @keyframes cta-roll {
   0% {
-    pointer-events: none;
     opacity: 0;
-    transform: translateY(60%);
+    transform: translateY(80%);
   }
 
   6%,
   44% {
-    pointer-events: auto;
     opacity: 1;
     transform: none;
   }
 
   50%,
   100% {
-    pointer-events: none;
     opacity: 0;
-    transform: translateY(-60%);
+    transform: translateY(-80%);
+  }
+}
+
+/* Which link takes clicks, in step with its label. */
+@keyframes cta-hit {
+  0%,
+  50%,
+  100% {
+    pointer-events: none;
+  }
+
+  6%,
+  44% {
+    pointer-events: auto;
   }
 }
 

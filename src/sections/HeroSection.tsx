@@ -46,16 +46,13 @@ export function HeroSection() {
         </p>
         <div data-anim="ctas" data-hero-anim className={styles.ctas}>
           <a href="#work" className={styles.primary}>
-            <span className={styles.circle} aria-hidden="true">
-              →
-            </span>
-            Explore work
+            <CircleArrow />
+            <span className={styles.label}>Explore work</span>
           </a>
           <a href="#about" className={styles.secondary}>
-            <span className={styles.circle} aria-hidden="true">
-              →
-            </span>
-            About me <span className={styles.secondaryArrow} aria-hidden="true">↗</span>
+            <CircleArrow />
+            <span className={styles.label}>About me</span>{" "}
+            <span className={styles.secondaryArrow} aria-hidden="true">↗</span>
           </a>
         </div>
       </div>
@@ -68,5 +65,16 @@ export function HeroSection() {
         </div>
       </div>
     </AnimatedSection>
+  );
+}
+
+// An SVG arrow rather than the "→" glyph, whose font metrics sit it off-centre.
+function CircleArrow() {
+  return (
+    <span className={styles.circle} aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 12h16M14 6l6 6-6 6" />
+      </svg>
+    </span>
   );
 }
