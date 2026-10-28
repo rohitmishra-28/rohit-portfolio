@@ -1,3 +1,4 @@
+import { asset } from "@/lib/base-path";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { LoopVideo } from "@/components/LoopVideo";
 import { mailtoHref, siteConfig } from "@/lib/site-config";
@@ -17,8 +18,8 @@ export function ContactSection() {
       <div data-anim="art" className={styles.artWrap}>
         <div className={styles.art}>
           <LoopVideo
-            src="/video/contact-namaste.webm"
-            poster="/video/contact-namaste-poster.webp"
+            src={asset("/video/contact-namaste.webm")}
+            poster={asset("/video/contact-namaste-poster.webp")}
             label="Rohit standing among carved sandstone arches in a sunlit garden, greeting with a namaste."
             width={1280}
             height={720}

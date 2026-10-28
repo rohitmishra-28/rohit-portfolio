@@ -1,3 +1,4 @@
+import { asset } from "@/lib/base-path";
 import type { Metadata, Viewport } from "next";
 import { MotionRoot } from "@/components/MotionRoot";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -14,10 +15,10 @@ export const metadata: Metadata = {
   // Brand icons from the Figma logo system (171:2). favicon.ico (16/32/48,
   // dark tile) comes from src/app/favicon.ico via the file convention.
   icons: {
-    icon: [{ url: "/icons/favicon-32.png", sizes: "32x32", type: "image/png" }],
-    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
+    icon: [{ url: asset("/icons/favicon-32.png"), sizes: "32x32", type: "image/png" }],
+    apple: [{ url: asset("/icons/apple-touch-icon.png"), sizes: "180x180" }],
   },
-  manifest: "/site.webmanifest",
+  manifest: asset("/site.webmanifest"),
 };
 
 export const viewport: Viewport = {

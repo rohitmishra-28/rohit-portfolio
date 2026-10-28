@@ -1,3 +1,4 @@
+import { asset } from "@/lib/base-path";
 import type { CSSProperties } from "react";
 import { images, type ImageName } from "@/lib/images.generated";
 
@@ -19,7 +20,7 @@ type Props = {
 const DESKTOP = "(min-width: 1024px)";
 
 const srcSet = (name: ImageName, ext: "avif" | "webp") =>
-  images[name].widths.map((w) => `/images/${name}-${w}.${ext} ${w}w`).join(", ");
+  images[name].widths.map((w) => `${asset(`/images/${name}-${w}.${ext}`)} ${w}w`).join(", ");
 
 /** Responsive AVIF/WebP image from the pre-generated set in public/images. */
 export function Picture({
@@ -46,7 +47,7 @@ export function Picture({
       <source type="image/avif" srcSet={srcSet(name, "avif")} sizes={sizes} />
       <source type="image/webp" srcSet={srcSet(name, "webp")} sizes={sizes} />
       <img
-        src={`/images/${name}-${widths[widths.length - 1]}.webp`}
+        src={asset(`/images/${name}-${widths[widths.length - 1]}.webp`)}
         alt={alt}
         width={width}
         height={height}

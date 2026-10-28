@@ -2,6 +2,8 @@
 // file — leave a field `null` until it is confirmed, and components render it
 // as plain text (never `href="#"`).
 
+import { asset } from "./base-path";
+
 export const siteConfig = {
   name: "Rohit Mishra",
   // Final domain not chosen yet. When null, canonical/Open Graph URLs are omitted.
@@ -11,7 +13,7 @@ export const siteConfig = {
   emailSubject: "Hello from your portfolio",
 
   resume: {
-    href: "/resume.pdf",
+    href: asset("/resume.pdf"),
     downloadName: "Rohit-Mishra-Resume.pdf",
   },
 

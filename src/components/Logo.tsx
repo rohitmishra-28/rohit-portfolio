@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element -- static brand SVGs from Figma */
+import { asset } from "@/lib/base-path";
 import styles from "./Logo.module.css";
 
 type Theme = "primary" | "inverse";
@@ -12,7 +13,7 @@ type Theme = "primary" | "inverse";
 export function Logo({ theme = "primary", className }: { theme?: Theme; className?: string }) {
   return (
     <span className={`${styles.logo} ${styles[theme]} ${className ?? ""}`}>
-      <img src={`/brand/logo-mark-${theme}.svg`} alt="" width={80} height={80} className={styles.mark} />
+      <img src={asset(`/brand/logo-mark-${theme}.svg`)} alt="" width={80} height={80} className={styles.mark} />
       <span className={styles.wordmark}>Rohit Mishra</span>
     </span>
   );
@@ -22,7 +23,7 @@ export function Logo({ theme = "primary", className }: { theme?: Theme; classNam
 export function Monogram({ theme = "primary", className }: { theme?: Theme; className?: string }) {
   return (
     <img
-      src={`/brand/monogram-${theme}.svg`}
+      src={asset(`/brand/monogram-${theme}.svg`)}
       alt=""
       width={112}
       height={112}

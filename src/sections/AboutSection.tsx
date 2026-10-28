@@ -1,3 +1,4 @@
+import { asset } from "@/lib/base-path";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { ArrowIcon } from "@/components/ArrowIcon";
 import { Picture } from "@/components/Picture";
@@ -83,7 +84,7 @@ export function AboutSection() {
             <li key={cap.label} data-anim="highlight" className={styles.capability}>
               <span className={styles.icon} aria-hidden="true">
                 {/* eslint-disable-next-line @next/next/no-img-element -- static SVG glyph */}
-                <img src={`/images/icons/about-cap-${i + 1}.svg`} alt="" />
+                <img src={asset(`/images/icons/about-cap-${i + 1}.svg`)} alt="" />
               </span>
               <span className={styles.capText}>
                 <span className={styles.capLabel}>
