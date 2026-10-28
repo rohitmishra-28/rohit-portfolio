@@ -1,0 +1,288 @@
+/* Home, after the current Shopify admin: a centred greeting with a big
+   search box and status pills, then a row of cards and the section grid. */
+.home {
+  display: grid;
+  gap: 40px;
+  max-width: 1000px;
+  margin-inline: auto;
+  padding: clamp(48px, 14vh, 160px) 24px 64px;
+}
+
+/* ---------- Greeting and search ---------- */
+.hero {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.hello {
+  color: var(--a-text-secondary);
+  font-size: 26px;
+  font-weight: 550;
+  line-height: 1.25;
+}
+
+.headline {
+  font-size: 26px;
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.searchBox {
+  position: relative;
+  z-index: 2;
+  width: min(640px, 100%);
+  margin-top: 24px;
+  padding: 8px 16px 10px;
+  border-radius: var(--a-radius-xl);
+  background: var(--a-surface);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 0.08),
+    0 4px 16px -6px rgb(0 0 0 / 0.12);
+  text-align: left;
+}
+
+.searchBox:focus-within {
+  box-shadow:
+    0 0 0 2px var(--a-focus),
+    0 4px 16px -6px rgb(0 0 0 / 0.12);
+}
+
+.searchFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.searchGlyph {
+  display: grid;
+  color: var(--a-icon);
+}
+
+.searchLinks {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.searchLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 4px 8px;
+  border-radius: var(--a-radius);
+  color: var(--a-text);
+  font-size: 12px;
+  font-weight: 550;
+  text-decoration: none;
+}
+
+.searchLink:hover {
+  background: var(--a-surface-hover);
+}
+
+.divider {
+  width: 1px;
+  height: 16px;
+  background: var(--a-border);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 4px 6px 4px 12px;
+  border-radius: 999px;
+  background: var(--a-surface);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.08);
+  color: var(--a-text);
+  font-weight: 550;
+  text-decoration: none;
+}
+
+.chip:not(:has(.chipCount)) {
+  padding-right: 12px;
+}
+
+.chip:hover {
+  background: var(--a-surface-hover);
+}
+
+.chipCount {
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--a-border-subdued);
+  color: var(--a-text-secondary);
+  font-size: 12px;
+  font-weight: 550;
+}
+
+.chipCount[data-tone="success"] {
+  background: var(--a-success-bg);
+  color: var(--a-success-text);
+}
+
+.chipCount[data-tone="warning"] {
+  background: var(--a-warning-bg);
+  color: var(--a-warning-text);
+}
+
+.chipCount[data-tone="info"] {
+  background: var(--a-info-bg);
+  color: var(--a-info-text);
+}
+
+.chipCount[data-tone="critical"] {
+  background: var(--a-critical-bg);
+  color: var(--a-critical-text);
+}
+
+/* ---------- Cards ---------- */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 240px;
+  padding: 16px;
+  border-radius: var(--a-radius-xl);
+  background: var(--a-surface);
+  box-shadow: var(--a-shadow-card);
+}
+
+.tileTitle {
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.tileBody {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.tileAction {
+  display: flex;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 4px 12px;
+  border-radius: 10px;
+  background: var(--a-surface);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 0.1),
+    0 1px 0 rgb(0 0 0 / 0.05);
+  color: var(--a-text);
+  font-weight: 550;
+  text-decoration: none;
+}
+
+.pill:hover {
+  background: var(--a-surface-hover);
+}
+
+.muted {
+  color: var(--a-text-secondary);
+}
+
+/* ---------- Section grid ---------- */
+.group {
+  display: grid;
+  gap: 12px;
+}
+
+.groupTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.groupMeta {
+  color: var(--a-text-secondary);
+  font-size: 13px;
+  font-weight: 450;
+}
+
+.sectionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sectionCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  height: 100%;
+  padding: 14px;
+  border-radius: var(--a-radius-lg);
+  background: var(--a-surface);
+  box-shadow: var(--a-shadow-card);
+  color: var(--a-text);
+  text-decoration: none;
+}
+
+.sectionCard:hover {
+  background: var(--a-surface-hover);
+}
+
+.sectionText {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.sectionTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-weight: 650;
+}
+
+.sectionMeta {
+  color: var(--a-text-secondary);
+}
+
+@media (max-width: 768px) {
+  .home {
+    gap: 32px;
+    padding: 32px 16px 48px;
+  }
+
+  .hello,
+  .headline {
+    font-size: 20px;
+  }
+
+  .tile {
+    min-height: 0;
+  }
+}

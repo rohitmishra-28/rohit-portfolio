@@ -98,7 +98,7 @@ export function SectionEditor({ id }: { id: ContentKey }) {
                   <Card title="Highlighting words">
                     <p style={{ color: "var(--a-text-secondary)" }}>
                       In titles, wrap words in asterisks to set them in the accent colour:{" "}
-                      <code>*Indian roots*</code> and.
+                      <code>*Indian roots*</code>.
                     </p>
                   </Card>
                 )}

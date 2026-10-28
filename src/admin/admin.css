@@ -1,6 +1,7 @@
 /*
  * CMS base styles and tokens. The look follows the current Shopify admin:
- * a dark top bar, a grey sidebar, white cards on a light grey canvas, and
+ * a dark full-height sidebar beside a rounded page panel, white cards on a
+ * light grey canvas, and
  * bevelled buttons. Everything else lives in CSS Modules beside each part.
  */
 :root {
@@ -11,9 +12,14 @@
   --a-surface-hover: #f7f7f7;
   --a-surface-active: #f3f3f3;
   --a-surface-subdued: #f7f7f7;
-  --a-sidebar: #ebebeb;
-  --a-topbar: #1a1a1a;
-  --a-topbar-field: #303030;
+  --a-chrome: #141414;
+  --a-chrome-raised: #1f1f1f;
+  --a-chrome-field: #262626;
+  --a-chrome-hover: #262626;
+  --a-chrome-active: #303030;
+  --a-chrome-text: #e3e3e3;
+  --a-chrome-icon: #a6a6a6;
+  --a-chrome-muted: #8a8a8a;
 
   --a-text: #303030;
   --a-text-secondary: #616161;
@@ -47,8 +53,8 @@
   --a-shadow-popover: 0 4px 6px -2px rgb(26 26 26 / 0.2), 0 0 0 1px rgb(0 0 0 / 0.06);
   --a-shadow-modal: 0 26px 80px rgb(0 0 0 / 0.2), 0 0 1px rgb(0 0 0 / 0.2);
 
-  --a-topbar-height: 56px;
   --a-sidebar-width: 240px;
+  --a-sidebar-collapsed: 56px;
 }
 
 * {

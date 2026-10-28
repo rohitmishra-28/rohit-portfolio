@@ -14,30 +14,49 @@ import styles from "./Frame.module.css";
 
 export const editorHref = (id: string) => (id === "site" ? "/admin/settings" : `/admin/sections/${id}`);
 
-/** The admin chrome: top bar (search, account, save bar), sidebar and toasts. */
+const COLLAPSED_KEY = "cms-sidebar-collapsed";
+
+/**
+ * The admin chrome, after the current Shopify admin: a dark full-height
+ * sidebar (brand, search, navigation, account) beside the page, which sits in
+ * a rounded panel. The save bar appears at the top of that panel.
+ */
 export function Frame({ children }: { children: ReactNode }) {
   const pathname = usePathname().replace(/\/$/, "");
   // The drawer belongs to the page it was opened on, so navigating closes it.
   const [menuFor, setMenuFor] = useState<string | null>(null);
   const menuOpen = menuFor === pathname;
   const setMenuOpen = (open: boolean) => setMenuFor(open ? pathname : null);
-  const { dirtyIds } = useCms();
+  // The Frame only renders after sign-in on the client, so storage is readable here.
+  const [collapsed, setCollapsedState] = useState(() => {
+    try {
+      return localStorage.getItem(COLLAPSED_KEY) === "1";
+    } catch {
+      return false;
+    }
+  });
+  const setCollapsed = (value: boolean) => {
+    setCollapsedState(value);
+    try {
+      localStorage.setItem(COLLAPSED_KEY, value ? "1" : "0");
+    } catch {}
+  };
+  const { dirty, dirtyIds, saved } = useCms();
 
-  const nav = (href: string, label: string, icon: IconName | null, extra?: { sub?: boolean; dot?: boolean }) => (
+  const nav = (href: string, label: string, icon: IconName, dot?: boolean) => (
     <Link
       prefetch={false}
       key={href}
       href={href}
-      className={`${styles.navItem} ${extra?.sub ? styles.subItem : ""}`}
+      className={styles.navItem}
       aria-current={pathname === href ? "page" : undefined}
+      title={collapsed ? label : undefined}
     >
-      {icon && (
-        <span className={styles.navIcon}>
-          <Icon name={icon} />
-        </span>
-      )}
+      <span className={styles.navIcon}>
+        <Icon name={icon} />
+      </span>
       <span className={styles.navLabel}>{label}</span>
-      {extra?.dot && (
+      {dot && (
         <span className={styles.navDot} title="Unsaved changes">
           <span className="visually-hidden">(unsaved changes)</span>
         </span>
@@ -46,74 +65,84 @@ export function Frame({ children }: { children: ReactNode }) {
   );
 
   return (
-    <div className={styles.frame}>
-      <TopBar onMenu={() => setMenuOpen(!menuOpen)} menuOpen={menuOpen} />
-
-      <nav className={styles.sidebar} aria-label="Admin" data-open={menuOpen} id="admin-nav">
-        {nav("/admin", "Home", "home")}
-        <p className={styles.navHeading}>Homepage sections</p>
-        {sections
-          .filter((s) => s.group === "sections")
-          .map((s) => nav(editorHref(s.id), s.title, s.icon, { dot: dirtyIds.includes(s.id) }))}
-        <p className={styles.navHeading}>Content</p>
-        {sections
-          .filter((s) => s.group === "content")
-          .map((s) => nav(editorHref(s.id), s.title, s.icon, { dot: dirtyIds.includes(s.id) }))}
-        {nav("/admin/media", "Media", "image")}
-        <div className={styles.sidebarFooter}>
-          {nav("/admin/settings", "Settings", "settings", { dot: dirtyIds.includes("site") })}
-          <a href={cmsConfig.siteUrl} target="_blank" rel="noreferrer" className={styles.navItem}>
-            <span className={styles.navIcon}>
-              <Icon name="globe" />
-            </span>
-            <span className={styles.navLabel}>View site</span>
-            <span className={styles.navIcon}>
-              <Icon name="external" size={16} />
-            </span>
-            <span className="visually-hidden">(opens in a new tab)</span>
-          </a>
-        </div>
-      </nav>
-      {menuOpen && <div className={styles.scrim} onClick={() => setMenuOpen(false)} aria-hidden="true" />}
-
-      <main className={styles.main} id="admin-main">
-        {children}
-      </main>
-
-      <Toasts />
-    </div>
-  );
-}
-
-function TopBar({ onMenu, menuOpen }: { onMenu: () => void; menuOpen: boolean }) {
-  const { dirty, saved } = useCms();
-  return (
-    <header className={styles.topbar}>
-      <div style={{ display: "flex", alignItems: "center", gap: 4, minWidth: 0 }}>
+    <div className={styles.frame} data-collapsed={collapsed}>
+      <header className={styles.mobileBar}>
         <button
           type="button"
-          className={styles.menuToggle}
+          className={styles.iconButton}
           aria-expanded={menuOpen}
           aria-controls="admin-nav"
-          onClick={onMenu}
+          onClick={() => setMenuOpen(!menuOpen)}
         >
           <Icon name={menuOpen ? "close" : "menu"} />
           <span className="visually-hidden">Menu</span>
         </button>
-        <Link prefetch={false} href="/admin" className={styles.brand}>
+        <Link prefetch={false} href="/admin" className={styles.mobileBrand}>
           <img src={asset("/brand/monogram-primary.svg")} alt="" className={styles.brandMark} />
-          <span className={styles.brandName}>{saved?.site.name ?? "Portfolio"} · Admin</span>
+          <span>{saved?.site.name ?? "Portfolio"}</span>
         </Link>
-      </div>
-      {dirty ? (
-        <SaveBar />
-      ) : (
-        <>
-          <Search />
+      </header>
+
+      <nav className={styles.sidebar} aria-label="Admin" data-open={menuOpen} id="admin-nav">
+        <div className={styles.sidebarTop}>
+          <div className={styles.brandRow}>
+            <Link prefetch={false} href="/admin" className={styles.brand} title="Home">
+              <img src={asset("/brand/monogram-primary.svg")} alt="" className={styles.brandMark} />
+              <span className="visually-hidden">{saved?.site.name ?? "Portfolio"} admin home</span>
+            </Link>
+            <button
+              type="button"
+              className={`${styles.iconButton} ${styles.collapseToggle}`}
+              aria-pressed={collapsed}
+              onClick={() => setCollapsed(!collapsed)}
+              title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            >
+              <Icon name="sidebar" />
+              <span className="visually-hidden">{collapsed ? "Expand sidebar" : "Collapse sidebar"}</span>
+            </button>
+          </div>
+          <Search variant="sidebar" onExpand={() => setCollapsed(false)} />
+        </div>
+
+        <div className={styles.navScroll}>
+          {nav("/admin", "Home", "home")}
+          <p className={styles.navHeading}>
+            Homepage sections <Icon name="chevronRight" size={12} />
+          </p>
+          {sections.filter((s) => s.group === "sections").map((s) => nav(editorHref(s.id), s.title, s.icon, dirtyIds.includes(s.id)))}
+          <p className={styles.navHeading}>
+            Content <Icon name="chevronRight" size={12} />
+          </p>
+          {sections.filter((s) => s.group === "content").map((s) => nav(editorHref(s.id), s.title, s.icon, dirtyIds.includes(s.id)))}
+          {nav("/admin/media", "Media", "image")}
+        </div>
+
+        <div className={styles.sidebarFooter}>
+          {nav("/admin/settings", "Settings", "settings", dirtyIds.includes("site"))}
+          <a href={cmsConfig.siteUrl} target="_blank" rel="noreferrer" className={styles.navItem} title={collapsed ? "View site" : undefined}>
+            <span className={styles.navIcon}>
+              <Icon name="globe" />
+            </span>
+            <span className={styles.navLabel}>View site</span>
+            <span className={`${styles.navIcon} ${styles.navTrailing}`}>
+              <Icon name="external" size={16} />
+            </span>
+            <span className="visually-hidden">(opens in a new tab)</span>
+          </a>
           <Account />
-        </>
-      )}
-    </header>
+        </div>
+      </nav>
+      {menuOpen && <div className={styles.scrim} onClick={() => setMenuOpen(false)} aria-hidden="true" />}
+
+      <div className={styles.panel}>
+        {dirty && <SaveBar />}
+        <main className={styles.main} id="admin-main">
+          {children}
+        </main>
+      </div>
+
+      <Toasts />
+    </div>
   );
 }
 
@@ -140,7 +169,7 @@ function SaveBar() {
       <p className={styles.saveMessage}>
         <Icon name="alert" />
         <span>
-          Unsaved changes<span style={{ fontWeight: 450, color: "#b5b5b5" }}> · {summary}</span>
+          Unsaved changes<span className={styles.saveSummary}> · {summary}</span>
         </span>
       </p>
       <div className={styles.saveActions}>
@@ -193,12 +222,19 @@ function SaveBar() {
 
 type Result = { href: string; title: string; meta: string; icon: IconName };
 
-function Search() {
+/**
+ * Jump to any section or field. The sidebar copy answers Ctrl/⌘ K; the Home
+ * copy is the big search box under the greeting.
+ */
+export function Search({ variant, onExpand }: { variant: "sidebar" | "hero"; onExpand?: () => void }) {
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(false);
   const input = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const sidebar = variant === "sidebar";
+  const label = sidebar ? "Search sections and fields" : "What do you want to edit?";
+  const listId = `admin-search-results-${variant}`;
 
   const index = useMemo<Result[]>(
     () => [
@@ -220,15 +256,17 @@ function Search() {
     : [];
 
   useEffect(() => {
+    if (!sidebar) return;
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
-        input.current?.focus();
+        onExpand?.();
+        requestAnimationFrame(() => input.current?.focus());
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [sidebar, onExpand]);
 
   const go = (r: Result) => {
     router.push(r.href);
@@ -237,45 +275,68 @@ function Search() {
     input.current?.blur();
   };
 
+  const field = (
+    <input
+      ref={input}
+      className={styles.searchInput}
+      type="search"
+      placeholder={sidebar ? "Search" : "What do you want to edit? Try “headline”, “résumé” or “email”"}
+      aria-label={label}
+      aria-expanded={open && results.length > 0}
+      aria-controls={listId}
+      aria-autocomplete="list"
+      role="combobox"
+      value={query}
+      onChange={(e) => {
+        setQuery(e.target.value);
+        setActive(0);
+        setOpen(true);
+      }}
+      onFocus={() => setOpen(true)}
+      onBlur={() => setTimeout(() => setOpen(false), 150)}
+      onKeyDown={(e) => {
+        if (e.key === "ArrowDown") setActive((a) => Math.min(a + 1, results.length - 1));
+        else if (e.key === "ArrowUp") setActive((a) => Math.max(a - 1, 0));
+        else if (e.key === "Enter" && results[active]) go(results[active]);
+        else if (e.key === "Escape") {
+          setQuery("");
+          input.current?.blur();
+        } else return;
+        e.preventDefault();
+      }}
+    />
+  );
+
   return (
-    <div className={styles.search} role="search">
-      <span className={styles.searchIcon}>
-        <Icon name="search" />
-      </span>
-      <input
-        ref={input}
-        className={styles.searchInput}
-        type="search"
-        placeholder="Search sections and fields"
-        aria-label="Search sections and fields"
-        aria-expanded={open && results.length > 0}
-        aria-controls="admin-search-results"
-        aria-autocomplete="list"
-        role="combobox"
-        value={query}
-        onChange={(e) => {
-          setQuery(e.target.value);
-          setActive(0);
-          setOpen(true);
-        }}
-        onFocus={() => setOpen(true)}
-        onBlur={() => setTimeout(() => setOpen(false), 150)}
-        onKeyDown={(e) => {
-          if (e.key === "ArrowDown") setActive((a) => Math.min(a + 1, results.length - 1));
-          else if (e.key === "ArrowUp") setActive((a) => Math.max(a - 1, 0));
-          else if (e.key === "Enter" && results[active]) go(results[active]);
-          else if (e.key === "Escape") {
-            setQuery("");
-            input.current?.blur();
-          } else return;
-          e.preventDefault();
-        }}
-      />
+    <div className={styles.search} data-variant={variant} role="search">
+      {sidebar && (
+        <button
+          type="button"
+          className={styles.searchCollapsed}
+          onClick={() => {
+            onExpand?.();
+            requestAnimationFrame(() => input.current?.focus());
+          }}
+          title="Search"
+        >
+          <Icon name="search" />
+          <span className="visually-hidden">Search</span>
+        </button>
+      )}
+      <label className={styles.searchField}>
+        {sidebar && (
+          <span className={styles.searchIcon}>
+            <Icon name="search" size={16} />
+          </span>
+        )}
+        {field}
+        {sidebar && <kbd className={styles.kbd}>Ctrl K</kbd>}
+      </label>
       {open && results.length > 0 && (
-        <div className={styles.results} id="admin-search-results" role="listbox">
+        <div className={styles.results} id={listId} role="listbox">
           {results.map((r, i) => (
             <Link
-      prefetch={false}
+              prefetch={false}
               key={`${r.href}-${r.title}-${r.meta}`}
               href={r.href}
               role="option"
@@ -318,12 +379,19 @@ function Account() {
     };
   }, [open]);
 
-  if (!user) return <span />;
+  if (!user) return null;
   return (
     <div className={styles.account} ref={ref}>
-      <button type="button" className={styles.accountButton} aria-expanded={open} aria-haspopup="menu" onClick={() => setOpen((v) => !v)}>
+      <button
+        type="button"
+        className={styles.accountButton}
+        aria-expanded={open}
+        aria-haspopup="menu"
+        onClick={() => setOpen((v) => !v)}
+        title={user.name ?? user.login}
+      >
         <img src={user.avatar} alt="" className={styles.avatar} />
-        <span className={styles.accountName}>{user.name ?? user.login}</span>
+        <span className={styles.navLabel}>{user.name ?? user.login}</span>
       </button>
       {open && (
         <div className={styles.popover} role="menu">
