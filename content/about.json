@@ -1,0 +1,35 @@
+{
+  "number": "01",
+  "marker": "About me",
+  "title": ["A developer with", "*Indian roots* and", "global vision."],
+  "bio": "I’m Rohit Mishra, a frontend developer passionate about crafting digital experiences that are meaningful, accessible and beautiful. I bring together engineering precision, ecommerce expertise and a deep appreciation for visual storytelling.",
+  "highlights": [
+    {
+      "label": "11+ years",
+      "title": "Frontend Development Experience",
+      "short": "Frontend development experience",
+      "icon": "/images/icons/about-cap-1.svg"
+    },
+    {
+      "label": "Shopify & ecommerce",
+      "title": "Storefronts, Themes and Custom Features",
+      "short": "Storefronts, themes and custom features",
+      "icon": "/images/icons/about-cap-2.svg"
+    },
+    {
+      "label": "Performance focus",
+      "title": "Core Web Vitals and Technical SEO",
+      "short": "Core Web Vitals and technical SEO",
+      "icon": "/images/icons/about-cap-3.svg"
+    },
+    {
+      "label": "Collaborative approach",
+      "title": "Work with Design, Product and Marketing Teams",
+      "short": "Design, product and marketing teams",
+      "icon": "/images/icons/about-cap-4.svg"
+    }
+  ],
+  "cta": { "label": "More about me", "href": "site:resume" },
+  "image": "about",
+  "imageAlt": "Illustration of Rohit at a wooden desk with a monitor and laptop, in a room with temple sketches, plants and a sleeping cat."
+}

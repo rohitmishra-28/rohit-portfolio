@@ -1,0 +1,106 @@
+/*
+ * CMS base styles and tokens. The look follows the current Shopify admin:
+ * a dark top bar, a grey sidebar, white cards on a light grey canvas, and
+ * bevelled buttons. Everything else lives in CSS Modules beside each part.
+ */
+:root {
+  --a-font: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --a-bg: #f1f1f1;
+  --a-surface: #ffffff;
+  --a-surface-hover: #f7f7f7;
+  --a-surface-active: #f3f3f3;
+  --a-surface-subdued: #f7f7f7;
+  --a-sidebar: #ebebeb;
+  --a-topbar: #1a1a1a;
+  --a-topbar-field: #303030;
+
+  --a-text: #303030;
+  --a-text-secondary: #616161;
+  --a-text-disabled: #b5b5b5;
+  --a-text-inverse: #e3e3e3;
+  --a-icon: #4a4a4a;
+
+  --a-border: #e3e3e3;
+  --a-border-subdued: #ebebeb;
+  --a-border-input: #8a8a8a;
+  --a-border-input-hover: #616161;
+  --a-focus: #005bd3;
+
+  --a-success-bg: #cdfee1;
+  --a-success-text: #0c5132;
+  --a-warning-bg: #ffd6a4;
+  --a-warning-text: #5e4200;
+  --a-attention-bg: #fff1e3;
+  --a-info-bg: #eaf4ff;
+  --a-info-text: #00527c;
+  --a-critical-bg: #fedad9;
+  --a-critical-text: #8e0b21;
+  --a-critical: #c70a24;
+
+  --a-radius-sm: 6px;
+  --a-radius: 8px;
+  --a-radius-lg: 12px;
+  --a-radius-xl: 16px;
+
+  --a-shadow-card: 0 0 0 1px rgb(0 0 0 / 0.07), 0 1px 0 0 rgb(0 0 0 / 0.08);
+  --a-shadow-popover: 0 4px 6px -2px rgb(26 26 26 / 0.2), 0 0 0 1px rgb(0 0 0 / 0.06);
+  --a-shadow-modal: 0 26px 80px rgb(0 0 0 / 0.2), 0 0 1px rgb(0 0 0 / 0.2);
+
+  --a-topbar-height: 56px;
+  --a-sidebar-width: 240px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--a-bg);
+  color: var(--a-text);
+  font-family: var(--a-font);
+  font-size: 13px;
+  line-height: 20px;
+  font-feature-settings: "calt" 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--a-focus);
+}
+
+:focus-visible {
+  outline: 2px solid var(--a-focus);
+  outline-offset: 1px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

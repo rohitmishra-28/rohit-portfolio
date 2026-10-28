@@ -1,0 +1,11 @@
+{
+  "eyebrow": "Frontend developer",
+  "title": ["Building", "*digital experiences*", "with purpose."],
+  "lede": "I craft performant, accessible and thoughtful digital experiences that help ecommerce brands grow.",
+  "primaryCta": { "label": "Explore work", "href": "#work" },
+  "secondaryCta": { "label": "About me", "href": "#about" },
+  "scrollLabel": "Scroll",
+  "image": "hero",
+  "imageDesktop": "hero-desktop",
+  "imageAlt": "Illustration of a developer working on a laptop beneath a banyan tree, beside a lotus lake and a South Indian temple at sunset."
+}

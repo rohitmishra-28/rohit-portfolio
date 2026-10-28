@@ -33,7 +33,8 @@ export function AnimatedSection({
   useGSAP(
     () => {
       const scope = ref.current;
-      if (!scope) return;
+      // The CMS live preview shows the static layout.
+      if (!scope || document.documentElement.hasAttribute("data-cms-preview")) return;
       const mm = gsap.matchMedia();
       try {
         animations[animation](scope, mm);

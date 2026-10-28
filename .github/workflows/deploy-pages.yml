@@ -27,9 +27,12 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # npm run build first turns any new images in src/assets (CMS uploads)
+      # into responsive variants (scripts/optimize-images.mjs).
       - name: Build static site
         run: npm run build
         env:
+          NEXT_PUBLIC_CMS_REPO: ${{ github.repository }}
           NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
           NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
       - uses: actions/configure-pages@v5

@@ -3,40 +3,41 @@ import type { Metadata, Viewport } from "next";
 import { MotionRoot } from "@/components/MotionRoot";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { content, siteUrl } from "@/content";
 import { manrope, yatraOne } from "@/lib/fonts";
-import { siteConfig } from "@/lib/site-config";
-import "./globals.css";
+import "../globals.css";
 
-const title = `${siteConfig.name} — ${siteConfig.role}`;
+const { site } = content;
+const title = site.seoTitle;
 
-// Share card: the homepage banner (public/og-image.jpg, 1200×630). Link
+// Share card: the homepage banner (site settings, 1200×630). Link
 // previews (WhatsApp, LinkedIn, X…) need absolute URLs, so the card and
 // canonical are only emitted when the site URL is known. URLs are built in
 // full because the site may live under a sub-path.
-const shareImage = siteConfig.url && {
-  url: `${siteConfig.url}/og-image.jpg`,
+const shareImage = siteUrl && {
+  url: `${siteUrl}${site.shareImage}`,
   width: 1200,
   height: 630,
-  alt: "Rohit Mishra, Frontend Developer — Building digital experiences with purpose.",
+  alt: site.shareImageAlt,
 };
 
 export const metadata: Metadata = {
-  ...(siteConfig.url && { metadataBase: new URL(siteConfig.url) }),
+  ...(siteUrl && { metadataBase: new URL(siteUrl) }),
   title,
-  description: siteConfig.description,
-  ...(siteConfig.url && { alternates: { canonical: `${siteConfig.url}/` } }),
+  description: site.seoDescription,
+  ...(siteUrl && { alternates: { canonical: `${siteUrl}/` } }),
   openGraph: {
     type: "website",
-    siteName: siteConfig.name,
+    siteName: site.name,
     title,
-    description: siteConfig.description,
-    ...(siteConfig.url && { url: `${siteConfig.url}/` }),
+    description: site.seoDescription,
+    ...(siteUrl && { url: `${siteUrl}/` }),
     ...(shareImage && { images: [shareImage] }),
   },
   twitter: {
     card: "summary_large_image",
     title,
-    description: siteConfig.description,
+    description: site.seoDescription,
     ...(shareImage && { images: [shareImage.url] }),
   },
   // Brand icons from the Figma logo system (171:2). favicon.ico (16/32/48,
@@ -69,9 +70,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <a href="#main" className="skip-link">
           Skip to content
         </a>
-        <SiteHeader />
+        <SiteHeader name={site.name} nav={site.nav} />
         <main id="main">{children}</main>
-        <SiteFooter />
+        <SiteFooter content={content.footer} site={site} projects={content.work.projects} />
       </body>
     </html>
   );

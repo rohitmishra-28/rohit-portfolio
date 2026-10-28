@@ -1,13 +1,17 @@
 import { asset } from "@/lib/base-path";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { LoopVideo } from "@/components/LoopVideo";
-import { mailtoHref, siteConfig } from "@/lib/site-config";
+import { mailtoHref, resolveLink } from "@/content/links";
+import { orDesktop } from "@/content/rich";
+import type { ContactContent, SiteContent } from "@/content/types";
 import styles from "./ContactSection.module.css";
 
 // 08 — Contact / Namaste invitation (Figma desktop 11:197, mobile 120:114).
 // Timeline in src/animations/contact.ts. The desktop and mobile frames use
 // different headlines and CTA order.
-export function ContactSection() {
+export function ContactSection({ content, site }: { content: ContactContent; site: SiteContent }) {
+  const resume = resolveLink("site:resume", site);
+
   return (
     <AnimatedSection
       id="contact"
@@ -18,9 +22,9 @@ export function ContactSection() {
       <div data-anim="art" className={styles.artWrap}>
         <div className={styles.art}>
           <LoopVideo
-            src={asset("/video/contact-namaste.webm")}
-            poster={asset("/video/contact-namaste-poster.webp")}
-            label="Rohit standing among carved sandstone arches in a sunlit garden, greeting with a namaste."
+            src={asset(content.video)}
+            poster={asset(content.videoPoster)}
+            label={content.videoLabel}
             width={1280}
             height={720}
             className={styles.artImg}
@@ -31,55 +35,55 @@ export function ContactSection() {
       <div className={styles.panel}>
         <div data-anim="heading" className={styles.heading}>
           <p className={styles.marker}>
-            <span className={styles.number}>08</span>
+            <span className={styles.number}>{content.number}</span>
             <span className={styles.slash} aria-hidden="true">
               /
             </span>
-            <span className={styles.desktopOnly}>A personal hello</span>
-            <span className={styles.mobileOnly}>Let’s connect</span>
+            <span className={styles.desktopOnly}>{content.marker}</span>
+            <span className={styles.mobileOnly}>{orDesktop(content.markerMobile, content.marker)}</span>
           </p>
           <h2 id="contact-title" className={styles.title}>
             <span className={styles.desktopOnly}>
-              Until we meet.
-              <span className={styles.subtitle}>Let’s build something meaningful.</span>
+              {content.title}
+              <span className={styles.subtitle}>{content.subtitle}</span>
             </span>
-            <span className={styles.mobileOnly}>Have a meaningful challenge in mind?</span>
+            <span className={styles.mobileOnly}>{orDesktop(content.titleMobile, content.title)}</span>
           </h2>
         </div>
 
         <div className={styles.body}>
           <p data-anim="copy" className={`${styles.copy} ${styles.desktopOnly}`}>
-            Have a project, an opportunity, or an interesting problem? I’d love to hear what
-            you’re working on.
+            {content.copy}
           </p>
           <p data-anim="copy" className={`${styles.copy} ${styles.mobileOnly}`}>
-            Let’s build something thoughtful, useful and made to last.
+            {orDesktop(content.copyMobile, content.copy)}
           </p>
 
           <div className={styles.ctas}>
-            <a data-anim="action" href={mailtoHref} className={styles.email}>
+            <a data-anim="action" href={mailtoHref(site)} className={styles.email}>
               <span className={styles.desktopOnly}>
-                <span aria-hidden="true">↗ </span>Send me an email
+                <span aria-hidden="true">↗ </span>
+                {content.emailLabel}
               </span>
-              <span className={styles.mobileOnly}>Get in touch</span>
-              <span className="visually-hidden"> ({siteConfig.email})</span>
+              <span className={styles.mobileOnly}>{orDesktop(content.emailLabelMobile, content.emailLabel)}</span>
+              <span className="visually-hidden"> ({site.email})</span>
             </a>
             <a
               data-anim="action"
-              href={siteConfig.resume.href}
-              download={siteConfig.resume.downloadName}
+              href={resume.href}
+              download={resume.download}
               className={styles.resume}
             >
               <span className={styles.desktopOnly} aria-hidden="true">
                 ↓{" "}
               </span>
-              Download résumé
+              {content.resumeLabel}
               <span className="visually-hidden"> (PDF)</span>
             </a>
           </div>
 
-          <p data-anim="signoff" className={styles.sign}>Thoughtful engineering. Human connection.</p>
-          <p data-anim="signoff" className={styles.namaste}>Namaste</p>
+          <p data-anim="signoff" className={styles.sign}>{content.signoff}</p>
+          <p data-anim="signoff" className={styles.namaste}>{content.namaste}</p>
         </div>
       </div>
     </AnimatedSection>

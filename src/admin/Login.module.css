@@ -1,0 +1,105 @@
+.screen {
+  display: grid;
+  min-height: 100vh;
+  min-height: 100dvh;
+  place-items: center;
+  padding: 32px 16px;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #e8dccb 0%, transparent 60%),
+    radial-gradient(900px 500px at 110% 110%, #d9e3d4 0%, transparent 55%),
+    var(--a-bg);
+}
+
+.column {
+  display: grid;
+  gap: 16px;
+  width: min(440px, 100%);
+}
+
+.card {
+  display: grid;
+  gap: 20px;
+  padding: 32px;
+  border-radius: var(--a-radius-xl);
+  background: var(--a-surface);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.05), 0 12px 32px -8px rgb(0 0 0 / 0.12);
+}
+
+.logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #f5ebdd;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: -0.3px;
+}
+
+.subtitle {
+  color: var(--a-text-secondary);
+  font-size: 14px;
+}
+
+.form {
+  display: grid;
+  gap: 16px;
+}
+
+.steps {
+  border-radius: var(--a-radius-lg);
+  background: var(--a-surface);
+  box-shadow: var(--a-shadow-card);
+}
+
+.steps summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  font-weight: 650;
+  cursor: pointer;
+  list-style: none;
+}
+
+.steps summary::-webkit-details-marker {
+  display: none;
+}
+
+.steps summary svg:last-child {
+  margin-left: auto;
+  transition: transform 0.15s;
+}
+
+.steps[open] summary svg:last-child {
+  transform: rotate(180deg);
+}
+
+.stepList {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0 16px 16px 36px;
+  color: var(--a-text);
+}
+
+.stepList li::marker {
+  color: var(--a-text-secondary);
+  font-weight: 650;
+}
+
+.footnote {
+  color: var(--a-text-secondary);
+  font-size: 12px;
+  text-align: center;
+}
+
+.loading {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  color: var(--a-text-secondary);
+}

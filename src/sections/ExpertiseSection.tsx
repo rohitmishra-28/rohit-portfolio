@@ -1,59 +1,14 @@
+import { Fragment } from "react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { Picture } from "@/components/Picture";
-import type { ImageName } from "@/lib/images.generated";
+import { Accented } from "@/content/rich";
+import type { ExpertiseContent } from "@/content/types";
 import styles from "./ExpertiseSection.module.css";
-
-type Capability = {
-  title: string;
-  skills: string;
-  /** Mobile frame trims the last item of this card. */
-  skillsMobile?: string;
-  tone: "linen" | "forest" | "sand";
-  emblem: ImageName;
-  art: ImageName;
-  artAlt: string;
-};
-
-const capabilities: Capability[] = [
-  {
-    title: "Ecommerce engineering",
-    skills: "Shopify themes · Liquid · Custom features · Integrations · Merchandising UI",
-    tone: "linen",
-    emblem: "emblem-chakra",
-    art: "expertise-1",
-    artAlt: "Temple gateway framed by floating storefront panels and carved elephants.",
-  },
-  {
-    title: "Frontend craft",
-    skills: "JavaScript · HTML · CSS · Responsive UI · Maintainable architecture",
-    tone: "forest",
-    emblem: "emblem-lotus",
-    art: "expertise-2",
-    artAlt: "A lotus whose petals are browser windows, set between carved temple pillars.",
-  },
-  {
-    title: "Performance & quality",
-    skills: "Core Web Vitals · Technical SEO · QA · Debugging · Documentation",
-    tone: "sand",
-    emblem: "emblem-conch",
-    art: "expertise-3",
-    artAlt: "A golden sun-wheel spinning above a river valley.",
-  },
-  {
-    title: "Growth & experience",
-    skills:
-      "Conversion-minded development · UX implementation · Funnel improvements · Experiment support",
-    skillsMobile: "Conversion-minded development · UX implementation · Funnel improvements",
-    tone: "linen",
-    emblem: "emblem-trishula",
-    art: "expertise-4",
-    artAlt: "A woman in a sari walking down garden steps towards a winding river and temples.",
-  },
-];
 
 // 04 — Expertise (Figma desktop 11:125, mobile 120:41).
 // Timeline in src/animations/expertise.ts (pinned card sequence on desktop).
-export function ExpertiseSection() {
+// The second title line is the smaller sans-serif subline.
+export function ExpertiseSection({ content }: { content: ExpertiseContent }) {
   return (
     <AnimatedSection
       id="expertise"
@@ -64,23 +19,30 @@ export function ExpertiseSection() {
       <div className={styles.inner}>
         <div className={styles.header}>
           <p data-anim="marker" className={styles.marker}>
-            <span className={styles.number}>03</span>
-            Expertise
+            <span className={styles.number}>{content.number}</span>
+            {content.marker}
           </p>
           <h2 id="expertise-title" className={styles.title}>
-            <span data-anim="mask" className={styles.line}>
-              <span>Engineering the details.</span>
-            </span>{" "}
-            <span data-anim="mask" className={`${styles.line} ${styles.subline}`}>
-              <span>Elevating the experience.</span>
-            </span>
+            {content.title.map((line, i) => (
+              <Fragment key={i}>
+                <span
+                  data-anim="mask"
+                  className={i === 1 ? `${styles.line} ${styles.subline}` : styles.line}
+                >
+                  <span>
+                    <Accented text={line} />
+                  </span>
+                </span>
+                {i < content.title.length - 1 && " "}
+              </Fragment>
+            ))}
           </h2>
         </div>
 
         <ol data-anim="cards" className={styles.cards}>
-          {capabilities.map((cap, i) => (
+          {content.cards.map((cap, i) => (
             <li
-              key={cap.title}
+              key={i}
               data-anim="card"
               className={styles.card}
               data-tone={cap.tone}
@@ -93,10 +55,10 @@ export function ExpertiseSection() {
                   className={styles.emblem}
                   imgClassName={styles.emblemImg}
                 />
-                <p className={styles.index}>0{i + 1}</p>
+                <p className={styles.index}>{String(i + 1).padStart(2, "0")}</p>
                 <h3 className={styles.cardTitle}>{cap.title}</h3>
                 <p className={styles.skills}>
-                  {cap.skillsMobile ? (
+                  {cap.skillsMobile.trim() ? (
                     <>
                       <span className={styles.desktopOnly}>{cap.skills}</span>
                       <span className={styles.mobileOnly}>{cap.skillsMobile}</span>
@@ -108,8 +70,8 @@ export function ExpertiseSection() {
               </div>
               <div data-anim="card-art" className={styles.artWrap}>
                 <Picture
-                  name={cap.art}
-                  alt={cap.artAlt}
+                  name={cap.image}
+                  alt={cap.imageAlt}
                   sizes="(min-width: 1024px) 365px, 100vw"
                   className={styles.art}
                   imgClassName={styles.artImg}

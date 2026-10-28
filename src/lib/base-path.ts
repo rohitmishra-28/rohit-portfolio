@@ -4,4 +4,5 @@
 // Set at build time via NEXT_PUBLIC_BASE_PATH; empty when served from a root.
 export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
-export const asset = (path: string) => `${basePath}${path}`;
+// Full URLs (the CMS preview's blob: URLs for files not uploaded yet) pass through.
+export const asset = (path: string) => (path.startsWith("/") ? `${basePath}${path}` : path);

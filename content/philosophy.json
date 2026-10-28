@@ -1,0 +1,31 @@
+{
+  "number": "05",
+  "marker": "Engineering philosophy",
+  "title": ["Good engineering", "*is felt, not just seen.*"],
+  "statement": "I believe technology should be invisible, intuitive and human. Performance, accessibility and maintainability are not checkboxes — they are part of a better, more inclusive web.",
+  "statementMobile": "Technology should feel invisible, intuitive and human—built for performance, accessibility and maintainability.",
+  "image": "philosophy",
+  "principles": [
+    {
+      "glyph": "♧",
+      "title": "Performance",
+      "tagline": "Fast. Thoughtful. Purposeful.",
+      "body": "Optimize for speed, Core Web Vitals and real user experience — not just lab scores.",
+      "short": "Optimize for speed, Core Web Vitals and real user experience."
+    },
+    {
+      "glyph": "✿",
+      "title": "Accessibility",
+      "tagline": "For everyone. By design.",
+      "body": "Build experiences that are inclusive, usable and work for more people, across devices and contexts.",
+      "short": "Build inclusive experiences across devices and contexts."
+    },
+    {
+      "glyph": "♧",
+      "title": "Maintainability",
+      "tagline": "Built to last.",
+      "body": "Write clean, modular code and scalable systems that support long-term growth.",
+      "short": "Write clean, modular code and scalable systems."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "number": "02",
+  "marker": "Featured work",
+  "title": ["Digital products", "*that create impact.*"],
+  "intro": "A selection of projects where I’ve helped brands solve real problems, improve user experience and build better ecommerce journeys.",
+  "introMobile": "Selected projects where engineering, brand craft and customer experience meet.",
+  "cta": { "label": "View all projects", "href": "#work" },
+  "note": "Selected work shaped by each brand’s craft, story, and customer journey.",
+  "background": "work-bg",
+  "projects": [
+    {
+      "name": "Grand Seiko",
+      "title": "Luxury, made online",
+      "stack": "Shopify · Liquid · Theme development",
+      "focus": "Luxury boutique experience",
+      "tags": "Luxury · Shopify",
+      "image": "project-grand-seiko",
+      "imageAlt": "Grand Seiko India online boutique homepage, featuring two silver Heritage Collection watches.",
+      "href": "https://grandseikoboutique.in/"
+    },
+    {
+      "name": "Seiko Watches",
+      "title": "Craft, made reliable",
+      "stack": "Shopify · Liquid · Theme development",
+      "focus": "Brand storefront",
+      "tags": "Watches · Shopify",
+      "image": "project-seiko",
+      "imageAlt": "Seiko India online store homepage, featuring a Prospex India Limited Edition dive watch with a tiger.",
+      "href": "https://seikowatches.co.in/"
+    },
+    {
+      "name": "Vishal Mega Mart",
+      "title": "Retail at national scale",
+      "stack": "Salesforce Commerce Cloud · Frontend development",
+      "focus": "High-traffic grocery & apparel commerce",
+      "tags": "Retail · Commerce Cloud",
+      "image": "project-vishal-mega-mart",
+      "imageAlt": "Vishal Mega Mart online store homepage, with clothing, home and grocery categories and a festive gifts banner.",
+      "href": "https://www.vishalmegamart.com/"
+    }
+  ]
+}

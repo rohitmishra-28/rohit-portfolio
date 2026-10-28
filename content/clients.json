@@ -1,0 +1,37 @@
+{
+  "groups": [
+    {
+      "region": "India",
+      "clients": [
+        { "name": "Seiko Watches", "sites": [{ "label": "", "href": "https://seikowatches.co.in/" }] },
+        { "name": "Grand Seiko", "sites": [{ "label": "", "href": "https://grandseikoboutique.in/" }] },
+        { "name": "TrueSouth Coffee", "sites": [{ "label": "", "href": "https://truesouth.in/" }] },
+        { "name": "Novology", "sites": [{ "label": "", "href": "https://www.novology.com/" }] },
+        { "name": "Vishal Mega Mart", "sites": [{ "label": "", "href": "https://www.vishalmegamart.com/" }] },
+        { "name": "Infinitea", "sites": [{ "label": "", "href": "" }] },
+        { "name": "Alba Watches", "sites": [{ "label": "", "href": "" }] },
+        { "name": "Adelite", "sites": [{ "label": "", "href": "" }] }
+      ]
+    },
+    {
+      "region": "UK & Europe",
+      "clients": [
+        { "name": "Hush Puppies", "sites": [{ "label": "", "href": "https://www.hushpuppies.co.uk/" }] },
+        {
+          "name": "Muck Boot",
+          "sites": [
+            { "label": "UK", "href": "https://muckbootcompany.co.uk/" },
+            { "label": "EU", "href": "https://muckbootcompany.eu/" },
+            { "label": "DE", "href": "https://muckbootcompany.de/" }
+          ]
+        },
+        { "name": "CAT Footwear", "sites": [{ "label": "", "href": "https://catfootwear.co.uk/" }] },
+        { "name": "Base London", "sites": [{ "label": "", "href": "https://baselondon.com/" }] },
+        { "name": "Timberland PRO", "sites": [{ "label": "", "href": "https://timberlandpro.co.uk/" }] },
+        { "name": "Frye", "sites": [{ "label": "", "href": "https://fryeboots.co.uk/" }] },
+        { "name": "Bearpaw", "sites": [{ "label": "", "href": "https://bearpawshoes.co.uk/" }] },
+        { "name": "Brantano", "sites": [{ "label": "", "href": "https://www.brantano.co.uk/" }] }
+      ]
+    }
+  ]
+}

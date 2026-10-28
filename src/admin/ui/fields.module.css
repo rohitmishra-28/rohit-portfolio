@@ -1,0 +1,332 @@
+.fields {
+  display: grid;
+  gap: 16px;
+}
+
+/* Side by side when there's room (stacks in the narrow preview column). */
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.groupLabel {
+  margin-bottom: 8px;
+  font-weight: 650;
+}
+
+/* ---------- Title lines ---------- */
+.lines {
+  display: grid;
+  gap: 6px;
+}
+
+.lineRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lineIndex {
+  flex: none;
+  width: 18px;
+  color: var(--a-text-secondary);
+  font-size: 12px;
+  text-align: right;
+}
+
+.linePreview {
+  padding: 8px 12px;
+  border-radius: var(--a-radius);
+  background: var(--a-surface-subdued);
+  color: var(--a-text);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.linePreview mark {
+  background: none;
+  color: #b4532a;
+  font-weight: 650;
+}
+
+/* ---------- Link ---------- */
+.linkRow {
+  display: flex;
+  gap: 6px;
+}
+
+.linkRow > :first-child {
+  flex: 1 1 auto;
+}
+
+.linkSelect {
+  flex: none;
+  width: 132px;
+}
+
+.linkMeaning {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--a-text-secondary);
+}
+
+/* ---------- Media fields ---------- */
+.media {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border: 1px solid var(--a-border);
+  border-radius: var(--a-radius-lg);
+}
+
+.mediaInfo {
+  display: grid;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.mediaName {
+  overflow: hidden;
+  font-weight: 550;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mediaMeta {
+  color: var(--a-text-secondary);
+  font-size: 12px;
+}
+
+.mediaActions {
+  display: flex;
+  flex: none;
+  gap: 6px;
+}
+
+/* ---------- Lists ---------- */
+.list {
+  overflow: hidden;
+  border: 1px solid var(--a-border);
+  border-radius: var(--a-radius-lg);
+}
+
+.item + .item {
+  border-top: 1px solid var(--a-border);
+}
+
+.itemHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  padding: 6px 12px;
+  border: 0;
+  background: var(--a-surface);
+  text-align: left;
+  cursor: pointer;
+}
+
+.itemHeader:hover {
+  background: var(--a-surface-hover);
+}
+
+.itemOpen > .itemHeader {
+  background: var(--a-surface-subdued);
+}
+
+.itemIndex {
+  flex: none;
+  width: 20px;
+  color: var(--a-text-secondary);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.itemTitle {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 550;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.itemChevron {
+  display: grid;
+  flex: none;
+  color: var(--a-icon);
+  transition: transform 0.15s;
+}
+
+.itemOpen .itemChevron {
+  transform: rotate(180deg);
+}
+
+.itemBody {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+  border-top: 1px solid var(--a-border-subdued);
+}
+
+.itemActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 12px;
+  border-top: 1px solid var(--a-border-subdued);
+}
+
+.itemActions > :last-child {
+  margin-left: auto;
+}
+
+.listFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Nested lists sit on a subdued surface so the levels read apart. */
+.item .list {
+  background: var(--a-surface-subdued);
+}
+
+/* ---------- Library ---------- */
+.libraryToolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.libraryToolbar > :first-child {
+  flex: 1 1 220px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.tile {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  padding: 6px;
+  border: 0;
+  border-radius: var(--a-radius-lg);
+  background: var(--a-surface);
+  box-shadow: inset 0 0 0 1px var(--a-border);
+  text-align: left;
+  cursor: pointer;
+}
+
+.tile:hover {
+  background: var(--a-surface-hover);
+}
+
+.tile[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 2px #303030;
+}
+
+.tileImage {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--a-radius);
+  background:
+    repeating-conic-gradient(#f3f3f3 0% 25%, #ffffff 0% 50%) 50% / 12px 12px;
+  color: var(--a-icon);
+}
+
+.tileImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tileName {
+  overflow: hidden;
+  padding-inline: 2px;
+  font-size: 12px;
+  font-weight: 550;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tileMeta {
+  padding-inline: 2px;
+  color: var(--a-text-secondary);
+  font-size: 12px;
+}
+
+.tileCheck {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: #303030;
+  color: #ffffff;
+}
+
+.tileBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.drop {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 20px;
+  border: 1px dashed #b5b5b5;
+  border-radius: var(--a-radius-lg);
+  color: var(--a-text-secondary);
+  text-align: center;
+  transition: background-color 0.1s, border-color 0.1s;
+}
+
+.drop[data-active="true"] {
+  border-color: var(--a-focus);
+  background: #f2f7fe;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px;
+  border: 0;
+  background: var(--a-surface);
+  text-align: left;
+  cursor: pointer;
+}
+
+.fileRow + .fileRow {
+  border-top: 1px solid var(--a-border-subdued);
+}
+
+.fileRow:hover {
+  background: var(--a-surface-hover);
+}
+
+.fileRow[aria-pressed="true"] {
+  background: #f0f0f0;
+  box-shadow: inset 3px 0 0 #303030;
+}

@@ -1,0 +1,19 @@
+{
+  "role": "Frontend Developer • Shopify Specialist",
+  "tagline": "Crafting digital experiences with Indian roots and a global vision.",
+  "navigationHeading": "Navigation",
+  "homeLabel": "Home",
+  "workHeading": "Featured work",
+  "viewAllLabel": "View all projects",
+  "viewAllHref": "#work",
+  "resourcesHeading": "Resources",
+  "resources": [
+    { "label": "Download résumé", "href": "site:resume" },
+    { "label": "LinkedIn", "href": "site:linkedin" },
+    { "label": "GitHub", "href": "site:github" },
+    { "label": "Email me", "href": "site:email" }
+  ],
+  "quote": "“Technology is a modern medium. Our culture is an endless source of inspiration.”",
+  "copyright": "© 2026 Rohit Mishra. All rights reserved.",
+  "credit": "Built with purpose, inspired by Bharat."
+}

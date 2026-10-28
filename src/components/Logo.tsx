@@ -6,15 +6,23 @@ type Theme = "primary" | "inverse";
 
 /**
  * Brand logo from the Figma brand system (171:2): the custom R mark plus
- * "Rohit Mishra" set in Yatra One. Primary on light surfaces, inverse on dark.
+ * the site name set in Yatra One. Primary on light surfaces, inverse on dark.
  * The wordmark stays live text so it scales crisply and reads as the name.
  * Below 212px wide the brand guide calls for the standalone Monogram.
  */
-export function Logo({ theme = "primary", className }: { theme?: Theme; className?: string }) {
+export function Logo({
+  name,
+  theme = "primary",
+  className,
+}: {
+  name: string;
+  theme?: Theme;
+  className?: string;
+}) {
   return (
     <span className={`${styles.logo} ${styles[theme]} ${className ?? ""}`}>
       <img src={asset(`/brand/logo-mark-${theme}.svg`)} alt="" width={80} height={80} className={styles.mark} />
-      <span className={styles.wordmark}>Rohit Mishra</span>
+      <span className={styles.wordmark}>{name}</span>
     </span>
   );
 }

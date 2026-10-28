@@ -61,23 +61,52 @@ The implementation should include:
 
 ```text
 rohit-portfolio/
-├── public/
-│   ├── images/
-│   └── fonts/
+├── content/              # All site text, links and image choices, one JSON file per section (edited by the CMS)
+├── public/               # Files served as-is: built image variants, résumé, video, icons, uploads/
+├── scripts/              # Image pipeline and QA
 ├── src/
-│   ├── assets/
+│   ├── admin/            # The CMS: schema, GitHub client, state, Shopify-style UI
+│   ├── app/
+│   │   ├── (site)/       # The portfolio homepage
+│   │   ├── (cms)/admin/  # The CMS at /admin
+│   │   └── (preview)/    # The CMS live preview at /admin/preview
+│   ├── assets/           # Source images: figma/ (design exports) and uploads/ (from the CMS)
+│   ├── content/          # Content types, loader and link helpers
 │   ├── components/
 │   ├── sections/
-│   ├── styles/
+│   ├── animations/
 │   └── lib/
-├── docs/
-├── CLAUDE.md
 ├── CLAUDE_CODE_HANDOFF_ROHIT_PORTFOLIO.md
 ├── README.md
 └── package.json
 ```
 
-The final application structure may differ depending on the approved framework.
+## Content Management (CMS)
+
+Every image, piece of text and link on the site can be changed section by section at **`/admin`** (on GitHub Pages: `https://rohitmishra-28.github.io/rohit-portfolio/admin`). The admin is styled after the Shopify admin.
+
+**How it works.** The site's content lives in `content/*.json` in this repository. The admin reads and writes those files through the GitHub API, so there's no server or database to run. Saving makes one commit; the existing deploy workflow rebuilds the site and it's live in about 2–3 minutes. Every save is in the Git history and can be reverted.
+
+**Logging in.** The admin asks for a fine-grained GitHub token, which only you can create:
+
+1. Go to GitHub › Settings › Developer settings › Fine-grained tokens › Generate new token.
+2. Under *Repository access* choose *Only select repositories* › `rohit-portfolio`.
+3. Under *Repository permissions*, set *Contents* to **Read and write** and *Actions* to **Read-only** (Actions only shows publish progress).
+4. Paste the token into the login page. It stays in your browser and is only sent to GitHub.
+
+**What you can do.**
+
+- Edit every section: headings, body copy, mobile-specific wording, buttons and their links, alt text.
+- Highlight words in titles with `*asterisks*` to set them in the accent colour.
+- Add, remove and reorder list items: projects, highlights, cards, principles, steps, menu items, footer links.
+- Pick images from the media library or upload new ones (PNG, JPG, WebP). On deploy they're converted to responsive AVIF/WebP automatically.
+- Replace files: résumé PDF, contact video and poster, highlight icons, share image.
+- See a live preview of the real page at desktop and phone sizes before saving.
+- Edit site settings: name, email, LinkedIn, GitHub, résumé, header menu, and SEO and share-preview text.
+
+Safeguards: required fields and link formats are checked before saving, and a save is refused if someone else changed the same section on GitHub meanwhile. Images in use can't be deleted, and the build fails with a clear message if content names an image that doesn't exist.
+
+**Editing without the admin.** You can also edit `content/*.json` directly and push. For images, add the file to `src/assets/uploads/` and use its file name, without the extension, as the image value. `npm run dev` and `npm run build` generate image variants automatically, or run `npm run images` yourself.
 
 ## Important Rules
 
@@ -93,9 +122,9 @@ The final application structure may differ depending on the approved framework.
 
 ## Current Status
 
-**Phase:** Design completed; implementation pending.
+**Phase:** Live on GitHub Pages (Next.js static export), with content managed through the CMS at `/admin`.
 
-**Next milestone:** Inspect the project, propose the technical stack, and agree on the implementation plan before scaffolding the application.
+**Next milestones:** All-projects page (its content is already editable under *All projects* in the CMS), case-study pages, custom domain.
 
 ---
 

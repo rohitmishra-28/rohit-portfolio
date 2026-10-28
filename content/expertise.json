@@ -1,0 +1,43 @@
+{
+  "number": "03",
+  "marker": "Expertise",
+  "title": ["Engineering the details.", "Elevating the experience."],
+  "cards": [
+    {
+      "title": "Ecommerce engineering",
+      "skills": "Shopify themes · Liquid · Custom features · Integrations · Merchandising UI",
+      "skillsMobile": "",
+      "tone": "linen",
+      "emblem": "emblem-chakra",
+      "image": "expertise-1",
+      "imageAlt": "Temple gateway framed by floating storefront panels and carved elephants."
+    },
+    {
+      "title": "Frontend craft",
+      "skills": "JavaScript · HTML · CSS · Responsive UI · Maintainable architecture",
+      "skillsMobile": "",
+      "tone": "forest",
+      "emblem": "emblem-lotus",
+      "image": "expertise-2",
+      "imageAlt": "A lotus whose petals are browser windows, set between carved temple pillars."
+    },
+    {
+      "title": "Performance & quality",
+      "skills": "Core Web Vitals · Technical SEO · QA · Debugging · Documentation",
+      "skillsMobile": "",
+      "tone": "sand",
+      "emblem": "emblem-conch",
+      "image": "expertise-3",
+      "imageAlt": "A golden sun-wheel spinning above a river valley."
+    },
+    {
+      "title": "Growth & experience",
+      "skills": "Conversion-minded development · UX implementation · Funnel improvements · Experiment support",
+      "skillsMobile": "Conversion-minded development · UX implementation · Funnel improvements",
+      "tone": "linen",
+      "emblem": "emblem-trishula",
+      "image": "expertise-4",
+      "imageAlt": "A woman in a sari walking down garden steps towards a winding river and temples."
+    }
+  ]
+}

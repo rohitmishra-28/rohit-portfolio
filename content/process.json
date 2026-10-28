@@ -1,0 +1,32 @@
+{
+  "number": "06",
+  "marker": "A thoughtful way of working",
+  "title": "A clear path from question to impact.",
+  "steps": [
+    {
+      "title": "Understand",
+      "body": "Align on goals, users and the real problem.",
+      "image": "process-1",
+      "imageAlt": "A winding river path through green hills."
+    },
+    {
+      "title": "Explore",
+      "body": "Explore the options, trade-offs and best route.",
+      "image": "process-2",
+      "imageAlt": "An architectural sketch of a temple complex."
+    },
+    {
+      "title": "Build",
+      "body": "Build with craft, clarity and performance in mind.",
+      "image": "process-3",
+      "imageAlt": "Carved stone and textile patterns laid side by side."
+    },
+    {
+      "title": "Refine",
+      "body": "Test, learn, measure and make it better.",
+      "image": "process-4",
+      "imageAlt": "Ripples spreading across a lotus pond."
+    }
+  ],
+  "note": "Clear thinking. Considered craft. Continuous improvement."
+}

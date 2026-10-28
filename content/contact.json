@@ -1,0 +1,18 @@
+{
+  "number": "08",
+  "marker": "A personal hello",
+  "markerMobile": "Let’s connect",
+  "title": "Until we meet.",
+  "subtitle": "Let’s build something meaningful.",
+  "titleMobile": "Have a meaningful challenge in mind?",
+  "copy": "Have a project, an opportunity, or an interesting problem? I’d love to hear what you’re working on.",
+  "copyMobile": "Let’s build something thoughtful, useful and made to last.",
+  "emailLabel": "Send me an email",
+  "emailLabelMobile": "Get in touch",
+  "resumeLabel": "Download résumé",
+  "signoff": "Thoughtful engineering. Human connection.",
+  "namaste": "Namaste",
+  "video": "/video/contact-namaste.webm",
+  "videoPoster": "/video/contact-namaste-poster.webp",
+  "videoLabel": "Rohit standing among carved sandstone arches in a sunlit garden, greeting with a namaste."
+}

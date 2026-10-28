@@ -1,12 +1,18 @@
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { ArrowIcon } from "@/components/ArrowIcon";
 import { Picture } from "@/components/Picture";
+import { resolveLink } from "@/content/links";
+import { Accented, wholeAccent } from "@/content/rich";
+import type { HeroContent, SiteContent } from "@/content/types";
 import styles from "./HeroSection.module.css";
 
 // 01 — Hero (Figma desktop 11:46, mobile 120:2).
 // Load timeline and Hero → About parallax in src/animations/hero.ts; the CTA
 // swap and bouncing scroll cue are CSS loops in the module stylesheet.
-export function HeroSection() {
+export function HeroSection({ content, site }: { content: HeroContent; site: SiteContent }) {
+  const primary = resolveLink(content.primaryCta.href, site);
+  const secondary = resolveLink(content.secondaryCta.href, site);
+
   return (
     <AnimatedSection
       id="top"
@@ -16,9 +22,9 @@ export function HeroSection() {
     >
       <div data-anim="art" className={styles.artWrap}>
         <Picture
-          name="hero"
-          desktopName="hero-desktop"
-          alt="Illustration of a developer working on a laptop beneath a banyan tree, beside a lotus lake and a South Indian temple at sunset."
+          name={content.image}
+          desktopName={content.imageDesktop}
+          alt={content.imageAlt}
           sizes="100vw"
           priority
           className={styles.art}
@@ -28,32 +34,45 @@ export function HeroSection() {
 
       <div data-anim="content" className={styles.content}>
         <p data-anim="eyebrow" data-hero-anim className={styles.eyebrow}>
-          Frontend developer
+          {content.eyebrow}
         </p>
         <h1 id="hero-title" data-anim="title" data-hero-anim className={styles.title}>
-          <span data-anim="line" className={styles.line}>
-            Building{" "}
-          </span>
-          <span data-anim="line" className={`${styles.line} ${styles.accent}`}>
-            digital experiences{" "}
-          </span>
-          <span data-anim="line" className={styles.line}>
-            with purpose.
-          </span>
+          {content.title.map((line, i) => {
+            const whole = wholeAccent(line);
+            return (
+              <span
+                key={i}
+                data-anim="line"
+                className={whole ? `${styles.line} ${styles.accent}` : styles.line}
+              >
+                {whole ?? <Accented text={line} className={styles.accent} />}
+                {i < content.title.length - 1 && " "}
+              </span>
+            );
+          })}
         </h1>
         <span data-anim="divider" data-hero-anim className={styles.divider} aria-hidden="true" />
         <p data-anim="lede" data-hero-anim className={styles.lede}>
-          I craft performant, accessible and thoughtful digital experiences that help ecommerce
-          brands grow.
+          {content.lede}
         </p>
         <div data-anim="ctas" data-hero-anim className={styles.ctas}>
-          <a href="#work" className={styles.primary}>
+          <a
+            href={primary.href}
+            className={styles.primary}
+            {...(primary.download && { download: primary.download })}
+            {...(primary.external && { target: "_blank", rel: "noreferrer" })}
+          >
             <CircleArrow />
-            <span className={styles.label}>Explore work</span>
+            <span className={styles.label}>{content.primaryCta.label}</span>
           </a>
-          <a href="#about" className={styles.secondary}>
+          <a
+            href={secondary.href}
+            className={styles.secondary}
+            {...(secondary.download && { download: secondary.download })}
+            {...(secondary.external && { target: "_blank", rel: "noreferrer" })}
+          >
             <CircleArrow />
-            <span className={styles.label}>About me</span>{" "}
+            <span className={styles.label}>{content.secondaryCta.label}</span>{" "}
             <span className={styles.secondaryArrow} aria-hidden="true">↗</span>
           </a>
         </div>
@@ -63,7 +82,7 @@ export function HeroSection() {
       <div data-anim="scroll-cue" className={styles.scroll} aria-hidden="true">
         <div data-anim="scroll" data-hero-anim className={styles.scrollInner}>
           <span className={styles.scrollLine} />
-          <span>Scroll</span>
+          <span>{content.scrollLabel}</span>
         </div>
       </div>
     </AnimatedSection>

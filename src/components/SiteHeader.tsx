@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
-import { sectionLinks } from "@/lib/site-config";
+import type { Cta } from "@/content/types";
 import { Logo, Monogram } from "./Logo";
 import styles from "./SiteHeader.module.css";
 
@@ -16,7 +16,7 @@ const DIRECTION_THRESHOLD = 6;
  *   you scroll down, so it never sits over the pinned sections while they
  *   play. It also shows whenever it holds keyboard focus or the menu is open.
  */
-export function SiteHeader() {
+export function SiteHeader({ name, nav }: { name: string; nav: Cta[] }) {
   const [open, setOpen] = useState(false);
   const [compact, setCompact] = useState(false);
   const [shown, setShown] = useState(false);
@@ -64,8 +64,8 @@ export function SiteHeader() {
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocused(false);
       }}
     >
-      <a href="#top" className={styles.brand} aria-label="Rohit Mishra — back to top">
-        <Logo className={styles.logo} />
+      <a href="#top" className={styles.brand} aria-label={`${name} — back to top`}>
+        <Logo name={name} className={styles.logo} />
         <Monogram className={styles.monogram} />
       </a>
 
@@ -89,8 +89,8 @@ export function SiteHeader() {
         data-over-art
       >
         <ul className={styles.links}>
-          {sectionLinks.map((link) => (
-            <li key={link.href}>
+          {nav.map((link, i) => (
+            <li key={i}>
               <a href={link.href} onClick={() => setOpen(false)}>
                 {link.label}
               </a>
