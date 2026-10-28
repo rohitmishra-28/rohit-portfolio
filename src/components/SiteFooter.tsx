@@ -62,7 +62,14 @@ export function SiteFooter() {
             <ul className={styles.list}>
               {projects.map((p) => (
                 <li key={p.slug}>
-                  <a href={p.href ?? "#work"}>{p.name}</a>
+                  {p.href ? (
+                    <a href={p.href} target="_blank" rel="noreferrer">
+                      {p.name}
+                      <span className="visually-hidden"> (opens in a new tab)</span>
+                    </a>
+                  ) : (
+                    <a href="#work">{p.name}</a>
+                  )}
                 </li>
               ))}
               <li className={styles.desktopOnly}>

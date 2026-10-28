@@ -16,7 +16,7 @@ export type Project = {
   tags: string;
   image: ImageName;
   imageAlt: string;
-  // Verified case-study or live URL. null = card is intentionally non-clickable.
+  // Verified live site (case-study pages later). null = card is non-clickable.
   href: string | null;
 };
 
@@ -30,7 +30,7 @@ export const projects: Project[] = [
     tags: "Ecommerce · Shopify",
     image: "project-tarinika",
     imageAlt: "Gold temple-style necklace and jhumka earrings on a silk sari.",
-    href: null,
+    href: "https://www.tarinika.com/",
   },
   {
     slug: "paksha",
@@ -41,7 +41,7 @@ export const projects: Project[] = [
     tags: "Wellness · Shopify",
     image: "project-paksha",
     imageAlt: "Ayurvedic oils, herbs and a stone mortar and pestle among green leaves.",
-    href: null,
+    href: "https://paksha.com/",
   },
   {
     slug: "novology",
@@ -52,6 +52,6 @@ export const projects: Project[] = [
     tags: "Skincare · Commerce",
     image: "project-novology",
     imageAlt: "Skincare serums and a cream jar on stone blocks beside lab glassware.",
-    href: null,
+    href: "https://www.novology.com/",
   },
 ];
