@@ -1,4 +1,4 @@
-import { Manrope, Yatra_One } from "next/font/google";
+import { Cormorant_Garamond, Manrope, Yatra_One } from "next/font/google";
 
 // next/font downloads these at build time and serves them from our own origin.
 export const yatraOne = Yatra_One({
@@ -9,8 +9,16 @@ export const yatraOne = Yatra_One({
 });
 
 export const manrope = Manrope({
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   display: "swap",
   variable: "--font-manrope",
+});
+
+// Editorial serif for the Journey section (Figma 198:32).
+export const cormorant = Cormorant_Garamond({
+  weight: "600",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-cormorant",
 });

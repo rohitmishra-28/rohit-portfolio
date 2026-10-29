@@ -1,0 +1,120 @@
+{
+  "eyebrow": "Journey",
+  "title": ["A journey shaped by", "real-world ecommerce."],
+  "intro": "From early web development to leading Shopify Plus implementations for global brands, here’s the path that brought me here.",
+  "introMobile": "From early web development to leading Shopify Plus implementations for global brands.",
+  "chapterLabel": "Chapter",
+  "currentLabel": "Current chapter",
+  "workLabel": "What I work on",
+  "scrollHint": "Scroll to follow the journey",
+  "figure": "journey-figure",
+  "figureAlt": "Illustration of Rohit standing with folded arms, wearing a terracotta scarf.",
+  "background": "journey-bg",
+  "chapters": [
+    {
+      "label": "The beginning",
+      "tagline": "Curiosity before titles",
+      "dates": "May 2015 – May 2016",
+      "location": "India",
+      "badge": "Strive Services",
+      "logo": "",
+      "role": "Web Developer",
+      "company": "Strive Services",
+      "points": [
+        { "title": "Responsive interfaces", "body": "HTML5, CSS3, JavaScript and jQuery, built to work on every screen." },
+        { "title": "Ecommerce and corporate sites", "body": "Frontends for online stores and company websites." },
+        { "title": "Agile delivery", "body": "Shipping to schedule as part of an Agile team." }
+      ]
+    },
+    {
+      "label": "Taking ownership",
+      "tagline": "One platform, end to end",
+      "dates": "May 2016 – Dec 2020",
+      "location": "India",
+      "badge": "Transferet",
+      "logo": "",
+      "role": "Web Developer — IT Head",
+      "company": "Transferet Relocation Services Pvt. Ltd",
+      "points": [
+        { "title": "Platform ownership", "body": "Built and maintained the Transferet.com WordPress platform, from custom theme to plugins." },
+        { "title": "Frontend escalation", "body": "The technical escalation point for frontend architecture." },
+        { "title": "Speed and Core Web Vitals", "body": "Faster load times through CDN setup, image optimisation and caching." }
+      ]
+    },
+    {
+      "label": "Into commerce",
+      "tagline": "Premium brands on Shopify",
+      "dates": "Dec 2020 – Feb 2022",
+      "location": "India",
+      "badge": "Protocol10",
+      "logo": "",
+      "role": "Senior Web Developer — Team Management",
+      "company": "Protocol10 Digital Marcom",
+      "points": [
+        { "title": "Shopify for premium brands", "body": "Led Shopify development for 5+ storefronts, including Grand Seiko Boutique and Alba Watches." },
+        { "title": "Working with brand teams", "body": "Partnered with brand, merchandising and servicing teams on scalable Shopify solutions." },
+        { "title": "Membership and CRM", "body": "A custom WordPress membership platform and internal CRM portals in PHP and MySQL." }
+      ]
+    },
+    {
+      "label": "Sharpening the craft",
+      "tagline": "One storefront, in depth",
+      "dates": "Feb 2022 – May 2022",
+      "location": "India",
+      "badge": "BlueSaint",
+      "logo": "",
+      "role": "Senior Web Developer",
+      "company": "BlueSaint India Pvt. Ltd",
+      "points": [
+        { "title": "The Koovs.com storefront", "body": "Developed and customised Shopify themes for Koovs.com." },
+        { "title": "Pages and sections", "body": "Custom pages and sections in Liquid and JavaScript." },
+        { "title": "Checkout flow", "body": "Checkout flow optimisations, styled with Bootstrap and Tailwind CSS." }
+      ]
+    },
+    {
+      "label": "Building more",
+      "tagline": "Storefronts and apps",
+      "dates": "May 2022 – Nov 2022",
+      "location": "India",
+      "badge": "Attryb",
+      "logo": "",
+      "role": "Senior Web Developer",
+      "company": "Attryb Tech Pvt. Ltd",
+      "points": [
+        { "title": "Four storefronts", "body": "Tarinika.in, Tarinika.com, Paksha.in and Paksha.com." },
+        { "title": "Custom Liquid themes", "body": "Dynamic content blocks and responsive layouts." },
+        { "title": "Public Shopify apps", "body": "Built in JavaScript, PHP and MySQL to extend what the platform can do." }
+      ]
+    },
+    {
+      "label": "Leading teams",
+      "tagline": "Shopify Plus flagships",
+      "dates": "Feb 2023 – Oct 2025",
+      "location": "India",
+      "badge": "VML",
+      "logo": "",
+      "role": "Senior Shopify Developer — Team Lead",
+      "company": "VML India (formerly Wunderman Thompson)",
+      "points": [
+        { "title": "Team leadership", "body": "Led and mentored 3–4 frontend developers through planning, standups and retrospectives." },
+        { "title": "Shopify Plus flagships", "body": "Novology.com for Hindustan Unilever and Vishal Mega Mart, including a Salesforce Commerce Cloud migration." },
+        { "title": "Standards and integrations", "body": "Coding standards, PR reviews, and Admin API pipelines between ERP systems and Shopify." }
+      ]
+    },
+    {
+      "label": "Today",
+      "tagline": "Systems over one-off fixes",
+      "dates": "Oct 2025 – Present",
+      "location": "Bengaluru, India",
+      "badge": "Channel Feeder",
+      "logo": "",
+      "role": "Senior Shopify Technical Architect",
+      "company": "Channel Feeder India Pvt Ltd",
+      "points": [
+        { "title": "Storefront architecture", "body": "Scalable foundations across multi-store Shopify ecosystems." },
+        { "title": "Performance & quality", "body": "Speed, Core Web Vitals, debugging, and reliable releases." },
+        { "title": "AI-assisted enrichment", "body": "Practical tooling to improve catalogue workflows." }
+      ]
+    }
+  ]
+}

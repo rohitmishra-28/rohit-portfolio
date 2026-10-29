@@ -1,0 +1,612 @@
+/* 03 — Journey. Mobile first (Figma 204:32); desktop from 1024px (198:32).
+   `.journey[data-pinned]` is set by src/animations/journey.ts while the
+   pinned scroll runs; without it the chapters are a plain list. */
+.journey {
+  --j-ink: #122921;
+  --j-muted: #5c574d;
+  --j-accent: #ad5729;
+  --j-line: #dbcfba;
+  --j-card: rgb(251 246 237 / 0.97);
+  --j-figure-h: 204px;
+
+  position: relative;
+  isolation: isolate;
+  padding: 26px 0 48px;
+  background: #fbf3e6;
+  color: var(--j-ink);
+}
+
+/* The scene stays one screen tall even when the static list is long. */
+.background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: block;
+  pointer-events: none;
+}
+
+.backgroundImg {
+  position: sticky;
+  top: 0;
+  display: block;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh;
+  object-fit: cover;
+  object-position: right center;
+}
+
+.inner {
+  margin-inline: auto;
+}
+
+/* ---------- Header ---------- */
+.header {
+  padding-inline: 24px;
+}
+
+/* Figma mobile uses ochre #c2945c; terracotta meets text contrast. */
+.eyebrow {
+  margin: 0;
+  color: var(--j-accent);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.55em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 12px 0 0;
+  font-family: var(--font-serif);
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.22;
+}
+
+.line {
+  display: block;
+}
+
+.accent {
+  color: var(--j-accent);
+}
+
+.intro {
+  max-width: 340px;
+  margin: 8px 0 0;
+  color: var(--j-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.desktopOnly {
+  display: none;
+}
+
+/* ---------- Chapters ---------- */
+.stage {
+  margin-top: 18px;
+}
+
+.chapters {
+  display: grid;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chapter {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lead {
+  text-align: center;
+}
+
+.label {
+  margin: 0;
+  color: var(--j-accent);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tagline {
+  margin: 4px 0 0;
+  font-size: 12px;
+}
+
+.figureSlot {
+  width: calc(var(--j-figure-h) * 2 / 3);
+  height: var(--j-figure-h);
+  margin-top: 4px;
+}
+
+/* Only the first chapter carries the figure; in the plain list the others
+   don't need its space. */
+.journey:not([data-pinned]) .chapter + .chapter .figureSlot {
+  display: none;
+}
+
+.figure,
+.figureImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.figureImg {
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.when {
+  position: relative;
+  /* Left-aligned a little inside the figure's left edge (Figma: 32 of 136px). */
+  width: calc(var(--j-figure-h) * 2 / 3);
+  padding-left: calc(var(--j-figure-h) * 0.157);
+  white-space: nowrap;
+}
+
+.node {
+  display: none;
+}
+
+.dates {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.location {
+  margin: 3px 0 0;
+  color: var(--j-muted);
+  font-size: 10px;
+}
+
+.marker {
+  display: block;
+  width: 82px;
+  height: 2px;
+  margin-top: 5px;
+  background: var(--j-accent);
+}
+
+.card {
+  position: relative;
+  margin: 16px 18px 0;
+  border: 1px solid var(--j-line);
+  border-radius: 16px;
+  background: var(--j-card);
+  box-shadow: 6px 7px 0 rgb(38 38 31 / 0.08);
+}
+
+.cardBody {
+  padding: 36px 14px 32px;
+}
+
+.counter {
+  margin: 0;
+  color: var(--j-accent);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.role {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  column-gap: 14px;
+  margin-top: 12px;
+}
+
+.roleText {
+  display: contents;
+}
+
+.logoTile {
+  display: grid;
+  place-items: center;
+  height: 58px;
+  padding: 6px;
+  border: 1px solid var(--j-line);
+  border-radius: 8px;
+  background: #fbf6ed;
+}
+
+.badge {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.logo,
+.logoImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.logoImg {
+  object-fit: contain;
+}
+
+.roleTitle {
+  margin: 0;
+  text-wrap: balance;
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.company {
+  grid-column: 1 / -1;
+  margin: 12px 0 0;
+  color: var(--j-muted);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.workLabel {
+  margin: 12px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--j-line);
+  color: var(--j-accent);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.points {
+  display: grid;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.point {
+  display: grid;
+  grid-template-columns: 35px minmax(0, 1fr);
+  align-content: start;
+  --j-num: 35px;
+}
+
+/* Rules between points start at the text column, as in the design. */
+.point + .point {
+  margin-top: 18px;
+  padding-top: 18px;
+  background: linear-gradient(var(--j-line), var(--j-line)) no-repeat var(--j-num) 0 / calc(100% - var(--j-num)) 1px;
+}
+
+.pointNumber {
+  grid-row: span 2;
+  color: var(--j-accent);
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.pointTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.pointBody {
+  margin: 3px 0 0;
+  color: var(--j-muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.hint {
+  display: none;
+  margin: 0;
+  color: var(--j-accent);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.arrow {
+  display: inline-block;
+  margin-left: 4px;
+}
+
+/* ---------- Pinned: the chapters overlap and swap in place ---------- */
+.journey[data-pinned] {
+  /* Fit the figure, chapter and card in one phone screen. */
+  --j-figure-h: clamp(96px, calc(100svh - 680px), 204px);
+}
+
+.journey[data-pinned] .chapters {
+  gap: 0;
+}
+
+.journey[data-pinned] .chapter {
+  grid-area: 1 / 1;
+}
+
+/* One card frame (the first chapter's) stays put; later chapters bring only
+   their contents. */
+.journey[data-pinned] .chapter + .chapter .card {
+  border-color: transparent;
+  background: none;
+  box-shadow: none;
+}
+
+.journey[data-pinned] .card {
+  flex: 1 1 auto;
+}
+
+.journey[data-pinned] .cardBody {
+  padding-bottom: 52px;
+}
+
+.journey[data-pinned] .hint {
+  position: absolute;
+  bottom: 22px;
+  left: 14px;
+  display: block;
+}
+
+/* ---------- Desktop ---------- */
+@media (min-width: 1024px) {
+  .journey {
+    --j-card: rgb(251 246 237 / 0.84);
+    --j-figure-h: 343px;
+
+    padding: 36px 0 72px;
+  }
+
+  /* Crop the foreground rock below the dates (imagery guideline: keep
+     text on a quiet area). */
+  .journey {
+    overflow: clip;
+  }
+
+  .background {
+    bottom: -14%;
+  }
+
+  .backgroundImg {
+    object-position: center bottom;
+  }
+
+  .inner {
+    max-width: 1440px;
+    padding-inline: clamp(32px, 5.8vw, 84px);
+  }
+
+  .header {
+    padding-inline: 0;
+  }
+
+  .eyebrow {
+    color: var(--j-accent);
+    font-size: 12px;
+  }
+
+  .title {
+    margin-top: 14px;
+    font-size: 48px;
+  }
+
+  .intro {
+    max-width: 690px;
+    margin-top: 10px;
+    font-size: 17px;
+  }
+
+  .desktopOnly {
+    display: inline;
+  }
+
+  .mobileOnly {
+    display: none;
+  }
+
+  .stage {
+    margin-top: 20px;
+    margin-right: clamp(0px, 3vw, 41px);
+  }
+
+  .chapter {
+    display: grid;
+    grid-template-columns: minmax(250px, 1fr) minmax(0, 850px);
+  }
+
+  .meta {
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 12px;
+  }
+
+  .lead {
+    width: 228px;
+    padding-left: 33px;
+    text-align: left;
+  }
+
+  .label {
+    font-size: 11px;
+  }
+
+  .tagline {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+
+  .figureSlot {
+    width: 228px;
+    margin-top: 5px;
+  }
+
+  .when {
+    display: grid;
+    justify-items: center;
+    width: 228px;
+    margin-top: 14px;
+    padding-left: 0;
+  }
+
+  /* A soft ivory wash keeps the dates legible over the scene. */
+  .when::before {
+    position: absolute;
+    inset: -22px -28px -20px;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(251 243 230 / 0.96) 55%, rgb(251 243 230 / 0));
+    content: "";
+  }
+
+  .node {
+    position: absolute;
+    top: 16px;
+    left: 30px;
+    display: block;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #ad9473;
+    border-radius: 50%;
+    background: var(--j-ink);
+  }
+
+  .dates {
+    font-size: 13px;
+  }
+
+  .location {
+    margin-top: 1px;
+    font-size: 12px;
+  }
+
+  .marker {
+    margin-top: 5px;
+  }
+
+  .card {
+    margin: 0;
+    border-radius: 20px;
+    box-shadow: 0 6px 0 rgb(38 38 31 / 0.08);
+  }
+
+  .cardBody {
+    padding: 54px 53px 40px 57px;
+  }
+
+  .counter {
+    font-size: 11px;
+    letter-spacing: 0.09em;
+  }
+
+  .role {
+    grid-template-columns: 116px minmax(0, 1fr);
+    column-gap: 34px;
+    margin-top: 33px;
+  }
+
+  .roleText {
+    display: block;
+  }
+
+  .logoTile {
+    height: 94px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    place-items: center start;
+  }
+
+  .badge {
+    font-size: 18px;
+    text-align: left;
+  }
+
+  /* Breaks like the design: "Senior Shopify / Technical Architect". */
+  .roleTitle {
+    max-width: 400px;
+    font-size: 39px;
+    line-height: 1.18;
+  }
+
+  .company {
+    margin-top: 6px;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  .workLabel {
+    margin-top: 29px;
+    padding-top: 30px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+
+  .points {
+    margin-top: 25px;
+    padding-right: 18px;
+  }
+
+  .point {
+    --j-num: 52px;
+    grid-template-columns: 52px minmax(0, 1fr);
+  }
+
+  .point + .point {
+    margin-top: 23px;
+    padding-top: 15px;
+  }
+
+  .pointNumber {
+    font-size: 19px;
+  }
+
+  .pointTitle {
+    font-size: 15px;
+  }
+
+  .pointBody {
+    margin-top: 6px;
+    font-size: 13px;
+  }
+
+  .hint {
+    font-size: 11px;
+  }
+
+  /* Tighter while pinned so the whole section fits a 900px-tall window. */
+  .journey[data-pinned] {
+    --j-figure-h: clamp(220px, calc(100vh - 560px), 343px);
+
+    padding-bottom: 28px;
+  }
+
+  .journey[data-pinned] .cardBody {
+    padding-top: 44px;
+    padding-bottom: 68px;
+  }
+
+  .journey[data-pinned] .hint {
+    bottom: 36px;
+    left: 57px;
+  }
+}

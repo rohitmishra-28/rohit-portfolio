@@ -4,6 +4,7 @@ import { expertiseAnimation } from "./expertise";
 import { footerAnimation } from "./footer";
 import type { gsap } from "./gsap";
 import { heroAnimation } from "./hero";
+import { journeyAnimation } from "./journey";
 import { philosophyAnimation } from "./philosophy";
 import { processAnimation } from "./process";
 import { signatureAnimation } from "./signature";
@@ -15,6 +16,7 @@ type SectionAnimation = (scope: HTMLElement, mm: gsap.MatchMedia) => void;
 export const animations = {
   hero: heroAnimation,
   about: aboutAnimation,
+  journey: journeyAnimation,
   work: workAnimation,
   expertise: expertiseAnimation,
   philosophy: philosophyAnimation,

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { manrope, yatraOne } from "@/lib/fonts";
+import { cormorant, manrope, yatraOne } from "@/lib/fonts";
 import "../../../globals.css";
 
 export const metadata: Metadata = {
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 // scripts. data-cms-preview turns the section animations off.
 export default function PreviewLayout({ children }: LayoutProps<"/admin/preview">) {
   return (
-    <html lang="en" className={`${yatraOne.variable} ${manrope.variable}`} data-cms-preview="">
+    <html lang="en" className={`${yatraOne.variable} ${manrope.variable} ${cormorant.variable}`} data-cms-preview="">
       <body>{children}</body>
     </html>
   );
