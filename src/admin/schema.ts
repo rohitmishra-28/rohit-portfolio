@@ -150,6 +150,85 @@ export const sections: SectionDef[] = [
     ],
   },
   {
+    id: "journey",
+    title: "Journey",
+    description: "Career chapters, from the first role to today.",
+    icon: "clock",
+    group: "sections",
+    anchor: "journey",
+    cards: [
+      {
+        title: "Heading",
+        fields: [
+          { type: "text", key: "eyebrow", label: "Section label" },
+          { type: "lines", key: "title", label: "Title", help: ACCENT, min: 1, max: 3 },
+          { type: "text", key: "intro", label: "Introduction", multiline: true },
+          { type: "text", key: "introMobile", label: "Mobile introduction", multiline: true, optional: true, help: MOBILE },
+        ],
+      },
+      {
+        title: "Chapters",
+        description: "Oldest first: the scroll runs from the first chapter to the last, and the last one is labelled as the current chapter.",
+        fields: [
+          {
+            type: "list",
+            key: "chapters",
+            label: "Chapters",
+            itemName: "chapter",
+            itemTitle: (c) => [str(c.badge), str(c.dates)].filter(Boolean).join(" · ") || "Untitled chapter",
+            min: 1,
+            max: 12,
+            blank: () => ({
+              label: "", tagline: "", dates: "", location: "", badge: "", logo: "", role: "", company: "",
+              points: [{ title: "", body: "" }],
+            }),
+            fields: [
+              { type: "text", key: "label", label: "Label", help: "Small text above the figure, e.g. The beginning." },
+              { type: "text", key: "tagline", label: "Tagline", help: "Below the label, e.g. Curiosity before titles." },
+              { type: "text", key: "dates", label: "Dates", help: "Below the figure, e.g. Oct 2025 – Present." },
+              { type: "text", key: "location", label: "Location" },
+              { type: "text", key: "role", label: "Role" },
+              { type: "text", key: "company", label: "Company" },
+              { type: "text", key: "badge", label: "Logo text", help: "Shown in the logo tile until a logo is added. Also the logo’s alt text." },
+              { type: "image", key: "logo", label: "Logo", optional: true, help: "Optional. Fits a 116 × 94 tile." },
+              {
+                type: "list",
+                key: "points",
+                label: "What I work on",
+                itemName: "point",
+                itemTitle: (p) => str(p.title) || "Untitled point",
+                min: 1,
+                max: 3,
+                blank: () => ({ title: "", body: "" }),
+                fields: [
+                  { type: "text", key: "title", label: "Title" },
+                  { type: "text", key: "body", label: "Detail", multiline: true },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Labels",
+        fields: [
+          { type: "text", key: "chapterLabel", label: "Chapter counter", help: "Before the number, e.g. Chapter · 02 / 07." },
+          { type: "text", key: "currentLabel", label: "Current chapter counter", help: "Used on the last chapter." },
+          { type: "text", key: "workLabel", label: "Points heading" },
+          { type: "text", key: "scrollHint", label: "Scroll hint", help: "At the bottom of the card while scrolling through." },
+        ],
+      },
+      {
+        title: "Artwork",
+        fields: [
+          { type: "image", key: "figure", label: "Figure", help: "Cut-out portrait with a transparent background, about 1024 × 1536. Stays still while the chapters change." },
+          { type: "text", key: "figureAlt", label: "Figure alt text", multiline: true },
+          { type: "image", key: "background", label: "Background", help: "Wide scene, about 1536 × 1024. Phones show its right side." },
+        ],
+      },
+    ],
+  },
+  {
     id: "work",
     title: "Featured work",
     description: "Project cards linking to live sites.",

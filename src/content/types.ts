@@ -50,6 +50,38 @@ export type AboutContent = {
   imageAlt: string;
 };
 
+export type JourneyChapter = {
+  /** Small label above the figure, e.g. "The beginning". */
+  label: string;
+  tagline: string;
+  dates: string;
+  location: string;
+  /** Text shown in the logo tile while there is no logo. */
+  badge: string;
+  /** Optional logo image; empty = the badge text is shown. */
+  logo: string;
+  role: string;
+  company: string;
+  points: { title: string; body: string }[];
+};
+
+export type JourneyContent = {
+  eyebrow: string;
+  title: string[];
+  intro: string;
+  introMobile: string;
+  chapterLabel: string;
+  /** Counter label for the last chapter, the role held now. */
+  currentLabel: string;
+  workLabel: string;
+  scrollHint: string;
+  figure: string;
+  figureAlt: string;
+  background: string;
+  /** Oldest first: the scroll runs from the beginning to today. */
+  chapters: JourneyChapter[];
+};
+
 export type Project = {
   name: string;
   title: string;
@@ -163,6 +195,7 @@ export type SiteContentMap = {
   site: SiteContent;
   hero: HeroContent;
   about: AboutContent;
+  journey: JourneyContent;
   work: WorkContent;
   expertise: ExpertiseContent;
   philosophy: PhilosophyContent;

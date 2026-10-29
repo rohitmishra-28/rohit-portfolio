@@ -8,6 +8,7 @@ import contact from "../../content/contact.json";
 import expertise from "../../content/expertise.json";
 import footer from "../../content/footer.json";
 import hero from "../../content/hero.json";
+import journey from "../../content/journey.json";
 import philosophy from "../../content/philosophy.json";
 import processSteps from "../../content/process.json";
 import signature from "../../content/signature.json";
@@ -21,6 +22,7 @@ export const content = {
   site,
   hero,
   about,
+  journey,
   work,
   expertise,
   philosophy,

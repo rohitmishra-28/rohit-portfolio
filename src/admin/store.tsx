@@ -24,7 +24,7 @@ import { sectionById } from "./schema";
 
 const TOKEN_KEY = "cms-github-token";
 const CONTENT_KEYS: ContentKey[] = [
-  "site", "hero", "about", "work", "expertise", "philosophy", "process", "signature", "contact", "footer", "clients",
+  "site", "hero", "about", "journey", "work", "expertise", "philosophy", "process", "signature", "contact", "footer", "clients",
 ];
 const IMAGE_SOURCE = /\.(png|jpe?g|webp)$/i;
 const BUILT_VARIANT = /-\d+\.(avif|webp)$/;

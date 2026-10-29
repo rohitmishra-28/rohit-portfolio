@@ -4,7 +4,7 @@ import { MotionRoot } from "@/components/MotionRoot";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { content, siteUrl } from "@/content";
-import { manrope, yatraOne } from "@/lib/fonts";
+import { cormorant, manrope, yatraOne } from "@/lib/fonts";
 import "../globals.css";
 
 const { site } = content;
@@ -61,7 +61,7 @@ const motionBootstrap = `(function(){var d=document.documentElement;if("scrollRe
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     // suppressHydrationWarning: the bootstrap script adds classes to <html>.
-    <html lang="en" className={`${yatraOne.variable} ${manrope.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${yatraOne.variable} ${manrope.variable} ${cormorant.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: motionBootstrap }} />
       </head>

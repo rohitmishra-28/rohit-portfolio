@@ -113,6 +113,25 @@ export const images = {
       1672
     ]
   },
+  "journey-bg": {
+    "width": 1536,
+    "height": 1024,
+    "widths": [
+      480,
+      800,
+      1200,
+      1536
+    ]
+  },
+  "journey-figure": {
+    "width": 1024,
+    "height": 1536,
+    "widths": [
+      480,
+      800,
+      1024
+    ]
+  },
   "philosophy": {
     "width": 1200,
     "height": 896,

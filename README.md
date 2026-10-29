@@ -35,13 +35,14 @@ Use the approved Figma designs as the visual source of truth. Do not redesign ap
 
 1. Hero
 2. About
-3. Featured Work
-4. Expertise
-5. Engineering Philosophy
-6. Process
-7. Heritage to Digital
-8. Contact
-9. Footer
+3. Journey (pinned career timeline)
+4. Featured Work
+5. Expertise
+6. Engineering Philosophy
+7. Process
+8. Heritage to Digital
+9. Contact
+10. Footer
 
 ## Technical Scope
 
