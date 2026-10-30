@@ -3,6 +3,7 @@
 import { useRef, type ReactNode } from "react";
 import { gsap, useGSAP } from "@/animations/gsap";
 import { animations, type AnimationName } from "@/animations";
+import { scheduleSetup } from "@/animations/schedule";
 
 type Props = {
   id: string;
@@ -36,14 +37,21 @@ export function AnimatedSection({
       // The CMS live preview shows the static layout.
       if (!scope || document.documentElement.hasAttribute("data-cms-preview")) return;
       const mm = gsap.matchMedia();
-      try {
-        animations[animation](scope, mm);
-      } catch (error) {
+      const setup = () => {
+        try {
+          animations[animation](scope, mm);
+        } catch (error) {
+          mm.revert();
+          document.documentElement.classList.add("anim-failed");
+          console.error(`Animation "${animation}" failed; showing static content.`, error);
+        }
+      };
+      // The hero's entrance plays on load; the rest wait their turn.
+      const cancel = animation === "hero" ? (setup(), undefined) : scheduleSetup(setup);
+      return () => {
+        cancel?.();
         mm.revert();
-        document.documentElement.classList.add("anim-failed");
-        console.error(`Animation "${animation}" failed; showing static content.`, error);
-      }
-      return () => mm.revert();
+      };
     },
     { scope: ref },
   );

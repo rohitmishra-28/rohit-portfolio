@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { ScrollTrigger } from "@/animations/gsap";
+import { sectionsReady } from "@/animations/schedule";
 
 /**
  * Page-level motion housekeeping.
@@ -33,12 +34,15 @@ export function MotionRoot() {
     } catch {}
 
     // Runs on "load", after ScrollTrigger's own load refresh (its listener is
-    // registered first, at import), or straight away if the page has loaded:
+    // registered first, at import), or straight away if the page has loaded,
+    // then waits for the queued sections (src/animations/schedule.ts):
     // triggers created after load measure themselves immediately. A second
     // refresh only happens if web fonts finish later (it's a long task on
     // phones), then the saved position is restored against the built pins.
     const settle = async () => {
-      if (document.fonts && document.fonts.status !== "loaded") {
+      const fontsPending = document.fonts && document.fonts.status !== "loaded";
+      await sectionsReady();
+      if (fontsPending) {
         await document.fonts.ready;
         ScrollTrigger.refresh();
       }

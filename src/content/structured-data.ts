@@ -58,6 +58,8 @@ export function homeStructuredData(site: SiteContent, siteUrl: string) {
         name: site.seoTitle,
         isPartOf: { "@id": website },
         mainEntity: { "@id": person },
+        // Build date: every content change in the CMS triggers a build.
+        dateModified: new Date().toISOString().slice(0, 10),
       },
     ],
   };

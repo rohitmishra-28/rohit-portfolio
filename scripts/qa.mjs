@@ -27,8 +27,17 @@ for (const reducedMotion of ["no-preference", "reduce"]) {
 
     await page.goto(baseUrl, { waitUntil: "networkidle" });
 
+    // Pinned sections are set up after load and add their scroll distance as
+    // they go, so wait for the page height to settle before measuring it.
+    let height = 0;
+    for (let i = 0; i < 40; i++) {
+      await page.waitForTimeout(250);
+      const h = await page.evaluate(() => document.documentElement.scrollHeight);
+      if (h === height) break;
+      height = h;
+    }
+
     // Scroll through so observers fire and lazy images load.
-    const height = await page.evaluate(() => document.documentElement.scrollHeight);
     for (let y = 0; y < height; y += 400) {
       await page.evaluate((top) => window.scrollTo(0, top), y);
       await page.waitForTimeout(120);
