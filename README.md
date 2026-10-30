@@ -109,6 +109,12 @@ Safeguards: required fields and link formats are checked before saving, and a sa
 
 **Editing without the admin.** You can also edit `content/*.json` directly and push. For images, add the file to `src/assets/uploads/` and use its file name, without the extension, as the image value. `npm run dev` and `npm run build` generate image variants automatically, or run `npm run images` yourself.
 
+## Search and custom domain
+
+- **Search basics** come from CMS › Settings: page title, meta description, share image, and the *Structured data* card (full name, other names, summary, employer, location, skills). The homepage emits Person, WebSite and ProfilePage JSON-LD from them; the build writes `sitemap.xml` and `robots.txt`.
+- **Custom domain:** in the repository, add the Actions variable `CUSTOM_DOMAIN` (Settings › Secrets and variables › Actions › Variables), e.g. `rohitkumarmishra.com`, and set the same domain under Settings › Pages, with *Enforce HTTPS*. At your registrar, point the apex at GitHub Pages (A records `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`) and `www` (CNAME) at `rohitmishra-28.github.io`. Re-run the deploy: the site then builds for the domain root, and canonical, share, sitemap and structured-data URLs all use the new domain. The CMS keeps working at `/admin`.
+- **Search Console:** add a *Domain* property for the new domain, verify it with the DNS TXT record Google gives you, and submit `https://<domain>/sitemap.xml`.
+
 ## Important Rules
 
 1. Read `CLAUDE_CODE_HANDOFF_ROHIT_PORTFOLIO.md` before implementation.
