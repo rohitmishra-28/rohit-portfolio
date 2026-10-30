@@ -2,12 +2,12 @@
   "number": "01",
   "marker": "About me",
   "title": ["A developer with", "*Indian roots* and", "global vision."],
-  "bio": "I’m Rohit Mishra, a frontend developer passionate about crafting digital experiences that are meaningful, accessible and beautiful. I bring together engineering precision, ecommerce expertise and a deep appreciation for visual storytelling.",
+  "bio": "I’m Rohit Kumar Mishra, a Senior Shopify Technical Architect in Bengaluru with 11+ years in commerce engineering, 8+ of them on Shopify and Shopify Plus. I bring together engineering precision, ecommerce expertise and a deep appreciation for visual storytelling.",
   "highlights": [
     {
       "label": "11+ years",
-      "title": "Frontend Development Experience",
-      "short": "Frontend development experience",
+      "title": "Commerce Engineering Experience",
+      "short": "Commerce engineering experience",
       "icon": "/images/icons/about-cap-1.svg"
     },
     {
