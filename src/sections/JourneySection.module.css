@@ -33,7 +33,7 @@
   height: 100vh;
   height: 100lvh;
   object-fit: cover;
-  object-position: right center;
+  object-position: center;
 }
 
 .inner {
@@ -57,10 +57,10 @@
 
 .title {
   margin: 12px 0 0;
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 34px;
-  font-weight: 600;
-  line-height: 1.22;
+  font-weight: 400;
+  line-height: 1.32;
 }
 
 .line {
@@ -239,17 +239,26 @@
   height: 100%;
 }
 
+/* Multiply drops white logo backgrounds into the tile colour; isolation
+   keeps the blend inside the tile. */
+.logoTile:has(.logo) {
+  display: flex;
+  isolation: isolate;
+  padding: 8px;
+}
+
 .logoImg {
   object-fit: contain;
+  mix-blend-mode: multiply;
 }
 
 .roleTitle {
   margin: 0;
   text-wrap: balance;
-  font-family: var(--font-serif);
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1.2;
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.3;
 }
 
 .company {
@@ -297,9 +306,9 @@
 .pointNumber {
   grid-row: span 2;
   color: var(--j-accent);
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.25;
 }
 
@@ -336,6 +345,9 @@
 .journey[data-pinned] {
   /* Fit the figure, chapter and card in one phone screen. */
   --j-figure-h: clamp(96px, calc(100svh - 680px), 204px);
+
+  /* At least a full screen, so the next section never peeks in below. */
+  min-height: 100vh;
 }
 
 .journey[data-pinned] .chapters {
@@ -373,7 +385,6 @@
 @media (min-width: 1024px) {
   .journey {
     --j-card: rgb(251 246 237 / 0.84);
-    --j-figure-h: 343px;
 
     padding: 36px 0 72px;
   }
@@ -406,9 +417,11 @@
     font-size: 12px;
   }
 
+  /* Same scale as the other section titles (e.g. Process: 48 / 52). */
   .title {
     margin-top: 14px;
     font-size: 48px;
+    line-height: 52px;
   }
 
   .intro {
@@ -432,10 +445,13 @@
 
   .chapter {
     display: grid;
-    grid-template-columns: minmax(250px, 1fr) minmax(0, 850px);
+    grid-template-columns: minmax(300px, 1fr) minmax(0, 850px);
   }
 
+  /* A size container: the column is exactly as tall as the card beside it,
+     so the figure can be sized in cqh. */
   .meta {
+    container-type: size;
     justify-content: flex-end;
     align-items: center;
     padding-right: 12px;
@@ -456,8 +472,14 @@
     font-size: 14px;
   }
 
+  /* Sized from the card, not the window: about three quarters of the
+     card's height, unless the column is too narrow for that, keeping the
+     portrait's 2:3 shape so there's no empty band above the head. */
   .figureSlot {
-    width: 228px;
+    flex: none;
+    width: min(100cqw, 74cqh * 2 / 3);
+    height: auto;
+    aspect-ratio: 2 / 3;
     margin-top: 5px;
   }
 
@@ -536,16 +558,21 @@
     place-items: center start;
   }
 
+  .logoTile:has(.logo) {
+    padding: 14px;
+  }
+
   .badge {
     font-size: 18px;
     text-align: left;
   }
 
-  /* Breaks like the design: "Senior Shopify / Technical Architect". */
+  /* Breaks like the design: "Senior Shopify / Technical Architect".
+     Yatra One runs wider than the design's serif, so it is set smaller. */
   .roleTitle {
-    max-width: 400px;
-    font-size: 39px;
-    line-height: 1.18;
+    max-width: 430px;
+    font-size: 32px;
+    line-height: 1.3;
   }
 
   .company {
@@ -577,7 +604,7 @@
   }
 
   .pointNumber {
-    font-size: 19px;
+    font-size: 17px;
   }
 
   .pointTitle {
@@ -595,8 +622,6 @@
 
   /* Tighter while pinned so the whole section fits a 900px-tall window. */
   .journey[data-pinned] {
-    --j-figure-h: clamp(220px, calc(100vh - 560px), 343px);
-
     padding-bottom: 28px;
   }
 

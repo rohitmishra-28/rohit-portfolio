@@ -123,6 +123,15 @@ export const images = {
       1536
     ]
   },
+  "journey-bg-mobile": {
+    "width": 851,
+    "height": 1847,
+    "widths": [
+      480,
+      800,
+      851
+    ]
+  },
   "journey-figure": {
     "width": 1024,
     "height": 1536,
@@ -130,6 +139,58 @@ export const images = {
       480,
       800,
       1024
+    ]
+  },
+  "logo-attryb": {
+    "width": 350,
+    "height": 113,
+    "widths": [
+      350
+    ]
+  },
+  "logo-bluesaint": {
+    "width": 400,
+    "height": 300,
+    "widths": [
+      400
+    ]
+  },
+  "logo-channel-feeder": {
+    "width": 500,
+    "height": 58,
+    "widths": [
+      480,
+      500
+    ]
+  },
+  "logo-protocol10": {
+    "width": 295,
+    "height": 296,
+    "widths": [
+      295
+    ]
+  },
+  "logo-strive": {
+    "width": 232,
+    "height": 82,
+    "widths": [
+      232
+    ]
+  },
+  "logo-transferet": {
+    "width": 280,
+    "height": 320,
+    "widths": [
+      280
+    ]
+  },
+  "logo-vml": {
+    "width": 1067,
+    "height": 1068,
+    "widths": [
+      480,
+      800,
+      1067
     ]
   },
   "philosophy": {

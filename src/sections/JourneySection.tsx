@@ -23,7 +23,8 @@ export function JourneySection({ content }: { content: JourneyContent }) {
   return (
     <AnimatedSection id="journey" animation="journey" className={styles.journey} ariaLabelledby="journey-title">
       <Picture
-        name={content.background}
+        name={content.backgroundMobile}
+        desktopName={content.background}
         alt=""
         sizes="100vw"
         className={styles.background}
