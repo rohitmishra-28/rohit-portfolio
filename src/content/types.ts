@@ -78,6 +78,8 @@ export type JourneyContent = {
   figure: string;
   figureAlt: string;
   background: string;
+  /** Phones get their own, portrait scene. */
+  backgroundMobile: string;
   /** Oldest first: the scroll runs from the beginning to today. */
   chapters: JourneyChapter[];
 };

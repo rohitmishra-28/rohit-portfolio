@@ -223,7 +223,8 @@ export const sections: SectionDef[] = [
         fields: [
           { type: "image", key: "figure", label: "Figure", help: "Cut-out portrait with a transparent background, about 1024 × 1536. Stays still while the chapters change." },
           { type: "text", key: "figureAlt", label: "Figure alt text", multiline: true },
-          { type: "image", key: "background", label: "Background", help: "Wide scene, about 1536 × 1024. Phones show its right side." },
+          { type: "image", key: "background", label: "Desktop background", help: "Wide scene, about 1536 × 1024." },
+          { type: "image", key: "backgroundMobile", label: "Mobile background", help: "Portrait scene for phones, about 850 × 1850." },
         ],
       },
     ],

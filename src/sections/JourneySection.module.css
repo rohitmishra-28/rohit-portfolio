@@ -33,7 +33,7 @@
   height: 100vh;
   height: 100lvh;
   object-fit: cover;
-  object-position: right center;
+  object-position: center;
 }
 
 .inner {
@@ -385,7 +385,6 @@
 @media (min-width: 1024px) {
   .journey {
     --j-card: rgb(251 246 237 / 0.84);
-    --j-figure-h: 343px;
 
     padding: 36px 0 72px;
   }
@@ -446,10 +445,13 @@
 
   .chapter {
     display: grid;
-    grid-template-columns: minmax(250px, 1fr) minmax(0, 850px);
+    grid-template-columns: minmax(300px, 1fr) minmax(0, 850px);
   }
 
+  /* A size container: the column is exactly as tall as the card beside it,
+     so the figure can be sized in cqh. */
   .meta {
+    container-type: size;
     justify-content: flex-end;
     align-items: center;
     padding-right: 12px;
@@ -470,8 +472,14 @@
     font-size: 14px;
   }
 
+  /* Sized from the card, not the window: about three quarters of the
+     card's height, unless the column is too narrow for that, keeping the
+     portrait's 2:3 shape so there's no empty band above the head. */
   .figureSlot {
-    width: 228px;
+    flex: none;
+    width: min(100cqw, 74cqh * 2 / 3);
+    height: auto;
+    aspect-ratio: 2 / 3;
     margin-top: 5px;
   }
 
@@ -614,8 +622,6 @@
 
   /* Tighter while pinned so the whole section fits a 900px-tall window. */
   .journey[data-pinned] {
-    --j-figure-h: clamp(220px, calc(100vh - 560px), 343px);
-
     padding-bottom: 28px;
   }
 

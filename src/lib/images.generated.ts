@@ -123,6 +123,15 @@ export const images = {
       1536
     ]
   },
+  "journey-bg-mobile": {
+    "width": 851,
+    "height": 1847,
+    "widths": [
+      480,
+      800,
+      851
+    ]
+  },
   "journey-figure": {
     "width": 1024,
     "height": 1536,

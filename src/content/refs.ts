@@ -8,6 +8,7 @@ export function imageRefs(c: SiteContentMap): [string, string][] {
     [c.about.image, "About"],
     [c.journey.figure, "Journey"],
     [c.journey.background, "Journey"],
+    [c.journey.backgroundMobile, "Journey"],
     ...c.journey.chapters.filter((ch) => ch.logo).map((ch): [string, string] => [ch.logo, "Journey"]),
     [c.work.background, "Featured work"],
     ...c.work.projects.map((p): [string, string] => [p.image, "Featured work"]),

@@ -10,6 +10,7 @@
   "figure": "journey-figure",
   "figureAlt": "Illustration of Rohit standing with folded arms, wearing a terracotta scarf.",
   "background": "journey-bg",
+  "backgroundMobile": "journey-bg-mobile",
   "chapters": [
     {
       "label": "The beginning",
