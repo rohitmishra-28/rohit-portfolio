@@ -239,8 +239,17 @@
   height: 100%;
 }
 
+/* Multiply drops white logo backgrounds into the tile colour; isolation
+   keeps the blend inside the tile. */
+.logoTile:has(.logo) {
+  display: flex;
+  isolation: isolate;
+  padding: 8px;
+}
+
 .logoImg {
   object-fit: contain;
+  mix-blend-mode: multiply;
 }
 
 .roleTitle {
@@ -534,6 +543,10 @@
     padding: 10px 12px;
     border-radius: 12px;
     place-items: center start;
+  }
+
+  .logoTile:has(.logo) {
+    padding: 14px;
   }
 
   .badge {
