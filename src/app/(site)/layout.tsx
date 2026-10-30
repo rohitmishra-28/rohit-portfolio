@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   ...(siteUrl && { alternates: { canonical: `${siteUrl}/` } }),
   openGraph: {
     type: "website",
-    siteName: site.name,
+    siteName: site.fullName,
     title,
     description: site.seoDescription,
     ...(siteUrl && { url: `${siteUrl}/` }),

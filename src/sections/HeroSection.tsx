@@ -33,23 +33,27 @@ export function HeroSection({ content, site }: { content: HeroContent; site: Sit
       </div>
 
       <div data-anim="content" className={styles.content}>
-        <p data-anim="eyebrow" data-hero-anim className={styles.eyebrow}>
-          {content.eyebrow}
-        </p>
-        <h1 id="hero-title" data-anim="title" data-hero-anim className={styles.title}>
-          {content.title.map((line, i) => {
-            const whole = wholeAccent(line);
-            return (
-              <span
-                key={i}
-                data-anim="line"
-                className={whole ? `${styles.line} ${styles.accent}` : styles.line}
-              >
-                {whole ?? <Accented text={line} className={styles.accent} />}
-                {i < content.title.length - 1 && " "}
-              </span>
-            );
-          })}
+        {/* One H1 holds the eyebrow (name and role, for search engines) and
+            the headline; each keeps its own look and entrance. */}
+        <h1 id="hero-title" className={styles.heading}>
+          <span data-anim="eyebrow" data-hero-anim className={styles.eyebrow}>
+            {content.eyebrow}
+          </span>{" "}
+          <span data-anim="title" data-hero-anim className={styles.title}>
+            {content.title.map((line, i) => {
+              const whole = wholeAccent(line);
+              return (
+                <span
+                  key={i}
+                  data-anim="line"
+                  className={whole ? `${styles.line} ${styles.accent}` : styles.line}
+                >
+                  {whole ?? <Accented text={line} className={styles.accent} />}
+                  {i < content.title.length - 1 && " "}
+                </span>
+              );
+            })}
+          </span>
         </h1>
         <span data-anim="divider" data-hero-anim className={styles.divider} aria-hidden="true" />
         <p data-anim="lede" data-hero-anim className={styles.lede}>

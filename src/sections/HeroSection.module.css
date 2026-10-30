@@ -35,6 +35,17 @@
   padding: 30px var(--section-inset) 46px;
 }
 
+/* The H1 only groups the eyebrow and headline; each sets its own type. */
+.heading {
+  margin: 0;
+  font: inherit;
+}
+
+.eyebrow,
+.title {
+  display: block;
+}
+
 .eyebrow {
   margin: 0;
   color: var(--color-burnt-sienna);

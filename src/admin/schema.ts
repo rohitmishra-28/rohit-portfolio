@@ -600,8 +600,9 @@ export const sections: SectionDef[] = [
       {
         title: "Identity",
         fields: [
-          { type: "text", key: "name", label: "Name", help: "Used in the logo, footer and share previews." },
-          { type: "text", key: "role", label: "Role" },
+          { type: "text", key: "name", label: "Name", help: "Short name for the logo and footer." },
+          { type: "text", key: "fullName", label: "Full name", help: "Your full name as search engines should know it. Used in the page title, share previews and structured data." },
+          { type: "text", key: "role", label: "Role", help: "Job title, used in the footer, share previews and structured data." },
         ],
       },
       {
@@ -644,6 +645,20 @@ export const sections: SectionDef[] = [
           { type: "text", key: "seoDescription", label: "Meta description", multiline: true },
           { type: "file", key: "shareImage", label: "Share image", accept: "image/jpeg,image/png", kind: "image", help: "Exactly 1200 × 630, JPEG or PNG." },
           { type: "text", key: "shareImageAlt", label: "Share image alt text" },
+        ],
+      },
+      {
+        title: "Structured data",
+        description: "Facts Google and AI search use to tell you apart from others with your name. Shown nowhere on the page.",
+        fields: [
+          { type: "text", key: "alternateNames", label: "Other names", help: "Comma separated, e.g. Rohit Mishra, Rohit K. Mishra." },
+          { type: "text", key: "summary", label: "Summary", multiline: true, help: "Two or three sentences about your work." },
+          { type: "text", key: "employer", label: "Current employer" },
+          { type: "text", key: "education", label: "College or university" },
+          { type: "text", key: "locality", label: "City" },
+          { type: "text", key: "region", label: "State" },
+          { type: "text", key: "country", label: "Country code", help: "Two letters, e.g. IN." },
+          { type: "text", key: "knowsAbout", label: "Skills", multiline: true, help: "Comma separated." },
         ],
       },
     ],

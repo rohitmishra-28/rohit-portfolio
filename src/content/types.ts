@@ -12,8 +12,23 @@ export type Href = string;
 export type Cta = { label: string; href: Href };
 
 export type SiteContent = {
+  /** Short name for the logo and footer. */
   name: string;
+  /** Full name for search engines: titles, structured data. */
+  fullName: string;
+  /** Other spellings, comma separated. */
+  alternateNames: string;
   role: string;
+  /** One-paragraph bio for structured data (Person.description). */
+  summary: string;
+  locality: string;
+  region: string;
+  /** ISO country code, e.g. IN. */
+  country: string;
+  employer: string;
+  education: string;
+  /** Skills for structured data, comma separated. */
+  knowsAbout: string;
   email: string;
   emailSubject: string;
   linkedin: string;
