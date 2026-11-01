@@ -59,7 +59,8 @@ export function homeStructuredData(site: SiteContent, siteUrl: string) {
         isPartOf: { "@id": website },
         mainEntity: { "@id": person },
         // Build date: every content change in the CMS triggers a build.
-        dateModified: new Date().toISOString().slice(0, 10),
+        // Google's ProfilePage rules need a full datetime, not just the date.
+        dateModified: new Date().toISOString(),
       },
     ],
   };
