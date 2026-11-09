@@ -52,7 +52,8 @@ for (const reducedMotion of ["no-preference", "reduce"]) {
       // and cue (faded on purpose by the scroll-linked hand-off) and the
       // Process route (65% opacity in the design).
       // Journey: only the current chapter (and, until the last, the hint) shows while pinned.
-      const intentional = ["content", "scroll-cue", "route", "chapter", "hint"];
+      // Services: likewise only the current service.
+      const intentional = ["content", "scroll-cue", "route", "chapter", "hint", "panel"];
       const hidden = [...document.querySelectorAll("[data-anim], [data-anim] *")].filter((el) => {
         if (el.closest(intentional.map((n) => `[data-anim="${n}"]`).join(","))) return false;
         const r = el.getBoundingClientRect();

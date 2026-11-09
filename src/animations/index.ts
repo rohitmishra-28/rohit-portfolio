@@ -7,6 +7,7 @@ import { heroAnimation } from "./hero";
 import { journeyAnimation } from "./journey";
 import { philosophyAnimation } from "./philosophy";
 import { processAnimation } from "./process";
+import { servicesAnimation } from "./services";
 import { signatureAnimation } from "./signature";
 import { workAnimation } from "./work";
 
@@ -18,6 +19,7 @@ export const animations = {
   about: aboutAnimation,
   journey: journeyAnimation,
   work: workAnimation,
+  services: servicesAnimation,
   expertise: expertiseAnimation,
   philosophy: philosophyAnimation,
   process: processAnimation,

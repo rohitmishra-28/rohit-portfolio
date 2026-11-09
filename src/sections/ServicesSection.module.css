@@ -1,0 +1,622 @@
+/* 03 — Services. Mobile first (no phone frame in Figma: the services are a
+   list of cards); desktop from 1024px (Figma 11:125). `.services[data-pinned]`
+   is set by src/animations/services.ts while the pinned scroll runs: the
+   panels then overlap and the navigation tracks the active service.
+   Stone and ochre text use the darker contrast tokens on parchment. */
+.services {
+  position: relative;
+  padding: 40px 0 32px;
+  background: var(--color-parchment);
+  color: var(--color-ink);
+}
+
+.stage {
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--section-inset);
+}
+
+/* ---------- Heading ---------- */
+.marker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  color: var(--color-ochre-text);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.marker::after {
+  content: "";
+  width: 54px;
+  height: 1px;
+  background: var(--color-terracotta);
+}
+
+.number {
+  color: var(--color-burnt-sienna);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.title {
+  margin: 18px 0 0;
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--color-forest);
+}
+
+.line {
+  display: block;
+}
+
+/* Masks for the unmask entrance. */
+.title .line {
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.title .line > span {
+  display: block;
+}
+
+.lede {
+  max-width: 34em;
+  margin: 18px 0 0;
+  font-size: 15px;
+  line-height: 23px;
+}
+
+/* The side navigation only earns its place next to the desktop stage. */
+.nav {
+  display: none;
+}
+
+.nav ol {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navLink {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 58px;
+  padding: 0 16px 0 22px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  text-decoration: none;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.navLink::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  left: -1px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--color-forest);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.navNumber {
+  flex: none;
+  width: 24px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.navLink:hover {
+  color: var(--color-forest);
+}
+
+.navLink[aria-current] {
+  border-color: var(--color-border-light);
+  background: var(--color-warm-ivory);
+  color: var(--color-forest);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.navLink[aria-current]::before {
+  opacity: 1;
+}
+
+.navLink[aria-current] .navNumber {
+  color: var(--color-burnt-sienna);
+}
+
+/* ---------- Services ---------- */
+.panels {
+  display: grid;
+  gap: 40px;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.panel {
+  display: grid;
+  gap: 22px;
+}
+
+/* On phones the picture leads each card. */
+.media {
+  order: -1;
+  margin: 0;
+}
+
+.frame {
+  padding: 8px;
+  border: 1px solid var(--color-border-light);
+  border-radius: 12px;
+  background: var(--color-warm-ivory);
+}
+
+.picture {
+  display: block;
+  overflow: hidden;
+  border-radius: 8px;
+  aspect-ratio: 476 / 454;
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.caption {
+  margin-top: 14px;
+  color: var(--color-text-muted);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.counter {
+  margin: 0;
+  color: var(--color-burnt-sienna);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.desktopOnly {
+  display: none;
+}
+
+.serviceTitle {
+  margin: 10px 0 0;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--color-forest);
+}
+
+.description {
+  margin: 14px 0 0;
+  font-size: 15px;
+  line-height: 23px;
+}
+
+.includesLabel {
+  margin: 22px 0 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-border-light);
+  color: var(--color-text-muted);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.includes {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--color-forest);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 25px;
+}
+
+/* The progress rail only appears with the pinned scroll. */
+.progress {
+  display: none;
+}
+
+/* ---------- Closing call to action ---------- */
+.cta {
+  display: grid;
+  gap: 24px;
+  margin: 48px 16px 0;
+  padding: 32px 24px;
+  border-radius: 14px;
+  background: var(--color-forest);
+  color: var(--color-warm-ivory);
+}
+
+.ctaEyebrow {
+  margin: 0;
+  color: var(--color-muted-ochre);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+}
+
+.ctaTitle {
+  margin: 16px 0 0;
+  font-family: var(--font-display);
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+/* On phones the headline's lines run together and wrap naturally. */
+.ctaTitle .line {
+  display: inline;
+}
+
+@media (min-width: 1024px) {
+  .ctaTitle .line {
+    display: block;
+  }
+}
+
+.ctaCopy {
+  margin: 16px 0 0;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  justify-self: start;
+  min-width: 200px;
+  min-height: 52px;
+  padding: 0 28px;
+  border-radius: 28px;
+  background: var(--color-warm-ivory);
+  color: var(--color-forest);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.ctaButton:hover {
+  background: var(--color-linen);
+}
+
+.ctaButton:hover svg {
+  transform: translateX(3px);
+}
+
+.ctaButton svg {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.ctaButton:active {
+  transform: translateY(1px);
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .panel {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 32px;
+  }
+
+  .media {
+    order: 0;
+  }
+}
+
+/* ---------- Desktop (Figma 11:125, 1440 × 1280) ---------- */
+@media (min-width: 1024px) {
+  .services {
+    padding: 0 0 62px;
+  }
+
+  /* Columns: introduction 310 · details 350 · artwork 500 at 1440. The top
+     space is inside the stage so it keeps it while pinned. */
+  .stage {
+    padding-top: 42px;
+    display: grid;
+    grid-template-columns: minmax(250px, 310px) minmax(0, 350fr) minmax(0, 500fr);
+    column-gap: 45px;
+    align-items: start;
+    padding-right: 64px;
+  }
+
+  .intro {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .marker {
+    position: relative;
+    gap: 22px;
+    font-size: 12px;
+  }
+
+  /* The section number sits in the left gutter, as in every section. */
+  .number {
+    position: absolute;
+    left: calc(-1 * var(--section-inset) + 58px);
+    font-size: 13px;
+  }
+
+  .title {
+    margin-top: 26px;
+    font-size: 36px;
+    line-height: 41px;
+  }
+
+  .lede {
+    max-width: 315px;
+    margin-top: 29px;
+  }
+
+  .nav {
+    display: block;
+    margin-top: 90px;
+  }
+
+  /* Without the pin the list stays beside the services as jump links. */
+  .services:not([data-pinned]) .nav {
+    position: sticky;
+    top: 110px;
+  }
+
+  .panels {
+    grid-column: 2 / span 2;
+    grid-row: 1;
+    grid-template-columns: subgrid;
+    row-gap: 64px;
+    margin-top: 132px;
+  }
+
+  .panel {
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    gap: 0 45px;
+  }
+
+  .media {
+    order: 0;
+  }
+
+  .frame {
+    padding: 11px;
+    border-radius: 14px;
+  }
+
+  .picture {
+    border-radius: 10px;
+  }
+
+  .caption {
+    margin-top: 18px;
+    padding-left: 12px;
+  }
+
+  .details {
+    padding-top: 14px;
+  }
+
+  .desktopOnly {
+    display: inline;
+  }
+
+  .mobileOnly {
+    display: none;
+  }
+
+  .counter {
+    font-size: 13px;
+  }
+
+  .serviceTitle {
+    max-width: 360px;
+    margin-top: 30px;
+    font-size: 39px;
+    line-height: 45px;
+  }
+
+  .description {
+    max-width: 350px;
+    margin-top: 50px;
+    font-size: 16px;
+    line-height: 25px;
+  }
+
+  .includesLabel {
+    margin-top: 49px;
+    padding-bottom: 15px;
+  }
+
+  .includes {
+    margin-top: 20px;
+  }
+
+  .cta {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    margin: 85px max(40px, calc((100% - 1360px) / 2)) 0;
+    padding: 42px 70px 52px 48px;
+  }
+
+  .ctaTitle {
+    margin-top: 22px;
+    font-size: 34px;
+    line-height: 40px;
+  }
+
+  .ctaCopy {
+    margin-top: 37px;
+  }
+
+  .ctaButton {
+    min-width: 220px;
+    min-height: 56px;
+    margin-top: 20px;
+  }
+}
+
+/* Narrow laptops: a slimmer introduction and equal service columns, so the
+   service title keeps room beside the picture. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .stage {
+    grid-template-columns: minmax(210px, 240px) minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 36px;
+    padding-right: 40px;
+  }
+
+  .panel {
+    column-gap: 36px;
+  }
+
+  .title {
+    font-size: 31px;
+    line-height: 36px;
+  }
+
+  .serviceTitle {
+    font-size: clamp(30px, 3vw, 39px);
+    line-height: 1.15;
+  }
+
+  .description {
+    margin-top: 36px;
+  }
+
+  .navLink {
+    gap: 12px;
+    padding-left: 16px;
+  }
+}
+
+/* ---------- Pinned stage (desktop, set by the animation) ---------- */
+@media (min-width: 1024px) {
+  .services[data-pinned] .panels {
+    grid-template-rows: auto;
+  }
+
+  /* All services share one slot; the scroll swaps them. */
+  .services[data-pinned] .panel {
+    grid-row: 1;
+  }
+
+  .services[data-pinned] .progress {
+    display: block;
+    grid-column: 2 / span 2;
+    grid-row: 2;
+    margin-top: 72px;
+    padding-right: 40px;
+  }
+
+  .hint {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .rail {
+    position: relative;
+    height: 1px;
+    margin: 24px 6px 40px;
+    background: var(--color-border-light);
+  }
+
+  .fill {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--color-terracotta);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  .step {
+    position: absolute;
+    top: 0;
+    display: grid;
+    justify-items: center;
+    transform: translateX(-50%);
+  }
+
+  .dot {
+    width: 9px;
+    height: 9px;
+    margin-top: -4.5px;
+    border: 1px solid var(--color-muted-ochre);
+    border-radius: 50%;
+    background: var(--color-parchment);
+    transition:
+      background-color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+  }
+
+  .step[data-reached] .dot {
+    border-color: var(--color-terracotta);
+    background: var(--color-terracotta);
+    transform: scale(1.33);
+  }
+
+  .stepNumber {
+    margin-top: 16px;
+    color: var(--color-text-muted);
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 14px;
+  }
+
+  .step[data-current] .stepNumber {
+    color: var(--color-forest);
+  }
+}

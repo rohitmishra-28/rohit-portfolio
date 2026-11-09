@@ -265,6 +265,42 @@ export const images = {
       1000
     ]
   },
+  "services-1": {
+    "width": 1200,
+    "height": 896,
+    "widths": [
+      480,
+      800,
+      1200
+    ]
+  },
+  "services-2": {
+    "width": 1200,
+    "height": 896,
+    "widths": [
+      480,
+      800,
+      1200
+    ]
+  },
+  "services-3": {
+    "width": 1200,
+    "height": 896,
+    "widths": [
+      480,
+      800,
+      1200
+    ]
+  },
+  "services-4": {
+    "width": 1200,
+    "height": 896,
+    "widths": [
+      480,
+      800,
+      1200
+    ]
+  },
   "signature": {
     "width": 1920,
     "height": 640,
