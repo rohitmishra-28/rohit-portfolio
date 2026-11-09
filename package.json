@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "predev": "npm run images",
+    "dev:remote": "node scripts/dev-remote.mjs",
     "build": "next build",
     "prebuild": "npm run images",
     "start": "next start",
