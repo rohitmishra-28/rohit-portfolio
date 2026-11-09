@@ -139,6 +139,29 @@ export type ExpertiseContent = {
   }[];
 };
 
+export type ServicesContent = {
+  number: string;
+  marker: string;
+  title: string[];
+  intro: string;
+  /** Heading over each service's list, e.g. What this includes. */
+  includesLabel: string;
+  scrollHint: string;
+  services: {
+    /** One word for the step, e.g. Build; shown on phones. */
+    label: string;
+    title: string;
+    description: string;
+    /** Separated with · (middle dot); one line each. */
+    includes: string;
+    /** Under the image, before the number. */
+    caption: string;
+    image: string;
+    imageAlt: string;
+  }[];
+  cta: { eyebrow: string; title: string[]; copy: string; button: Cta };
+};
+
 export type PhilosophyContent = {
   number: string;
   marker: string;
@@ -214,6 +237,7 @@ export type SiteContentMap = {
   about: AboutContent;
   journey: JourneyContent;
   work: WorkContent;
+  services: ServicesContent;
   expertise: ExpertiseContent;
   philosophy: PhilosophyContent;
   process: ProcessContent;

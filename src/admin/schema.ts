@@ -287,6 +287,74 @@ export const sections: SectionDef[] = [
     ],
   },
   {
+    id: "services",
+    title: "Services",
+    description: "What you offer, one pinned step per service.",
+    icon: "briefcase",
+    group: "sections",
+    anchor: "services",
+    cards: [
+      {
+        title: "Heading",
+        fields: [
+          sectionNumber,
+          { type: "text", key: "marker", label: "Section label" },
+          { type: "lines", key: "title", label: "Title", help: ACCENT, min: 1, max: 4 },
+          { type: "text", key: "intro", label: "Introduction", multiline: true },
+        ],
+      },
+      {
+        title: "Services",
+        description: "Four work best: on desktop the scroll steps through them one at a time.",
+        fields: [
+          {
+            type: "list",
+            key: "services",
+            label: "Services",
+            itemName: "service",
+            itemTitle: (s) => str(s.title) || "Untitled service",
+            min: 1,
+            max: 6,
+            blank: () => ({ label: "", title: "", description: "", includes: "", caption: "", image: "", imageAlt: "" }),
+            fields: [
+              { type: "text", key: "title", label: "Title" },
+              { type: "text", key: "label", label: "Step word", help: "One word, e.g. Build. Shown on phones next to the number." },
+              { type: "text", key: "description", label: "Description", multiline: true },
+              { type: "text", key: "includes", label: "What this includes", multiline: true, help: "Separate with · (middle dot); each item gets its own line." },
+              { type: "image", key: "image", label: "Image", help: "About 1200 × 900." },
+              { type: "text", key: "imageAlt", label: "Alt text", multiline: true },
+              { type: "text", key: "caption", label: "Image caption", help: "Under the image, before the number, e.g. Storefront architecture." },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Labels",
+        fields: [
+          { type: "text", key: "includesLabel", label: "List heading", help: "Above each service’s list, e.g. What this includes." },
+          { type: "text", key: "scrollHint", label: "Scroll hint", help: "Above the progress rail on desktop." },
+        ],
+      },
+      {
+        title: "Call to action",
+        description: "The dark band under the services.",
+        fields: [
+          {
+            type: "group",
+            key: "cta",
+            label: "Call to action",
+            fields: [
+              { type: "text", key: "eyebrow", label: "Label" },
+              { type: "lines", key: "title", label: "Headline", help: ACCENT, min: 1, max: 3 },
+              { type: "text", key: "copy", label: "Supporting line" },
+              cta("button", "Button"),
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
     id: "expertise",
     title: "Expertise",
     description: "Four capability cards.",

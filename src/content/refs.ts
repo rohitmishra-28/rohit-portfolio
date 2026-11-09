@@ -12,6 +12,7 @@ export function imageRefs(c: SiteContentMap): [string, string][] {
     ...c.journey.chapters.filter((ch) => ch.logo).map((ch): [string, string] => [ch.logo, "Journey"]),
     [c.work.background, "Featured work"],
     ...c.work.projects.map((p): [string, string] => [p.image, "Featured work"]),
+    ...c.services.services.map((s): [string, string] => [s.image, "Services"]),
     ...c.expertise.cards.flatMap((card): [string, string][] => [
       [card.emblem, "Expertise"],
       [card.image, "Expertise"],

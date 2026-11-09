@@ -1,0 +1,52 @@
+{
+  "number": "03",
+  "marker": "What I do",
+  "title": ["Four ways to", "make your store", "work better."],
+  "intro": "From building storefronts to diagnosing performance, conversions and technical health, I help ecommerce businesses solve what is really holding them back.",
+  "includesLabel": "What this includes",
+  "scrollHint": "Scroll to explore",
+  "services": [
+    {
+      "label": "Build",
+      "title": "Shopify Store Development",
+      "description": "Build a Shopify store around your business requirements, customer experience and long-term scalability.",
+      "includes": "Custom themes · Shopify Plus · Store architecture · Integrations",
+      "caption": "Storefront architecture",
+      "image": "services-1",
+      "imageAlt": "A laptop showing a shoe store’s product grid on a travertine desk, beside potted plants and a vase of olive branches."
+    },
+    {
+      "label": "Measure",
+      "title": "Performance & Lighthouse Audits",
+      "description": "Find what is slowing the storefront down, from theme code and apps to images and third-party scripts, and fix what matters most.",
+      "includes": "Core Web Vitals · Lighthouse reports · Theme and app impact · Speed fixes",
+      "caption": "Performance diagnostics",
+      "image": "services-2",
+      "imageAlt": "A desktop monitor showing a speed gauge and bar charts on a wooden desk with open notebooks and a pen pot."
+    },
+    {
+      "label": "Improve",
+      "title": "Conversion Rate Optimization",
+      "description": "Identify friction across the customer journey, from product discovery to checkout, and turn it into clear, testable improvements.",
+      "includes": "Journey analysis · Product page UX · Cart and checkout · Test ideas",
+      "caption": "Customer journey",
+      "image": "services-3",
+      "imageAlt": "A tablet showing a conversion funnel and a heatmap, lying on linen with a green cloth, a brass key and a pencil."
+    },
+    {
+      "label": "Diagnose",
+      "title": "Website Audits",
+      "description": "Assess technical health, SEO and usability, with a prioritised list of what to fix and why.",
+      "includes": "Technical SEO · Structured data · Accessibility · Code health",
+      "caption": "Technical health",
+      "image": "services-4",
+      "imageAlt": "A laptop showing a page wireframe beside printed audit sheets, a magnifying glass and a terracotta mug."
+    }
+  ],
+  "cta": {
+    "eyebrow": "A practical approach to better commerce",
+    "title": ["Have a Shopify challenge", "that needs a closer look?"],
+    "copy": "Let’s understand the problem before deciding what to change.",
+    "button": { "label": "Let’s talk", "href": "#contact" }
+  }
+}
