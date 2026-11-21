@@ -11,6 +11,7 @@ import hero from "../../content/hero.json";
 import journey from "../../content/journey.json";
 import philosophy from "../../content/philosophy.json";
 import processSteps from "../../content/process.json";
+import services from "../../content/services.json";
 import signature from "../../content/signature.json";
 import site from "../../content/site.json";
 import work from "../../content/work.json";
@@ -24,6 +25,7 @@ export const content = {
   about,
   journey,
   work,
+  services,
   expertise,
   philosophy,
   process: processSteps,

@@ -5,7 +5,7 @@ import { content, siteUrl } from "@/content";
 // homepage, so it never drifts from what the site says.
 export const dynamic = "force-static";
 
-const { site, journey, work, expertise } = content;
+const { site, journey, work, services, expertise } = content;
 const abs = (path: string) => (siteUrl ? `${siteUrl}${path}` : path);
 const list = (value: string) => value.split(",").map((s) => s.trim()).filter(Boolean);
 
@@ -33,6 +33,10 @@ export function GET() {
     "## Selected work",
     "",
     ...work.projects.map((p) => `- ${p.href ? `[${p.name}](${p.href})` : p.name}: ${p.title}. ${p.stack}.`),
+    "",
+    "## Services",
+    "",
+    ...services.services.map((s) => `- ${s.title}: ${s.description} Includes: ${s.includes.split("·").map((i) => i.trim()).filter(Boolean).join(", ")}.`),
     "",
     "## Expertise",
     "",
