@@ -1,5 +1,6 @@
 import { asset } from "@/lib/base-path";
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { MotionRoot } from "@/components/MotionRoot";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -73,6 +74,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SiteHeader name={site.name} nav={site.nav} />
         <main id="main">{children}</main>
         <SiteFooter content={content.footer} site={site} projects={content.work.projects} />
+        {/* Recruiter chat widget (vanilla JS, public/chat-widget.js): loads in idle time so it stays off the critical path. */}
+        <Script src={asset("/chat-widget.js")} strategy="lazyOnload" />
       </body>
     </html>
   );
