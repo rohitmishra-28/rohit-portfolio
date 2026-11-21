@@ -21,7 +21,16 @@ export function Logo({
 }) {
   return (
     <span className={`${styles.logo} ${styles[theme]} ${className ?? ""}`}>
-      <img src={asset(`/brand/logo-mark-${theme}.svg`)} alt="" width={80} height={80} className={styles.mark} />
+      {/* Inline (same paths as public/brand/logo-mark-*.svg) so the mark paints
+          with the wordmark instead of popping in after its own request. */}
+      <svg viewBox="0 0 80 80" width={80} height={80} aria-hidden="true" className={styles.mark}>
+        <path
+          d="M14 70V12H36C51 12 60 20 60 33C60 43 54 50 44 53L64 70H46L28 54H26V70H14ZM26 24V43H35C43 43 48 40 48 33C48 27 43 24 35 24H26Z"
+          fillRule="evenodd"
+          fill={theme === "primary" ? "#18291F" : "#FBF6ED"}
+        />
+        <rect x="65" y="12" width="8" height="8" fill="#C65B32" />
+      </svg>
       <span className={styles.wordmark}>{name}</span>
     </span>
   );

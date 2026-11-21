@@ -12,29 +12,35 @@ export function heroAnimation(scope: HTMLElement, mm: gsap.MatchMedia) {
 
   mm.add(conditions, (ctx) => {
     const { desktop } = ctx.conditions as Conditions;
-    document.documentElement.classList.add("hero-anim");
+    const root = document.documentElement;
+    // If the escape hatch already revealed the copy (a very slow load), don't
+    // hide it again just to replay the entrance; that reads as a flicker.
+    const alreadyShown = root.classList.contains("anim-failed");
+    root.classList.add("hero-anim");
 
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
     const artImg = scope.querySelectorAll("[data-anim=\"art\"] img");
-    tl.fromTo(artImg, { scale: 1.06 }, { scale: 1, duration: 1.8, ease: "power2.out" }, 0)
-      .fromTo($("eyebrow"), { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 0.15)
-      .fromTo(
-        // Desktop lines are blocks and stagger; on mobile the headline wraps
-        // as one paragraph, so it moves as one.
-        desktop ? $("line") : $("title"),
-        { autoAlpha: 0, y: 24 },
-        { autoAlpha: 1, y: 0, duration: 0.75, stagger: 0.09 },
-        0.25,
-      )
-      .fromTo(
-        $("divider"),
-        { autoAlpha: 0, scaleX: 0 },
-        { autoAlpha: 1, scaleX: 1, transformOrigin: "left center", duration: 0.6 },
-        0.6,
-      )
-      .fromTo($("lede"), { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.65)
-      .fromTo($("ctas"), { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.8)
-      .fromTo($("scroll"), { autoAlpha: 0, y: -10 }, { autoAlpha: 1, y: 0, duration: 0.8 }, 1.2);
+    if (!alreadyShown) {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.fromTo(artImg, { scale: 1.06 }, { scale: 1, duration: 1.8, ease: "power2.out" }, 0)
+        .fromTo($("eyebrow"), { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.5 }, 0.15)
+        .fromTo(
+          // Desktop lines are blocks and stagger; on mobile the headline wraps
+          // as one paragraph, so it moves as one.
+          desktop ? $("line") : $("title"),
+          { autoAlpha: 0, y: 24 },
+          { autoAlpha: 1, y: 0, duration: 0.75, stagger: 0.09 },
+          0.25,
+        )
+        .fromTo(
+          $("divider"),
+          { autoAlpha: 0, scaleX: 0 },
+          { autoAlpha: 1, scaleX: 1, transformOrigin: "left center", duration: 0.6 },
+          0.6,
+        )
+        .fromTo($("lede"), { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.65)
+        .fromTo($("ctas"), { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.8)
+        .fromTo($("scroll"), { autoAlpha: 0, y: -10 }, { autoAlpha: 1, y: 0, duration: 0.8 }, 1.2);
+    }
 
     // The desktop headline isn't animated as a whole, so release it from the
     // pre-hide (its lines carry their own autoAlpha).

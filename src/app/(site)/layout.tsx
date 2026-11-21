@@ -56,8 +56,10 @@ export const viewport: Viewport = {
 
 // Runs before first paint: hands scroll restoration to MotionRoot (pinned
 // sections change the page height after load), and lets CSS pre-hide the
-// hero copy for its GSAP entrance, with a 3s escape hatch.
-const motionBootstrap = `(function(){var d=document.documentElement;if("scrollRestoration" in history)history.scrollRestoration="manual";if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;d.classList.add("js-motion");setTimeout(function(){if(!d.classList.contains("hero-anim"))d.classList.add("anim-failed")},3000)})();`;
+// hero copy for its GSAP entrance, with an escape hatch 3s after the HTML is
+// parsed. (Counting from here instead fired before first paint on slow phones:
+// the copy showed, then the entrance hid it and faded it back in.)
+const motionBootstrap = `(function(){var d=document.documentElement;if("scrollRestoration" in history)history.scrollRestoration="manual";if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;d.classList.add("js-motion");function t(){setTimeout(function(){if(!d.classList.contains("hero-anim"))d.classList.add("anim-failed")},3000)}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",t);else t()})();`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
