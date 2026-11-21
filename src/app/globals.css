@@ -66,12 +66,18 @@ a {
  * Motion is driven by GSAP (src/animations). Content is visible by default;
  * the only exception is the hero copy, which an inline script pre-hides when
  * JS is running so its load timeline can start without a flash. If the
- * timeline hasn't started within 3s (no `hero-anim` class), `anim-failed`
- * releases it; AnimatedSection also sets it if a timeline throws.
+ * timeline hasn't started within 3s of the HTML being parsed (no `hero-anim`
+ * class), `anim-failed` releases it; AnimatedSection also sets it if a
+ * timeline throws. The hero art likewise starts at the timeline's opening
+ * zoom, so it doesn't paint at full size and then jump when GSAP takes over.
  */
 @media (prefers-reduced-motion: no-preference) {
   html.js-motion:not(.anim-failed) [data-hero-anim] {
     visibility: hidden;
+  }
+
+  html.js-motion:not(.anim-failed):not(.hero-anim) [data-anim="art"] img {
+    transform: scale(1.06);
   }
 }
 
