@@ -6,6 +6,11 @@
 // Voice replies switch on automatically when a visitor uses the mic.
 // Languages: English, हिन्दी, ಕನ್ನಡ, বাংলা. Pick in the header (needed for the mic);
 // spoken replies auto-detect the reply's script and use a matching voice if the device has one.
+//
+// Voice conversation (waveform button): a live, hands-free call through Gemini Live. The Worker's
+// /live-token route mints a short-lived, single-use token with the model, voice and instructions
+// locked in; the browser streams mic audio to Gemini and plays its spoken replies, and both sides
+// appear as text in the chat. Gemini picks up the visitor's language itself.
 
 (() => {
   const API_URL = "https://wandering-union-2c45.irohitm89.workers.dev"; // your Cloudflare Worker
@@ -105,8 +110,20 @@
   #rkm-mic.on{background:var(--rkm-accent-strong)!important;border-color:var(--rkm-accent-strong)!important;
     color:var(--rkm-ivory)!important;animation:rkm-pulse 1.2s ease-in-out infinite}
   @keyframes rkm-pulse{50%{box-shadow:0 0 0 6px rgb(198 91 50 / .25)}}
+  #rkm-chat [hidden]{display:none!important}
+  #rkm-talk{padding:0!important;width:44px;background:var(--rkm-forest)!important;color:var(--rkm-parchment)!important}
+  #rkm-talk:hover{background:var(--rkm-forest-card)!important}
+  #rkm-live{display:flex;align-items:center;gap:10px;padding:6px 6px 6px 16px;border-top:1px solid var(--rkm-border);background:var(--rkm-ivory)}
+  #rkm-live-dot{flex:none;width:12px;height:12px;border-radius:50%;background:var(--rkm-stone);
+    transform:scale(calc(1 + var(--rkm-level,0)));transition:transform 80ms linear}
+  #rkm-live[data-state=listening] #rkm-live-dot{background:var(--rkm-forest)}
+  #rkm-live[data-state=speaking] #rkm-live-dot{background:var(--rkm-accent-strong);animation:rkm-pulse 1.2s ease-in-out infinite}
+  #rkm-live-status{flex:1;min-width:0;font-size:13px;line-height:1.35;color:var(--rkm-ink)}
+  #rkm-live-end{flex:none;height:44px;padding:0 16px;border:0;border-radius:10px;background:var(--rkm-accent-strong);
+    color:var(--rkm-ivory);font-size:14px;font-weight:600;cursor:pointer;transition:background-color var(--rkm-fast) var(--rkm-ease)}
+  #rkm-live-end:hover{background:var(--rkm-forest)}
   @media (max-width:420px){#rkm-chat-btn{right:16px;bottom:16px}#rkm-chat header{padding-left:12px;gap:2px}#rkm-chat header strong{font-size:15px}#rkm-lang{padding:0 2px;font-size:12px}#rkm-chat{right:16px;bottom:80px;height:min(560px,calc(100vh - 100px));height:min(560px,calc(100dvh - 100px))}}
-  @media (prefers-reduced-motion:reduce){#rkm-chat-btn,#rkm-chat,#rkm-chat *{transition:none!important;animation:none!important}}
+  @media (prefers-reduced-motion:reduce){#rkm-chat-btn,#rkm-chat,#rkm-chat *{transition:none!important;animation:none!important}#rkm-live-dot{transform:none!important}}
   `;
   document.head.insertAdjacentHTML("beforeend", `<style>${css}</style>`);
 
@@ -117,6 +134,7 @@
     close: svg('<path d="M6 6l12 12M18 6 6 18"/>'),
     soundOn: svg('<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>'),
     soundOff: svg('<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="m16 9.5 5 5M21 9.5l-5 5"/>'),
+    wave: svg('<path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/>'),
     mic: svg('<rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v2.5"/>'),
     resume: svg('<path d="M14 3.5H7a1.5 1.5 0 0 0-1.5 1.5v14A1.5 1.5 0 0 0 7 20.5h10a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3.5V8h4.5M9 12.5h6M9 16h6"/>'),
     mail: svg('<rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="m4 7 8 6 8-6"/>'),
@@ -147,8 +165,14 @@
        <form id="rkm-form">
          <input maxlength="800" placeholder="Type or tap the mic…" aria-label="Message"/>
          <button type="button" id="rkm-mic" aria-label="Speak your question" title="Speak your question">${ICONS.mic}</button>
+         <button type="button" id="rkm-talk" aria-label="Start a voice conversation" title="Voice conversation: English, हिन्दी, ಕನ್ನಡ, বাংলা" aria-pressed="false">${ICONS.wave}</button>
          <button type="submit">Send</button>
        </form>
+       <div id="rkm-live" hidden>
+         <span id="rkm-live-dot" aria-hidden="true"></span>
+         <span id="rkm-live-status" role="status"></span>
+         <button type="button" id="rkm-live-end">End call</button>
+       </div>
      </div>`
   );
 
@@ -176,7 +200,7 @@
     launcher.setAttribute("aria-expanded", String(open));
     if (open) input.focus();
     else {
-      stopSpeaking(); stopListening();
+      stopSpeaking(); stopListening(); endLive("user");
       if (panel.contains(document.activeElement)) launcher.focus(); // don't lose keyboard focus
     }
   };
@@ -328,6 +352,214 @@
     log.scrollTop = log.scrollHeight;
     speak(reply);
   }
+
+  // ---------- Live voice conversation (Gemini Live) ----------
+  const LIVE_TOKEN_URL = API_URL + "/live-token";
+  const LIVE_WS = "wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContentConstrained";
+  const LIVE_MODEL = "models/gemini-3.8-live"; // the token's locked setup wins; this just mirrors it
+  const LIVE_MAX_MS = 5 * 60 * 1000; // keep calls (and Gemini audio costs) short
+  const LIVE_STATUS = {
+    connecting: "Connecting…",
+    listening: "Listening. Speak in English, हिन्दी, ಕನ್ನಡ or বাংলা",
+    speaking: "Speaking. Talk any time to interrupt",
+  };
+  const LIVE_END = {
+    failed: `Sorry, I couldn't start the voice conversation. You can still type, or download the resume at ${RESUME_URL} or email ${EMAIL}.`,
+    mic: "I couldn't access your microphone. Please allow mic access in your browser, or type your question.",
+    ended: "The voice call ended. Tap the waveform button to start another, or keep typing.",
+    limit: "That's the end of the voice call (5-minute limit). Tap the waveform button to start another, or keep typing.",
+  };
+  const talkBtn = document.getElementById("rkm-talk");
+  const liveBar = document.getElementById("rkm-live");
+  const liveStatus = document.getElementById("rkm-live-status");
+  const chipsBox = document.getElementById("rkm-chips");
+  const canTalk = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.AudioWorkletNode && window.WebSocket && window.isSecureContext);
+  if (!canTalk) talkBtn.style.display = "none";
+  let live = null; // the current call, or null
+
+  // Runs in the audio thread: downsamples the mic to 16 kHz, 16-bit PCM, 100 ms chunks.
+  const WORKLET = `
+  class RkmMic extends AudioWorkletProcessor {
+    constructor() { super(); this.ratio = sampleRate / 16000; this.pos = 0; this.buf = new Int16Array(1600); this.n = 0; }
+    process(inputs) {
+      const ch = inputs[0] && inputs[0][0];
+      if (ch) {
+        for (; this.pos < ch.length; this.pos += this.ratio) {
+          const i = Math.floor(this.pos), f = this.pos - i, a = ch[i], b = i + 1 < ch.length ? ch[i + 1] : a;
+          const v = Math.max(-1, Math.min(1, a + (b - a) * f));
+          this.buf[this.n++] = v < 0 ? v * 0x8000 : v * 0x7fff;
+          if (this.n === this.buf.length) { this.port.postMessage(this.buf.buffer, [this.buf.buffer]); this.buf = new Int16Array(1600); this.n = 0; }
+        }
+        this.pos -= ch.length;
+      }
+      return true;
+    }
+  }
+  registerProcessor("rkm-mic", RkmMic);`;
+
+  const toB64 = (buf) => {
+    const u = new Uint8Array(buf);
+    let s = "";
+    for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000));
+    return btoa(s);
+  };
+  const fromB64 = (b64) => {
+    const s = atob(b64), u = new Uint8Array(s.length);
+    for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i);
+    return u.buffer;
+  };
+
+  function setLiveState(s, state) {
+    if (live !== s || s.state === state) return;
+    s.state = state;
+    liveBar.dataset.state = state;
+    liveStatus.textContent = LIVE_STATUS[state];
+  }
+
+  function showLive(on) {
+    const hadFocus = liveBar.contains(document.activeElement);
+    form.hidden = on;
+    chipsBox.hidden = on;
+    liveBar.hidden = !on;
+    talkBtn.setAttribute("aria-pressed", String(on));
+    if (on) document.getElementById("rkm-live-end").focus();
+    else {
+      liveBar.style.removeProperty("--rkm-level");
+      if (hadFocus && panel.classList.contains("open")) talkBtn.focus();
+    }
+  }
+
+  // Gemini sends 24 kHz 16-bit PCM; queue the chunks back to back.
+  function playPcm(s, buf) {
+    const pcm = new Int16Array(buf, 0, buf.byteLength >> 1);
+    if (!pcm.length) return;
+    const f = new Float32Array(pcm.length);
+    for (let i = 0; i < pcm.length; i++) f[i] = pcm[i] / 32768;
+    const ab = s.ctx.createBuffer(1, f.length, 24000);
+    ab.copyToChannel(f, 0);
+    const src = s.ctx.createBufferSource();
+    src.buffer = ab;
+    src.connect(s.ctx.destination);
+    const at = Math.max(s.ctx.currentTime + 0.03, s.playAt);
+    src.start(at);
+    s.playAt = at + ab.duration;
+    s.sources.add(src);
+    src.onended = () => { s.sources.delete(src); if (!s.sources.size) setLiveState(s, "listening"); };
+    setLiveState(s, "speaking");
+  }
+  function stopPlayback(s) {
+    for (const src of s.sources) { try { src.stop(); } catch { /* already stopped */ } }
+    s.sources.clear();
+    s.playAt = 0;
+  }
+
+  // Both sides' words arrive in pieces; build one bubble per side per turn.
+  function addLiveText(s, who, t) {
+    const key = who === "user" ? "curUser" : "curBot";
+    let cur = s[key];
+    if (!cur) {
+      cur = s[key] = { text: "", el: document.createElement("div") };
+      cur.el.className = `rkm-msg rkm-${who}`;
+      // the visitor's words can arrive after the reply has started
+      if (who === "user" && s.curBot) log.insertBefore(cur.el, s.curBot.el);
+      else log.appendChild(cur.el);
+    }
+    cur.text += t;
+    cur.el.innerHTML = linkify(cur.text.trim());
+    log.scrollTop = log.scrollHeight;
+  }
+  function finishTurn(s) {
+    // keep the transcript in the text history so typing afterwards has context
+    if (s.curUser && s.curUser.text.trim()) history.push({ role: "user", text: s.curUser.text.trim() });
+    if (s.curBot && s.curBot.text.trim()) history.push({ role: "assistant", text: s.curBot.text.trim() });
+    s.curUser = s.curBot = null;
+  }
+
+  async function onLiveMessage(s, ev) {
+    let msg;
+    try { msg = JSON.parse(typeof ev.data === "string" ? ev.data : await ev.data.text()); } catch { return; }
+    if (live !== s) return;
+    if (msg.setupComplete) { s.ready = true; setLiveState(s, "listening"); return; }
+    const sc = msg.serverContent;
+    if (!sc) return;
+    if (sc.interrupted) { stopPlayback(s); finishTurn(s); setLiveState(s, "listening"); }
+    if (sc.inputTranscription && sc.inputTranscription.text) addLiveText(s, "user", sc.inputTranscription.text);
+    if (sc.modelTurn && sc.modelTurn.parts) {
+      for (const p of sc.modelTurn.parts) {
+        const d = p.inlineData;
+        if (d && d.data && (!d.mimeType || d.mimeType.startsWith("audio/"))) playPcm(s, fromB64(d.data));
+      }
+    }
+    if (sc.outputTranscription && sc.outputTranscription.text) addLiveText(s, "bot", sc.outputTranscription.text);
+    if (sc.turnComplete) finishTurn(s);
+  }
+
+  async function startLive() {
+    if (live || !canTalk) return;
+    stopSpeaking();
+    stopListening();
+    const s = (live = { ws: null, ctx: null, stream: null, sources: new Set(), playAt: 0, curUser: null, curBot: null, ready: false, state: "", timer: 0 });
+    showLive(true);
+    setLiveState(s, "connecting");
+    let stage = "failed";
+    try {
+      // Created inside the click so the browser lets it play sound.
+      s.ctx = new AudioContext();
+      s.ctx.resume();
+      const mod = URL.createObjectURL(new Blob([WORKLET], { type: "text/javascript" }));
+      const micP = navigator.mediaDevices
+        .getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 } })
+        .catch((e) => { stage = "mic"; throw e; });
+      // If the call ends while the mic is still being granted, release it straight away.
+      micP.then((st) => { if (live !== s) st.getTracks().forEach((t) => t.stop()); else s.stream = st; }, () => {});
+      const tokenP = fetch(LIVE_TOKEN_URL, { method: "POST" })
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`token ${r.status}`))))
+        .then((d) => d.token || Promise.reject(new Error("no token")));
+      const [stream, token] = await Promise.all([micP, tokenP, s.ctx.audioWorklet.addModule(mod)]);
+      URL.revokeObjectURL(mod);
+      if (live !== s) return; // ended while connecting
+
+      const ws = (s.ws = new WebSocket(`${LIVE_WS}?access_token=${encodeURIComponent(token)}`));
+      ws.onopen = () =>
+        ws.send(JSON.stringify({ setup: { model: LIVE_MODEL, generationConfig: { responseModalities: ["AUDIO"] }, inputAudioTranscription: {}, outputAudioTranscription: {} } }));
+      ws.onmessage = (ev) => onLiveMessage(s, ev);
+      ws.onclose = () => { if (live === s) endLive(s.ready ? "ended" : "failed"); };
+
+      const node = new AudioWorkletNode(s.ctx, "rkm-mic");
+      const mute = s.ctx.createGain();
+      mute.gain.value = 0; // keeps the worklet running without playing the mic back
+      s.ctx.createMediaStreamSource(stream).connect(node).connect(mute).connect(s.ctx.destination);
+      node.port.onmessage = (e) => {
+        if (!s.ready || ws.readyState !== 1) return;
+        ws.send(JSON.stringify({ realtimeInput: { audio: { data: toB64(e.data), mimeType: "audio/pcm;rate=16000" } } }));
+        const pcm = new Int16Array(e.data);
+        let sum = 0;
+        for (let i = 0; i < pcm.length; i += 4) sum += pcm[i] * pcm[i];
+        const rms = Math.sqrt(sum / Math.ceil(pcm.length / 4)) / 32768;
+        liveBar.style.setProperty("--rkm-level", Math.min(0.8, rms * 6).toFixed(2));
+      };
+      s.timer = setTimeout(() => endLive("limit"), LIVE_MAX_MS);
+    } catch {
+      if (live === s) endLive(stage);
+    }
+  }
+
+  function endLive(reason) {
+    const s = live;
+    if (!s) return;
+    live = null;
+    clearTimeout(s.timer);
+    finishTurn(s);
+    if (s.ws && s.ws.readyState <= 1) { try { s.ws.close(); } catch { /* closing anyway */ } }
+    if (s.ctx) stopPlayback(s);
+    if (s.stream) s.stream.getTracks().forEach((t) => t.stop());
+    if (s.ctx) s.ctx.close().catch(() => {});
+    showLive(false);
+    if (LIVE_END[reason]) add(LIVE_END[reason], "bot");
+  }
+
+  talkBtn.onclick = startLive;
+  document.getElementById("rkm-live-end").onclick = () => endLive("user");
 
   form.onsubmit = (e) => {
     e.preventDefault();
