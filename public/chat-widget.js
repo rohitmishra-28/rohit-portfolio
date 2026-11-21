@@ -9,10 +9,13 @@
 //
 // Voice conversation (waveform button): a live, hands-free call through Gemini Live. The Worker's
 // /live-token route mints a short-lived, single-use token with the model, voice and instructions
-// locked in; the browser streams mic audio to Gemini and plays its spoken replies, and both sides
-// appear as text in the chat. Gemini picks up the visitor's language itself.
+// locked in; the browser streams mic audio to Gemini and plays its spoken replies. During a call the
+// chat shows Rohit's avatar, pulsing while the assistant speaks (no transcript). Gemini picks up the
+// visitor's language itself.
 
 (() => {
+  const SCRIPT_SRC = (document.currentScript && document.currentScript.src) || location.href;
+  const AVATAR_URL = new URL("chat-avatar.webp", SCRIPT_SRC).href; // loaded only when a call starts
   const API_URL = "https://wandering-union-2c45.irohitm89.workers.dev"; // your Cloudflare Worker
   const RESUME_URL = "https://rohitkumarmishra.com/resume.pdf";
   const EMAIL = "hello@rohitkumarmishra.com";
@@ -113,6 +116,25 @@
   #rkm-chat [hidden]{display:none!important}
   #rkm-talk{padding:0!important;width:44px;background:var(--rkm-forest)!important;color:var(--rkm-parchment)!important}
   #rkm-talk:hover{background:var(--rkm-forest-card)!important}
+  #rkm-stage{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+    padding:24px 16px;text-align:center;overflow:hidden}
+  #rkm-avatar{position:relative;flex:none;width:132px;height:132px}
+  #rkm-avatar img{position:relative;z-index:1;display:block;width:100%;height:100%;border-radius:50%;object-fit:cover;
+    background:var(--rkm-linen);border:3px solid var(--rkm-ivory);box-shadow:0 0 0 2px var(--rkm-border);
+    transition:box-shadow 90ms linear}
+  #rkm-avatar::before,#rkm-avatar::after{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid var(--rkm-accent);opacity:0}
+  #rkm-stage[data-state=listening] #rkm-avatar img{box-shadow:0 0 0 calc(2px + var(--rkm-level,0) * 16px) rgb(24 41 31 / .22)}
+  #rkm-stage[data-state=speaking] #rkm-avatar img{box-shadow:0 0 0 3px var(--rkm-accent)}
+  #rkm-stage[data-state=speaking] #rkm-avatar::before{animation:rkm-ring 1.6s ease-out infinite}
+  #rkm-stage[data-state=speaking] #rkm-avatar::after{animation:rkm-ring 1.6s ease-out .8s infinite}
+  @keyframes rkm-ring{0%{transform:scale(1);opacity:.75}100%{transform:scale(1.42);opacity:0}}
+  #rkm-stage-name{font:400 19px/1.2 var(--font-display,Georgia,serif);color:var(--rkm-forest)}
+  #rkm-stage-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  #rkm-stage-links a{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:1px solid var(--rkm-border);
+    border-radius:999px;background:var(--rkm-ivory);color:var(--rkm-ink);font-size:13px;font-weight:500;text-decoration:none;
+    transition:border-color var(--rkm-fast) var(--rkm-ease),background-color var(--rkm-fast) var(--rkm-ease)}
+  #rkm-stage-links a:hover{border-color:var(--rkm-accent);background:var(--rkm-linen)}
+  #rkm-stage-links svg{width:16px;height:16px;color:var(--rkm-accent-strong)}
   #rkm-live{display:flex;align-items:center;gap:10px;padding:6px 6px 6px 16px;border-top:1px solid var(--rkm-border);background:var(--rkm-ivory)}
   #rkm-live-dot{flex:none;width:12px;height:12px;border-radius:50%;background:var(--rkm-stone);
     transform:scale(calc(1 + var(--rkm-level,0)));transition:transform 80ms linear}
@@ -123,7 +145,7 @@
     color:var(--rkm-ivory);font-size:14px;font-weight:600;cursor:pointer;transition:background-color var(--rkm-fast) var(--rkm-ease)}
   #rkm-live-end:hover{background:var(--rkm-forest)}
   @media (max-width:420px){#rkm-chat-btn{right:16px;bottom:16px}#rkm-chat header{padding-left:12px;gap:2px}#rkm-chat header strong{font-size:15px}#rkm-lang{padding:0 2px;font-size:12px}#rkm-chat{right:16px;bottom:80px;height:min(560px,calc(100vh - 100px));height:min(560px,calc(100dvh - 100px))}}
-  @media (prefers-reduced-motion:reduce){#rkm-chat-btn,#rkm-chat,#rkm-chat *{transition:none!important;animation:none!important}#rkm-live-dot{transform:none!important}}
+  @media (prefers-reduced-motion:reduce){#rkm-chat-btn,#rkm-chat,#rkm-chat *{transition:none!important;animation:none!important}#rkm-live-dot{transform:none!important}#rkm-avatar::before,#rkm-avatar::after{animation:none!important}#rkm-stage[data-state=listening] #rkm-avatar img{box-shadow:0 0 0 3px var(--rkm-forest)!important}}
   `;
   document.head.insertAdjacentHTML("beforeend", `<style>${css}</style>`);
 
@@ -157,6 +179,14 @@
          <button id="rkm-close" aria-label="Close">${ICONS.close}</button>
        </header>
        <div id="rkm-log" aria-live="polite"></div>
+       <div id="rkm-stage" hidden>
+         <div id="rkm-avatar"><img alt="" width="132" height="132" decoding="async"/></div>
+         <div id="rkm-stage-name">Rohit's assistant</div>
+         <div id="rkm-stage-links">
+           <a href="${RESUME_URL}" target="_blank" rel="noopener">${ICONS.resume}Resume</a>
+           <a href="mailto:${EMAIL}">${ICONS.mail}Email Rohit</a>
+         </div>
+       </div>
        <div id="rkm-chips">
          <button data-q="Can I download Rohit's resume?">${ICONS.resume}Resume</button>
          <button data-q="How can I contact Rohit?">${ICONS.mail}Contact</button>
@@ -372,6 +402,8 @@
   const talkBtn = document.getElementById("rkm-talk");
   const liveBar = document.getElementById("rkm-live");
   const liveStatus = document.getElementById("rkm-live-status");
+  const stage = document.getElementById("rkm-stage");
+  const stageImg = stage.querySelector("img");
   const chipsBox = document.getElementById("rkm-chips");
   const canTalk = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.AudioWorkletNode && window.WebSocket && window.isSecureContext);
   if (!canTalk) talkBtn.style.display = "none";
@@ -413,18 +445,23 @@
     if (live !== s || s.state === state) return;
     s.state = state;
     liveBar.dataset.state = state;
+    stage.dataset.state = state;
     liveStatus.textContent = LIVE_STATUS[state];
   }
 
   function showLive(on) {
     const hadFocus = liveBar.contains(document.activeElement);
+    if (on && !stageImg.src) stageImg.src = AVATAR_URL;
     form.hidden = on;
     chipsBox.hidden = on;
+    log.hidden = on; // no transcript during a call: just the avatar
+    stage.hidden = !on;
     liveBar.hidden = !on;
     talkBtn.setAttribute("aria-pressed", String(on));
     if (on) document.getElementById("rkm-live-end").focus();
     else {
-      liveBar.style.removeProperty("--rkm-level");
+      panel.style.removeProperty("--rkm-level");
+      log.scrollTop = log.scrollHeight;
       if (hadFocus && panel.classList.contains("open")) talkBtn.focus();
     }
   }
@@ -453,28 +490,6 @@
     s.playAt = 0;
   }
 
-  // Both sides' words arrive in pieces; build one bubble per side per turn.
-  function addLiveText(s, who, t) {
-    const key = who === "user" ? "curUser" : "curBot";
-    let cur = s[key];
-    if (!cur) {
-      cur = s[key] = { text: "", el: document.createElement("div") };
-      cur.el.className = `rkm-msg rkm-${who}`;
-      // the visitor's words can arrive after the reply has started
-      if (who === "user" && s.curBot) log.insertBefore(cur.el, s.curBot.el);
-      else log.appendChild(cur.el);
-    }
-    cur.text += t;
-    cur.el.innerHTML = linkify(cur.text.trim());
-    log.scrollTop = log.scrollHeight;
-  }
-  function finishTurn(s) {
-    // keep the transcript in the text history so typing afterwards has context
-    if (s.curUser && s.curUser.text.trim()) history.push({ role: "user", text: s.curUser.text.trim() });
-    if (s.curBot && s.curBot.text.trim()) history.push({ role: "assistant", text: s.curBot.text.trim() });
-    s.curUser = s.curBot = null;
-  }
-
   // Gemini guesses the language from the voice, and close languages (Bengali and Hindi) can be
   // mistaken for each other. When the visitor has picked a language in the menu, say so up front
   // (context only: turnComplete false doesn't trigger a reply).
@@ -493,23 +508,20 @@
     if (msg.setupComplete) { s.ready = true; sendLangHint(s); setLiveState(s, "listening"); return; }
     const sc = msg.serverContent;
     if (!sc) return;
-    if (sc.interrupted) { stopPlayback(s); finishTurn(s); setLiveState(s, "listening"); }
-    if (sc.inputTranscription && sc.inputTranscription.text) addLiveText(s, "user", sc.inputTranscription.text);
+    if (sc.interrupted) { stopPlayback(s); setLiveState(s, "listening"); }
     if (sc.modelTurn && sc.modelTurn.parts) {
       for (const p of sc.modelTurn.parts) {
         const d = p.inlineData;
         if (d && d.data && (!d.mimeType || d.mimeType.startsWith("audio/"))) playPcm(s, fromB64(d.data));
       }
     }
-    if (sc.outputTranscription && sc.outputTranscription.text) addLiveText(s, "bot", sc.outputTranscription.text);
-    if (sc.turnComplete) finishTurn(s);
   }
 
   async function startLive() {
     if (live || !canTalk) return;
     stopSpeaking();
     stopListening();
-    const s = (live = { ws: null, ctx: null, stream: null, sources: new Set(), playAt: 0, curUser: null, curBot: null, ready: false, state: "", timer: 0 });
+    const s = (live = { ws: null, ctx: null, stream: null, sources: new Set(), playAt: 0, ready: false, state: "", timer: 0 });
     showLive(true);
     setLiveState(s, "connecting");
     let stage = "failed";
@@ -547,7 +559,7 @@
         let sum = 0;
         for (let i = 0; i < pcm.length; i += 4) sum += pcm[i] * pcm[i];
         const rms = Math.sqrt(sum / Math.ceil(pcm.length / 4)) / 32768;
-        liveBar.style.setProperty("--rkm-level", Math.min(0.8, rms * 6).toFixed(2));
+        panel.style.setProperty("--rkm-level", Math.min(0.8, rms * 6).toFixed(2));
       };
       s.timer = setTimeout(() => endLive("limit"), LIVE_MAX_MS);
     } catch {
@@ -560,7 +572,6 @@
     if (!s) return;
     live = null;
     clearTimeout(s.timer);
-    finishTurn(s);
     if (s.ws && s.ws.readyState <= 1) { try { s.ws.close(); } catch { /* closing anyway */ } }
     if (s.ctx) stopPlayback(s);
     if (s.stream) s.stream.getTracks().forEach((t) => t.stop());
