@@ -475,11 +475,22 @@
     s.curUser = s.curBot = null;
   }
 
+  // Gemini guesses the language from the voice, and close languages (Bengali and Hindi) can be
+  // mistaken for each other. When the visitor has picked a language in the menu, say so up front
+  // (context only: turnComplete false doesn't trigger a reply).
+  function sendLangHint(s) {
+    if (lang === "en-IN" || !s.ready || s.ws.readyState !== 1) return;
+    const name = `${LANGS[lang].name} (${{ "hi-IN": "Hindi", "kn-IN": "Kannada", "bn-IN": "Bengali" }[lang]})`;
+    s.ws.send(JSON.stringify({ clientContent: { turns: [{ role: "user", parts: [{ text:
+      `(The visitor chose ${name} in the chat's language menu. Speak ${name} with them unless they clearly use another language.)` }] }], turnComplete: false } }));
+  }
+  langSel.addEventListener("change", () => { if (live) sendLangHint(live); });
+
   async function onLiveMessage(s, ev) {
     let msg;
     try { msg = JSON.parse(typeof ev.data === "string" ? ev.data : await ev.data.text()); } catch { return; }
     if (live !== s) return;
-    if (msg.setupComplete) { s.ready = true; setLiveState(s, "listening"); return; }
+    if (msg.setupComplete) { s.ready = true; sendLangHint(s); setLiveState(s, "listening"); return; }
     const sc = msg.serverContent;
     if (!sc) return;
     if (sc.interrupted) { stopPlayback(s); finishTurn(s); setLiveState(s, "listening"); }
